@@ -43,7 +43,7 @@ export function NavBar() {
                         justifyContent: 'start',
                         display: { xs: 'flex', md: 'none' },
                     }} >
-                    <img src={require('../Assets/example.png')} width={50} height={50} />
+                    <img src={require('../Assets/logo.png')} width={50} height={50} />
                 </IconButton>
                 <Box sx={{
                     display: { xs: 'flex', md: 'none' },
@@ -55,6 +55,7 @@ export function NavBar() {
                         aria-haspopup="true"
                         onClick={handleOpenNavMenu}
                         color="inherit"
+                        href='/'
                     >
                         <MenuIcon />
                     </IconButton>
@@ -97,11 +98,12 @@ export function NavBar() {
                         disableRipple
                         edge='start'
                         color='primary'
+                        href='/'
                         sx={{
                             justifyContent: 'start',
                             display: { xs: 'none', md: 'flex' },
                         }} >
-                        <img src={require('../Assets/example.png')} width={50} height={50} />
+                        <img src={require('../Assets/logo.png')} width={50} height={50} />
                     </IconButton>
 
                     <Box sx={{
