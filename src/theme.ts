@@ -1,28 +1,45 @@
-import { createTheme } from '@mui/material/styles';
+import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import '@fontsource/roboto';
+import { Palette, PaletteMode } from '@mui/material';
+import React from 'react';
 
 // A custom theme for this app
-const theme = createTheme({
+export const theme = (mode: PaletteMode) => ({
     typography: {
-        allVariants: {
-            color: 'white',
-        },
+        mode: mode,
         fontFamily: ['Roboto'].join(','),
     },
     palette: {
-        primary: {
-            main: '#33415c',
-        },
-        secondary: {
-            main: '#343FFC',
-        },
-        background: {
-            default: '#212529',
-        },
-        error: {
-            main: '#0466c8',
-        },
-    },
+        mode,
+        ...(mode === 'light'
+            ? {
+                primary: {
+                    main: '#6C63FF',
+                    contrastText: '#fff',
+                },
+                secondary: {
+                    main: '#6C63FF',
+                },
+                background: {
+                    default: '#fff',
+                },
+                error: {
+                    main: '#0466c8',
+                },
+            } : {
+                primary: {
+                    main: '#6C63FF',
+                    contrastText: '#fff',
+                },
+                secondary: {
+                    main: '#6C63FF',
+                },
+                background: {
+                    default: '#212529',
+                },
+                error: {
+                    main: '#0466c8',
+                },
+            })
+    }
 });
-
-export default theme;
