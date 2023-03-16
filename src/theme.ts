@@ -1,6 +1,6 @@
 import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import '@fontsource/roboto';
-import { Palette, PaletteMode } from '@mui/material';
+import { alpha, Palette, PaletteMode } from '@mui/material';
 import React from 'react';
 
 // A custom theme for this app
@@ -18,7 +18,7 @@ export const theme = (mode: PaletteMode) => ({
                     contrastText: '#fff',
                 },
                 secondary: {
-                    main: '#6C63FF',
+                    main: alpha('#fff', .8),
                 },
                 background: {
                     default: '#fff',
@@ -32,7 +32,7 @@ export const theme = (mode: PaletteMode) => ({
                     contrastText: '#fff',
                 },
                 secondary: {
-                    main: '#6C63FF',
+                    main: alpha('#212529', .8),
                 },
                 background: {
                     default: '#212529',

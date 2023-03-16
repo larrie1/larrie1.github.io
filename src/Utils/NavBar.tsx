@@ -89,21 +89,34 @@ export function NavBar() {
     }
 
     return (
-        <AppBar position="static" sx={{ boxShadow: 'none', background: 'transparent' }}>
+        <AppBar
+            position="fixed"
+            sx={{
+                boxShadow: 'none',
+                background: theme.palette.secondary.main,
+                backdropFilter: `blur(5px)`,
+            }}>
             <Container maxWidth='xl'>
-                <Toolbar disableGutters>
+                <Toolbar disableGutters >
                     <MobileNav />
 
                     <IconButton
                         disableRipple
-                        edge='start'
                         color='primary'
                         href='/'
                         sx={{
                             justifyContent: 'start',
                             display: { xs: 'none', md: 'flex' },
+                            height: '64px',
+                            filter: `brightness(80%)`,
+                            '&:hover': {
+                                filter: `brightness(100%)`,
+                            }
                         }} >
-                        <img src={require('../Assets/logo.png')} width={50} height={50} />
+                        <img
+                            src={require('../Assets/logo.png')}
+                            width={'100%'}
+                            height={'100%'} />
                     </IconButton>
 
                     <Box sx={{
