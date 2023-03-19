@@ -1,3 +1,4 @@
+import { Theme } from '@mui/material';
 import Blockly from 'blockly/core';
 
 Blockly.registry.unregister('theme', 'dark');

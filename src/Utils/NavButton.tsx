@@ -4,7 +4,7 @@ export function NavButton(props: { page: String }) {
     return (
         <Button
             variant='outlined'
-            href={props.page === 'Start' ? '/' : `/${props.page.toLowerCase()}`}
+            href={props.page === 'Start' ? '/#' : `/#/${props.page.toLowerCase()}`}
             sx={{
                 borderRadius: 25,
                 borderColor: 'primary',

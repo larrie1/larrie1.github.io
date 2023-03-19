@@ -4,6 +4,7 @@ import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/s
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Routes, Route } from "react-router";
 import { BrowserRouter } from "react-router-dom";
+import { HashRouter } from "react-router-dom";
 import { ColorModeContext } from "../color-context";
 import { Game } from "../Game";
 import { Generator } from "../Generator";
@@ -38,7 +39,7 @@ export function App() {
         <ColorModeContext.Provider value={colorMode}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
-                <BrowserRouter>
+                <HashRouter>
                     <NavBar />
                     <Container maxWidth='xl'>
                         <Routes>
@@ -47,7 +48,7 @@ export function App() {
                             <Route path='/generator' element={<Generator />} />
                         </Routes>
                     </Container>
-                </BrowserRouter>
+                </HashRouter>
             </ThemeProvider>
         </ColorModeContext.Provider>
     )
