@@ -1,5 +1,5 @@
 import { Container, CssBaseline, PaletteMode } from "@mui/material";
-import React from "react";
+import React, { useState } from "react";
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Routes, Route } from "react-router";
@@ -13,13 +13,19 @@ import { NavBar } from "../Utils";
 
 export function App() {
     const prefersDarkMode = useMediaQuery('prefers-color-scheme: dark)');
-    const [mode, setMode] = React.useState<PaletteMode>(prefersDarkMode ? 'dark' : 'light');
+    localStorage.setItem(
+        'mode',
+        localStorage.getItem('mode') === null ?
+            prefersDarkMode === true ? 'dark' : 'light' :
+            localStorage.getItem('mode') as PaletteMode)
+    const [mode, setMode] = useState<PaletteMode>(localStorage.getItem('mode') as PaletteMode)
     const colorMode = React.useMemo(
         () => ({
             toggleColorMode: () => {
                 setMode((prevMode: PaletteMode) =>
                     prevMode === 'light' ? 'dark' : 'light',
                 );
+                localStorage.setItem('mode', localStorage.getItem('mode') === 'dark' ? 'light' : 'dark');
             },
         }),
         [],

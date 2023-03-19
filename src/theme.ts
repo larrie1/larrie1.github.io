@@ -1,7 +1,5 @@
-import { createTheme, responsiveFontSizes } from '@mui/material/styles';
 import '@fontsource/roboto';
-import { alpha, Palette, PaletteMode } from '@mui/material';
-import React from 'react';
+import { alpha, PaletteMode } from '@mui/material';
 
 // A custom theme for this app
 export const theme = (mode: PaletteMode) => ({

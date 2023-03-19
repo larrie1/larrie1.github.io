@@ -94,7 +94,7 @@ export function NavBar() {
             sx={{
                 boxShadow: 'none',
                 background: theme.palette.secondary.main,
-                backdropFilter: `blur(5px)`,
+                backdropFilter: `blur(10px)`,
             }}>
             <Container maxWidth='xl'>
                 <Toolbar disableGutters >

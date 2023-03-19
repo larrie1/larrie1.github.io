@@ -128,6 +128,7 @@ export function Start() {
             to: '#section1',
             bottom: '0',
             margin: '50px',
+            transfrom: 'rotate(180deg)',
             width: '3em',
             height: '3em',
             alignSelf: 'center',
