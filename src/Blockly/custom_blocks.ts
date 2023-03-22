@@ -1,5 +1,6 @@
-import Blockly from 'blockly';
+import Blockly, { Block } from 'blockly';
 import { javascriptGenerator } from 'blockly/javascript';
+import { Tree, Node } from '../Tree';
 
 // / / /* Root * / / / //
 
@@ -19,10 +20,17 @@ Blockly.Blocks['stamm'] = {
 };
 
 javascriptGenerator['stamm'] = function (block: Blockly.Block) {
-  var value_top = javascriptGenerator.valueToCode(block, 'top', javascriptGenerator.ORDER_ATOMIC);
-  var value_bottom = javascriptGenerator.valueToCode(block, 'bottom', javascriptGenerator.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = '...;\n';
+  var value_top = javascriptGenerator.valueToCode(block, 'top', javascriptGenerator.ORDER_ATOMIC) as Node;
+  var value_bottom = javascriptGenerator.valueToCode(block, 'bottom', javascriptGenerator.ORDER_ATOMIC) as Node;
+  const tree = new Tree(
+    new Node(
+      'data',
+      value_top,
+      value_bottom,
+      null,
+    )
+  )
+  var code = tree.toJSON();
   return code;
 };
 
@@ -46,11 +54,13 @@ Blockly.Blocks['knoten'] = {
 };
 
 javascriptGenerator['knoten'] = function (block: Blockly.Block) {
-  var value_top = javascriptGenerator.valueToCode(block, 'top', javascriptGenerator.ORDER_ATOMIC);
-  var dropdown_name = block.getFieldValue('NAME');
-  var value_bottom = javascriptGenerator.valueToCode(block, 'bottom', javascriptGenerator.ORDER_ATOMIC);
-  // TODO: Assemble JavaScript into code variable.
-  var code = '...';
-  // TODO: Change ORDER_NONE to the correct strength.
-  return [code, javascriptGenerator.ORDER_NONE];
+  var value_top = javascriptGenerator.valueToCode(block, 'top', javascriptGenerator.ORDER_ATOMIC) as Node || null;
+  var dropdown_name = block.getFieldValue('dropdown');
+  var value_bottom = javascriptGenerator.valueToCode(block, 'bottom', javascriptGenerator.ORDER_ATOMIC) as Node || null;
+  var code = new Node(
+    dropdown_name,
+    value_top,
+    value_bottom,
+  );
+  return [code.toJSON(), javascriptGenerator.ORDER_NONE];
 };

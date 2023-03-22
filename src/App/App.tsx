@@ -10,7 +10,7 @@ import { Game } from "../Game";
 import { Generator } from "../Generator";
 import { Start } from "../Start";
 import { theme as getDesignTokens } from "../theme";
-import { NavBar } from "../Utils";
+import { NavBar, Footer } from "../Utils";
 
 export function App() {
     const prefersDarkMode = useMediaQuery('prefers-color-scheme: dark)');
@@ -48,6 +48,7 @@ export function App() {
                             <Route path='/generator' element={<Generator />} />
                         </Routes>
                     </Container>
+                    <Footer />
                 </HashRouter>
             </ThemeProvider>
         </ColorModeContext.Provider>
