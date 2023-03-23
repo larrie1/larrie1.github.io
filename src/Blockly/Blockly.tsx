@@ -12,13 +12,13 @@ import './blocks/';
 import './generators';
 import { jsonGenerator } from './generators/json_generator';
 import { JSONTree } from 'react-json-tree';
-import { Table } from '../Utils/Table';
+import { Head, Row, Table } from '../Utils/Table';
+import { isNull } from 'util';
 
 
 export function Blockly(props: { table: Table }) {
     const [javascriptCode, setJavascriptCode] = useState("");
     const [jsonCode, setJsonCode] = useState("");
-    const [resultCode, setResultCode] = useState("");
 
     function workspaceDidChange(workspace: BlocklyLib.WorkspaceSvg) {
         const jsonCode = jsonGenerator.workspaceToCode(workspace);
@@ -30,16 +30,47 @@ export function Blockly(props: { table: Table }) {
         localStorage.setItem('xml', xml)
     }
     const initialXml = localStorage.getItem('xml') === null ?
-        '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="stamm" x="70" y="30"><field name="node"></field></block></xml>' :
+        '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="node" x="70" y="30"><field name="Node"></field></block></xml>' :
         localStorage.getItem('xml')!!;
 
     const clearWorkspace = () => saveXML('<xml xmlns="http://www.w3.org/1999/xhtml"><block type="stamm" x="70" y="30"><field name="node"></field></block></xml>')
 
     function checkCode() {
-        const json = JSON.parse(javascriptCode)
-        return (
-            <JSONTree data={json} />
-        )
+        const json = JSON.parse(javascriptCode.substring(0, javascriptCode.length - 2))
+        console.log(json)
+        const header = props.table[0]
+        props.table[1].forEach((row, index) => {
+            const expectedResult = row[0] === "Gutes Wetter" ? true : false
+            const actualResult = checkRow(
+                row,
+                header,
+                json
+            )
+            console.log(index + " Row:")
+            console.log("Expected Result: " + expectedResult)
+            console.log("Acutal Result: " + actualResult)
+        })
+    }
+
+    function checkRow(row: Row, header: Head, json: any): boolean {
+        const index = header.findIndex((value) => value.toUpperCase() === json.decision)
+        if (index === -1) {
+            console.log("undefined index")
+            return false
+        }
+        if (row[index]) {
+            if (json.top !== null && json.top !== undefined && typeof(json.top) !== "boolean") {
+                return checkRow(row, header, json.top)
+            } else {
+                return json.top
+            }
+        } else {
+            if (json.bottom !== null && json.bottom !== undefined && typeof(json.bottom) !== "boolean") {
+                return checkRow(row, header, json.bottom)
+            } else {
+                return json.bottom
+            }
+        }
     }
 
     return (
@@ -95,7 +126,7 @@ export function Blockly(props: { table: Table }) {
                             language="javascript"
                             style={useTheme().palette.mode === 'dark' ? atelierCaveDark : atelierCaveLight}
                         >
-                            {javascriptCode}
+                            {javascriptCode.substring(0, javascriptCode.length - 2)}
                         </SyntaxHighlighter>
                     </Box>
                     <Box sx={{ height: '20px' }} />

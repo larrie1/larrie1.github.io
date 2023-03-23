@@ -1,28 +1,8 @@
-/**
- * @license
- * Copyright 2023 Google LLC
- * SPDX-License-Identifier: Apache-2.0
- */
-
-/**
- * @fileoverview The full custom JSON generator built during the custom
- * generator codelab.
- */
-
 import Blockly from 'blockly';
 
 export const jsonGenerator = new Blockly.Generator('JSON');
 
 jsonGenerator.PRECEDENCE = 0;
-
-jsonGenerator.scrub_ = function (block, code, thisOnly) {
-  const nextBlock =
-    block.nextConnection && block.nextConnection.targetBlock();
-  if (nextBlock && !thisOnly) {
-    return code + ',\n' + jsonGenerator.blockToCode(nextBlock);
-  }
-  return code;
-};
 
 jsonGenerator['logic_null'] = function (block) {
   return ['null', jsonGenerator.PRECEDENCE];
@@ -42,27 +22,6 @@ jsonGenerator['math_number'] = function (block) {
 jsonGenerator['logic_boolean'] = function (block) {
   const code = (block.getFieldValue('BOOL') == 'TRUE') ? 'true' : 'false';
   return [code, jsonGenerator.PRECEDENCE];
-};
-
-jsonGenerator['member'] = function (block) {
-  const name = block.getFieldValue('MEMBER_NAME');
-  const value = jsonGenerator.valueToCode(block, 'MEMBER_VALUE', jsonGenerator.PRECEDENCE);
-  const code = `"${name}": ${value}`;
-  return code;
-};
-
-jsonGenerator['lists_create_with'] = function (block) {
-  const values = [];
-  for (let i = 0; i < block.itemCount_; i++) {
-    const valueCode = jsonGenerator.valueToCode(block, 'ADD' + i, jsonGenerator.PRECEDENCE);
-    if (valueCode) {
-      values.push(valueCode);
-    }
-  }
-  const valueString = values.join(',\n');
-  const indentedValueString = jsonGenerator.prefixLines(valueString, jsonGenerator.INDENT);
-  const codeString = '[\n' + indentedValueString + '\n]';
-  return [codeString, jsonGenerator.PRECEDENCE];
 };
 
 jsonGenerator['stamm'] = function (block) {
@@ -94,7 +53,7 @@ jsonGenerator['node'] = function (block) {
     jsonGenerator.valueToCode(block, 'top', jsonGenerator.PRECEDENCE) || null,
     jsonGenerator.valueToCode(block, 'bottom', jsonGenerator.PRECEDENCE) || null,
   ]
-  const valueString = '"Top": ' + values[0] + ',\n"Decision": ' + dropdown_name + ',\n"Bottom": ' + values[1];
+  const valueString = '"Top": ' + values[0] + ',\n"Decision": ' + `"${dropdown_name}"` + ',\n"Bottom": ' + values[1];
   const indentedValueString = jsonGenerator.prefixLines(valueString, jsonGenerator.INDENT);
   const code = '{\n' + indentedValueString + '\n}';
   return [code, jsonGenerator.PRECEDENCE];

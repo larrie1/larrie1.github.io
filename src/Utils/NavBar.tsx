@@ -101,6 +101,7 @@ export function NavBar() {
                     <MobileNav />
 
                     <IconButton
+                        key={"logo"}
                         disableRipple
                         color='primary'
                         href='/'
@@ -124,10 +125,10 @@ export function NavBar() {
                         display: { xs: 'none', md: 'flex' },
                         justifyContent: 'end',
                     }}>
-                        {pages.map((page) => (
-                            <NavButton page={page} />
+                        {pages.map((page, index) => (
+                            <NavButton key={index} page={page}/>
                         ))}
-                        <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="primary">
+                        <IconButton key={"mode"} sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="primary">
                             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                         </IconButton>
                     </Box>

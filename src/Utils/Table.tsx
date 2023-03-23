@@ -20,6 +20,7 @@ export function BasicTable(props: { table: Table }) {
                 }}>
                 <TableHead>
                     <TableRow
+                        key={"head"}
                         hover={true}
                         sx={{
                             color: 'primary',
@@ -27,7 +28,9 @@ export function BasicTable(props: { table: Table }) {
                             borderColor: 'black',
                         }}>
                         {props.table[0].map((ele: string, index: number) => (
-                            <TableCell align={index === 0 ? undefined : 'right'}>
+                            <TableCell
+                                key={index}
+                                align={index === 0 ? undefined : 'right'}>
                                 <Typography variant='h5'>
                                     {ele}
                                 </Typography>
@@ -36,8 +39,9 @@ export function BasicTable(props: { table: Table }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.table[1].map((row: Row) => (
+                    {props.table[1].map((row: Row, index: number) => (
                         <TableRow
+                            key={index}
                             hover={true}
                             sx={{
                                 '&:last-child td, &:last-child th': { border: 0 },
@@ -46,6 +50,7 @@ export function BasicTable(props: { table: Table }) {
                         >
                             {row.map((ele: string | number | boolean, index: number) => (
                                 <TableCell
+                                    key={index}
                                     component={index === 0 ? 'th' : undefined}
                                     scope={index === 0 ? 'row' : undefined}
                                     align={index === 0 ? undefined : 'right'}

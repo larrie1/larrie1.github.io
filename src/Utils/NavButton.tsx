@@ -1,6 +1,6 @@
 import { Button } from '@mui/material';
 
-export function NavButton(props: { page: String }) {
+export function NavButton(props: { page: String}) {
     return (
         <Button
             variant='outlined'

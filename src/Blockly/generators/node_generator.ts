@@ -24,8 +24,8 @@ javascriptGenerator['node'] = function (block: Blockly.Block) {
     ]
     const json = {
         Top: values[0],
-        Decision: dropdown_name,
+        Decision: `"${dropdown_name}"`,
         Bottom: values[1],
     }
-    return [JSON.stringify(json), javascriptGenerator.PRECEDENCE];
+    return ['{"top": ' + json.Top + ', "decision": ' + json.Decision + ', "bottom": ' + json.Bottom + "}", javascriptGenerator.PRECEDENCE];
 };

@@ -4,22 +4,22 @@ import { BasicTable, createHead, createTable, createRow } from '../Utils';
 
 const table = createTable(
     createHead(
-        'Wie ist das Wetter', 'Temperatur', 'Windig', 'Regen'
+        'Wie ist das Wetter', 'Warm', 'Windig', 'Regen'
     ),
     [
-        createRow('Schlechtes Wetter', 15, true, true),
-        createRow('Gutes Wetter', 25, false, false),
-        createRow('Gutes Wetter', 25, true, false),
-        createRow('Gutes Wetter', 20, true, false),
-        createRow('Schlechtes Wetter', 18, false, true),
-        createRow('Schlechtes Wetter', 10, false, false),
-        createRow('Schlechtes Wetter', 0, true, false),
-        createRow('Schlechtes Wetter', 35, false, false),
+        createRow('Schlechtes Wetter', true, true, true),
+        createRow('Gutes Wetter', true, false, false),
+        createRow('Gutes Wetter', true, true, false),
+        createRow('Gutes Wetter', true, true, false),
+        createRow('Schlechtes Wetter', true, false, true),
+        createRow('Schlechtes Wetter', false, false, false),
+        createRow('Schlechtes Wetter', false, true, false),
+        createRow('Schlechtes Wetter', false, false, false),
     ]
 )
 
 export function createDropDown() {
-    var options: string[] = ['Wie ist das Wetter', 'Temperatur', 'Regen', 'Windig'];
+    var options: string[] = ['Wie ist das Wetter', 'Warm', 'Regen', 'Windig'];
     var result: Array<string[]> = [];
     options.forEach((decision: string) => {
         result.push([decision, decision.toUpperCase()])
