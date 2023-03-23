@@ -33,6 +33,10 @@ export const toolboxCategories = {
                     kind: "block",
                     type: "knoten",
                 },
+                {
+                    kind: "block",
+                    type: "node",
+                },
             ],
         },
     ],

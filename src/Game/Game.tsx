@@ -1,10 +1,10 @@
 import { Typography, Box, Button } from '@mui/material';
 import { Blockly } from '../Blockly'
-import { BasicTable, Row, Table, Head, createHead, createTable, createRow } from '../Utils';
+import { BasicTable, createHead, createTable, createRow } from '../Utils';
 
 const table = createTable(
     createHead(
-        'Wie ist das Wetter', 'Temperatur', 'Regen', 'Windig'
+        'Wie ist das Wetter', 'Temperatur', 'Windig', 'Regen'
     ),
     [
         createRow('Schlechtes Wetter', 15, true, true),
@@ -18,6 +18,15 @@ const table = createTable(
     ]
 )
 
+export function createDropDown() {
+    var options: string[] = ['Wie ist das Wetter', 'Temperatur', 'Regen', 'Windig'];
+    var result: Array<string[]> = [];
+    options.forEach((decision: string) => {
+        result.push([decision, decision.toUpperCase()])
+    })
+    return result;
+}
+
 export function Game() {
     return (
         <>
@@ -27,7 +36,7 @@ export function Game() {
                 </Typography>
             </Box>
             <BasicTable table={table} />
-            <Blockly />
+            <Blockly table={table} />
         </>
     );
 }
