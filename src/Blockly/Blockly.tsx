@@ -30,10 +30,10 @@ export function Blockly(props: { table: Table }) {
         localStorage.setItem('xml', xml)
     }
     const initialXml = localStorage.getItem('xml') === null ?
-        '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="stamm" x="70" y="30"><field name="Stamm"></field></block></xml>' :
+        '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="stamm" x="70" y="30"><field name="node"></field></block></xml>' :
         localStorage.getItem('xml')!!;
 
-    const clearWorkspace = () => saveXML(initialXml)
+    const clearWorkspace = () => saveXML('<xml xmlns="http://www.w3.org/1999/xhtml"><block type="stamm" x="70" y="30"><field name="node"></field></block></xml>')
 
     function checkCode() {
         const json = JSON.parse(javascriptCode)
