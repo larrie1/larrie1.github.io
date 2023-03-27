@@ -1,14 +1,6 @@
 import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Paper, Typography } from '@mui/material'
 
-export type Row = Array<string | number | boolean>
-export type Table = [Head, Row[]]
-export type Head = Array<string>
-
-export const createHead = (...elements: string[]): Head => elements;
-export const createRow = (...elements: (string | number | boolean)[]): Row => elements;
-export const createTable = (head: Head, rows: Row[]): Table => [head, rows];
-
-export function BasicTable(props: { table: Table }) {
+export function BasicTable(props: { table: [string[], any[]] }) {
     return (
         <TableContainer
             sx={{
@@ -39,7 +31,7 @@ export function BasicTable(props: { table: Table }) {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {props.table[1].map((row: Row, index: number) => (
+                    {props.table[1].map((row: any[], index: number) => (
                         <TableRow
                             key={index}
                             hover={true}

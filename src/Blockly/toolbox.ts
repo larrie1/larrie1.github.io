@@ -27,14 +27,6 @@ export const toolboxCategories = {
             contents: [
                 {
                     kind: "block",
-                    type: "stamm",
-                },
-                {
-                    kind: "block",
-                    type: "knoten",
-                },
-                {
-                    kind: "block",
                     type: "node",
                 },
             ],

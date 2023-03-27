@@ -11,31 +11,22 @@ import { atelierCaveDark, atelierCaveLight } from 'react-syntax-highlighter/dist
 import './blocks/';
 import './generators';
 import { jsonGenerator } from './generators/json_generator';
-import { Head, Row, Table } from '../Utils/Table';
+import { training_data } from './data/level1';
 
 
-export function Blockly(props: { table: Table }) {
+export function Blockly(props: { table: [string[], any[]] }) {
     const [javascriptCode, setJavascriptCode] = useState("");
     const [jsonCode, setJsonCode] = useState("");
     const [id3Code, setId3Code] = useState("");
     var DecisionTree = require('decision-tree');
-
-    const training_data = [
-        {"Wie ist das Wetter": false, "Warm": true, "Windig": true, "Regen": true},
-        {"Wie ist das Wetter": true, "Warm": true, "Windig": false, "Regen": false},
-        {"Wie ist das Wetter": true, "Warm": true, "Windig": true, "Regen": false},
-        {"Wie ist das Wetter": true, "Warm": true, "Windig": true, "Regen": false},
-        {"Wie ist das Wetter": false, "Warm": true, "Windig": false, "Regen": true},
-        {"Wie ist das Wetter": false, "Warm": false, "Windig": false, "Regen": false},
-        {"Wie ist das Wetter": false, "Warm": false, "Windig": true, "Regen": false},
-        {"Wie ist das Wetter": false, "Warm": false, "Windig": false, "Regen": false}
-    ]
 
     function workspaceDidChange(workspace: BlocklyLib.WorkspaceSvg) {
         const jsonCode = jsonGenerator.workspaceToCode(workspace);
         const javascriptCode = javascriptGenerator.workspaceToCode(workspace);
         setJsonCode(jsonCode);
         setJavascriptCode(javascriptCode);
+        workspace.refreshTheme()
+        workspace.render()
     }
     function saveXML(xml: string) {
         localStorage.setItem('xml', xml)
@@ -44,7 +35,9 @@ export function Blockly(props: { table: Table }) {
         '<xml xmlns="http://www.w3.org/1999/xhtml"><block type="node" x="70" y="30"><field name="Node"></field></block></xml>' :
         localStorage.getItem('xml')!!;
 
-    const clearWorkspace = () => saveXML('<xml xmlns="http://www.w3.org/1999/xhtml"><block type="node" x="70" y="30"><field name="node"></field></block></xml>')
+    const clearWorkspace = () => {
+        saveXML('<xml xmlns="http://www.w3.org/1999/xhtml"><block type="node" x="70" y="30"><field name="node"></field></block></xml>')
+    }
 
     function checkCode() {
         const json = JSON.parse(javascriptCode.substring(0, javascriptCode.length - 2))
@@ -67,7 +60,7 @@ export function Blockly(props: { table: Table }) {
         })
     }
 
-    function checkRow(row: Row, header: Head, json: any): boolean {
+    function checkRow(row: any[], header: string[], json: any): boolean {
         const index = header.findIndex((value) => value.toUpperCase() === json.decision)
         if (index === -1) {
             console.log("undefined index")
@@ -93,7 +86,7 @@ export function Blockly(props: { table: Table }) {
             <Box sx={{ flexDirection: 'row', my: 2, flex: 1, display: 'flex' }}>
                 <Button
                     variant='outlined'
-                    onClick={checkCode}
+                    onClick={() => {}}
                     sx={{
                         borderRadius: 25,
                         borderColor: 'primary',

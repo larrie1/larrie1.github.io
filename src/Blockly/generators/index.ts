@@ -1,2 +1,2 @@
 import './node_generator'
-import './root_generator'
+import './json_generator'
