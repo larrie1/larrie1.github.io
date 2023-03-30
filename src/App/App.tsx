@@ -3,9 +3,8 @@ import React, { useState } from "react";
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Routes, Route } from "react-router";
-import { BrowserRouter } from "react-router-dom";
 import { HashRouter } from "react-router-dom";
-import { ColorModeContext } from "../color-context";
+import { ColorModeContext } from "../context";
 import { Game } from "../Game";
 import { Generator } from "../Generator";
 import { Start } from "../Start";

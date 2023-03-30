@@ -3,28 +3,8 @@ import { level2Table } from '../data/level1';
 import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
 
-/*Blockly.Blocks['node'] = {
-    init: function () {
-        this.appendDummyInput()
-            .appendField("Node")
-            .appendField(new Blockly.FieldDropdown(this.generateOptions), "Decision");
-        this.appendValueInput("top")
-            .setCheck(["Boolean", "Number", "String", "node"])
-            .appendField("true");
-        this.appendValueInput("bottom")
-            .setCheck(["Boolean", "Number", "String", "node"])
-            .appendField("false");
-        this.setInputsInline(false);
-        this.setOutput(true, "node");
-        this.setColour(230);
-        this.setTooltip("This is a Node you can connect it with other nodes or with a leaf");
-        this.setHelpUrl("");
-    },
-    generateOptions: createDropDown()
-};*/
-
 Blockly.Blocks['node'] = {
-    dataHeader: level2Table,
+    dataHeader: level2Table[0],
     dataBody: level2Table[1],
     itemCount: 0,
     minInputs: 2,
@@ -50,20 +30,11 @@ Blockly.Blocks['node'] = {
     updateDropDowns: function (newValue: any) {
         this.decision = +newValue
         const choices: string[][] = this.generateChoices(+newValue)
-        for(let i = 0; i <= this.itemCount; i++) {
+        for (let i = 0; i <= this.itemCount; i++) {
             const input = this.getInput(i.toString())
             input?.removeField('CHOICE' + i)
-            input?.appendField(new Blockly.FieldDropdown(this.generateChoices(+newValue)), "CHOICE" + i)
+            input?.appendField(new Blockly.FieldDropdown(choices), "CHOICE" + i)
         }
-    },
-    mutationToDom: function () {
-        const container = Blockly.utils.xml.createElement('mutation')
-        container.setAttribute('items', this.itemCount)
-        return container
-    },
-    domToMutation: function (xmlElement: any) {
-        const targetCount = parseInt(xmlElement.getAttribute('items'), 10)
-        this.updateShape(targetCount)
     },
     saveExtraState: function () {
         return {
@@ -86,37 +57,37 @@ Blockly.Blocks['node'] = {
         this.updateMinus()
     },
     plus: function () {
-        this.addPart();
-        this.updateMinus();
+        this.addPart()
+        this.updateMinus()
     },
     minus: function () {
-        if (this.itemCount == this.minInputs) {
-            return;
+        if (this.itemCount === this.minInputs) {
+            return
         }
-        this.removePart();
-        this.updateMinus();
+        this.removePart()
+        this.updateMinus()
     },
     addPart: function () {
         this.appendValueInput(this.itemCount.toString())
             .setCheck(null)
             .setAlign(Blockly.ALIGN_RIGHT)
             .appendField("Choice " + (this.itemCount + 1) + ": ")
-            .appendField(new Blockly.FieldDropdown(this.generateChoices(0)), "CHOICE" + this.itemCount);
-        this.itemCount++;
+            .appendField(new Blockly.FieldDropdown(this.generateChoices(this.decision)), "CHOICE" + this.itemCount)
+        this.itemCount++
     },
     removePart: function () {
-        this.itemCount--;
-        this.removeInput(this.itemCount.toString());
+        this.itemCount--
+        this.removeInput(this.itemCount.toString())
     },
     updateMinus: function () {
-        const minusField = this.getField('MINUS');
-        const top = this.getInput('TOP');
+        const minusField = this.getField('MINUS')
+        const top = this.getInput('TOP')
         if (!minusField && this.itemCount > 2) {
             top.removeField('NODE')
             top.appendField(createMinusField(), 'MINUS');
             top.appendField("Node", 'NODE')
         } else if (minusField && this.itemCount === this.minInputs) {
-            top.removeField('MINUS');
+            top.removeField('MINUS')
         }
     },
     generateDecisions: function () {

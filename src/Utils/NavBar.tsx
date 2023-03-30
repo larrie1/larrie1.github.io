@@ -15,7 +15,7 @@ import Typography from '@mui/material/Typography';
 import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
 import MenuItem from '@mui/material/MenuItem';
-import { ColorModeContext } from '../color-context';
+import { ColorModeContext } from '../context';
 
 const pages = ['Start', 'Game', 'Generator'];
 

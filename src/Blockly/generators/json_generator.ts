@@ -43,7 +43,6 @@ jsonGenerator['node'] = function (block: Blockly.Block) {
     }
   }
   const str = '"Decision": ' + `"${decision}"` + ',\n' + childStr
-  const valueString = `"${dropDowns[0]}"` + ': ' + values[0] + ',\n"Decision": ' + `"${decision}"` + ',\n"Bottom": ' + values[1];
   const indentedValueString = jsonGenerator.prefixLines(str, jsonGenerator.INDENT);
   const code = '{\n' + indentedValueString + '\n}';
   return [code, jsonGenerator.PRECEDENCE];
