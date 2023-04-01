@@ -25,11 +25,11 @@ export function Generator() {
     return (
         <TableContext.Provider value={table}>
             <Box sx={{ display: 'flex', flexDirection: 'column', mt: '64px' }}>
-            <Typography variant='h1'>
-                Generator
-            </Typography>
-            <Blockly />
-        </Box>
+                <Typography variant='h1'>
+                    Generator
+                </Typography>
+                <Blockly />
+            </Box>
         </TableContext.Provider>
     );
 }

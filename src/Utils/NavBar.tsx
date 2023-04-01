@@ -93,6 +93,8 @@ export function NavBar() {
             position="fixed"
             sx={{
                 boxShadow: 'none',
+                borderBottom: 1,
+                borderColor: theme.palette.secondary.dark,
                 background: theme.palette.secondary.main,
                 backdropFilter: `blur(10px)`,
             }}>
