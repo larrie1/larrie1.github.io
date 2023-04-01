@@ -6,7 +6,7 @@ import { Blockly } from '../../Blockly'
 import { Typography } from "@mui/material";
 import { Headline } from "../../Utils/Headline";
 
-export function Level1() {
+export function Level1(props: {isUnlocked: boolean}) {
     const [rows, setRows] = useState(level2Table[1])
 
     const table = {
@@ -27,7 +27,7 @@ export function Level1() {
 
     return(
         <TableContext.Provider value={table}>
-            <TableButton />
+            {props.isUnlocked && <TableButton />}
             <Headline variant="h4" text="Level 1"/>
             <Typography variant="body1" sx={{mb: 10}}>
                 This is your first level

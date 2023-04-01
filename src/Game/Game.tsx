@@ -17,6 +17,10 @@ export function Game() {
         return steps.length
     }
 
+    const isUnlocked = () => {
+        return activeStep !== 0 && !completed[activeStep - 1]
+    }
+
     const completedSteps = () => {
         return Object.keys(completed).length
     }
@@ -61,17 +65,14 @@ export function Game() {
 
     function getLevel() {
         switch (activeStep) {
-            case 0: { return <Level1 /> }
-            case 1: { return <Level2 /> }
-            case 2: { return <Level3 /> }
+            case 0: { return <Level1 isUnlocked={completed[0]} /> }
+            case 1: { return <Level2 isUnlocked={completed[1]} /> }
+            case 2: { return <Level3 isUnlocked={completed[2]} /> }
         }
     }
 
     return (
-        <Box sx={{ mt: '104px', position: 'relative'}}>
-            <Box sx={{ position: 'absolute', width: '100%', height: '100%', zIndex: 99, backdropFilter: `blur(10px)`,}}>
-                <LockIcon sx={{ height: '100px', width: '100px' }} />
-            </Box>
+        <Box sx={{ mt: '104px', position: 'relative' }}>
             <Stepper
                 nonLinear
                 alternativeLabel
@@ -89,7 +90,12 @@ export function Game() {
                     </Step>
                 ))}
             </Stepper>
-            {getLevel()}
+            <Box sx={{ position: 'relative' }}>
+                {isUnlocked() && <Box sx={{ position: 'absolute', width: '100%', height: '100%', zIndex: 99, backdropFilter: `blur(15px)`, border: 1, borderColor: theme.palette.secondary.dark, borderRadius: 2 }}>
+                    <LockIcon sx={{ position: 'absolute', height: '100px', width: '100px', top: '50%', left: '46%' }} />
+                </Box>}
+                {getLevel()}
+            </Box>
             <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, mt: 5 }}>
                 <Button
                     color="inherit"
@@ -100,7 +106,10 @@ export function Game() {
                     Back
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
-                <Button onClick={handleNext} sx={{ mr: 1 }}>
+                <Button
+                    disabled={isUnlocked()}
+                    onClick={handleNext}
+                    sx={{ mr: 1 }}>
                     Next
                 </Button>
                 {activeStep !== steps.length &&
@@ -109,7 +118,9 @@ export function Game() {
                             Step {activeStep + 1} already completed
                         </Typography>
                     ) : (
-                        <Button onClick={handleComplete}>
+                        <Button
+                            disabled={isUnlocked()}
+                            onClick={handleComplete}>
                             {completedSteps() === totalSteps() - 1
                                 ? 'Finish'
                                 : 'Complete Step'}
