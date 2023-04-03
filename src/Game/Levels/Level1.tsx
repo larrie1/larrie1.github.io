@@ -1,37 +1,45 @@
 import { useState } from "react";
-import { level2Table } from "../../Blockly/data/level1";
+import { level1Table } from "../../Blockly/data/level1";
 import { TableContext } from "../../context";
 import { TableButton } from "../../Utils/TableButton";
 import { Blockly } from '../../Blockly'
-import { Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { Headline } from "../../Utils/Headline";
+import { useTheme } from '@mui/material/styles'
+import { bounce_top } from "../../Utils/animations";
 
-export function Level1(props: {isUnlocked: boolean}) {
-    const [rows, setRows] = useState(level2Table[1])
+export function Level1(props: { isUnlocked: boolean }) {
+    const theme = useTheme()
+    const [rows, setRows] = useState(level1Table[1])
+    const [head, setHead] = useState(level1Table[0])
 
     const table = {
-        head: level2Table[0],
+        head: head,
         body: rows,
         addRow: () => {
-            setRows(previousRows =>
-                [...previousRows, [
-                    undefined,
-                    rows[Math.floor(Math.random() * rows[0].length)][1],
-                    rows[Math.floor(Math.random() * rows[1].length)][2],
-                    rows[Math.floor(Math.random() * rows[2].length)][3],
-                    rows[Math.floor(Math.random() * rows[3].length)][4]
-                ]]
+            const newRow = [undefined, undefined]
+            for(var i = 2; i < head.length; i++) {
+                newRow.push(rows[Math.floor(Math.random() * rows.length)][i])
+            }
+            setRows(
+                [...rows, newRow]
             )
+        },
+        addResult: (val: any, index: number) => {
+            rows[index][0] = val
+            setRows([...rows])
         }
     }
 
-    return(
+    return (
         <TableContext.Provider value={table}>
             {props.isUnlocked && <TableButton />}
-            <Headline variant="h4" text="Level 1"/>
-            <Typography variant="body1" sx={{mb: 10}}>
-                This is your first level
-            </Typography>
+            <Box sx={{ animation: `${bounce_top} 1.1s both`, border: 1, borderColor: theme.palette.secondary.dark, borderRadius: 2, px: 5, pb: 5, pt: 3, mb: 3, background: theme.palette.secondary.light }}>
+                <Headline variant="h4" text="Level 1" />
+                <Typography variant="body1">
+                    Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
+                </Typography>
+            </Box>
             <Blockly />
         </TableContext.Provider>
     )

@@ -30,6 +30,7 @@
     "react-router-dom": "^6.9.0",
     "react-scripts": "^5.0.1",
     "react-syntax-highlighter": "^15.5.0",
+    "react-tree-graph": "^8.0.1",
     "source-map-loader": "^4.0.1",
     "treeify": "^1.1.0",
     "ts-loader": "^9.4.2",

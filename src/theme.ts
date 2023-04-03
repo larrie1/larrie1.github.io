@@ -16,8 +16,8 @@ export const theme = (mode: PaletteMode) => ({
                     contrastText: '#fff',
                 },
                 secondary: {
-                    light: 'grey.200',
-                    dark: 'grey.400',
+                    light: '#efecf4',
+                    dark: '#bdbdbd',
                     main: alpha('#fff', .5),
                 },
                 background: {
@@ -32,8 +32,8 @@ export const theme = (mode: PaletteMode) => ({
                     contrastText: '#fff',
                 },
                 secondary: {
-                    light: 'grey.600',
-                    dark: 'grey.800',
+                    light: '#19171c',
+                    dark: '#424242',
                     main: alpha('#212529', .5),
                 },
                 background: {

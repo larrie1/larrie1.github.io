@@ -17,8 +17,8 @@ export const lightTheme = Blockly.Theme.defineTheme('light', {
     'base': Blockly.Themes.Classic,
     'componentStyles': {
         'workspaceBackgroundColour': '#fff',
-        'toolboxBackgroundColour': '#797979',
-        'flyoutBackgroundColour': '#797979',
+        'toolboxBackgroundColour': '#efecf4',
+        'flyoutBackgroundColour': '#efecf4',
         'flyoutOpacity': 0.9,
         'scrollbarColour': '#797979',
         'scrollbarOpacity': 0.4,

@@ -91,12 +91,12 @@ Blockly.Blocks['node'] = {
         }
     },
     generateDecisions: function () {
-        return level2Table[0].slice(1, level2Table[0].length).map((decision: string, index: number) => [decision, index.toString()])
+        return level2Table[0].slice(2, level2Table[0].length).map((decision: string, index: number) => [decision, index.toString()])
     },
     generateChoices: function (decision: number) {
         const options: any[] = []
         this.dataBody.forEach((row: any[]) => {
-            row.slice(1, row.length).forEach((val: any, index: number) => {
+            row.slice(2, row.length).forEach((val: any, index: number) => {
                 if (index === decision && !options.includes(val.toString())) {
                     options.push(val.toString())
                 }

@@ -1,4 +1,4 @@
-import { Box, Button, useTheme } from '@mui/material';
+import { Box, Button, keyframes } from '@mui/material';
 import { BlocklyWorkspace } from 'react-blockly';
 import "./Blockly.css";
 import { useContext, useState } from 'react';
@@ -15,15 +15,24 @@ import { TableContext } from '../context';
 import { codeGenerator } from './generators/code_generator';
 import Grid2 from '@mui/material/Unstable_Grid2';
 import json from 'react-syntax-highlighter/dist/cjs/languages/hljs/json'
+import { Tree } from 'react-tree-graph';
+import { bounce_in_fwd, bounce_in_left, bounce_in_right } from '../Utils/animations';
+import './Graph.css'
+import { useTheme } from '@mui/material/styles'
 
 
 export function Blockly() {
     const [blockJSON, setBlockJSON] = useState("");
     const [jsonString, setJsonString] = useState("");
+    const [graphVisible, setGraphVisible] = useState(false)
     const [id3Code, setId3Code] = useState("");
     const { body } = useContext(TableContext)
     const { head } = useContext(TableContext)
+    const { addResult } = useContext(TableContext)
     var DecisionTree = require('decision-tree');
+    const theme = useTheme()
+
+    const onShowGraphClick = () => setGraphVisible(!graphVisible)
 
     function workspaceDidChange(workspace: BlocklyLib.WorkspaceSvg) {
         setJsonString(jsonGenerator.workspaceToCode(workspace));
@@ -56,6 +65,7 @@ export function Blockly() {
                 head,
                 json
             )
+            addResult(actualResult, index)
             console.log((index + 1) + " Row:")
             console.log("Expected Result: " + (row[0] || "undefined"))
             console.log("Acutal Result: " + actualResult)
@@ -76,8 +86,43 @@ export function Blockly() {
         }
     }
 
+    function getChildren(val: any) {
+        const children: any[] = []
+        const decisionIndex = +val.Decision
+        const decisions: any[] = []
+        const choices: any[] = []
+        for (var i = 0; i < body.length; i++) {
+            const child = body[i][decisionIndex + 2]
+            if (val[child] !== null && val[child] !== undefined) {
+                if ((typeof(val[child]) === 'string' || typeof(val[child]) === 'boolean' || typeof(val[child]) === 'number') && !decisions.includes(val[child])) {
+                    choices.push(child)
+                    decisions.push(val[child])
+                    children.push({ 'Decision': val[child].toString() })
+                } else if (!choices.includes(child)) {
+                    choices.push(child)
+                    children.push(val[child])
+                }
+            }
+        }
+        if (children.length > 0) return children
+    }
+
+    //const json = JSON.parse(blockJSON)
     return (
         <>
+            {graphVisible && <Box sx={{ animation: `${bounce_in_fwd} 1.1s both`, background: theme.palette.secondary.light, border: 1, borderRadius: 2, borderColor: theme.palette.secondary.dark }}>
+                <Tree
+                    data={JSON.parse(blockJSON)}
+                    height={400}
+                    width={950}
+                    animated={true}
+                    labelProp={"Decision"}
+                    keyProp={"Decision"}
+                    getChildren={getChildren}
+                    svgProps={{
+                        className: 'custom'
+                    }} />
+            </Box>}
             <Box sx={{ flexDirection: 'row', my: 2, flex: 1, display: 'flex' }}>
                 <Button
                     variant='outlined'
@@ -101,10 +146,21 @@ export function Blockly() {
                     }}>
                     Clear Workspace
                 </Button>
+                <Button
+                    variant='outlined'
+                    onClick={onShowGraphClick}
+                    sx={{
+                        borderRadius: 25,
+                        borderColor: 'primary',
+                        backgroundColor: 'transparent',
+                        mx: 1,
+                    }}>
+                    Show Tree Graph
+                </Button>
             </Box>
             <Grid2 container spacing={3}>
                 <Grid2 xs={12} md={8}>
-                    <Box sx={{ height: '800px', borderRadius: 2, overflow: 'hidden', border: 1, borderColor: useTheme().palette.secondary.dark }}>
+                    <Box sx={{ animation: `${bounce_in_left} 1.1s both`, height: '800px', borderRadius: 2, overflow: 'hidden', border: 1, borderColor: useTheme().palette.secondary.dark }}>
                         <BlocklyWorkspace
                             className='fill-height'
                             toolboxConfiguration={toolboxCategories}
@@ -125,7 +181,7 @@ export function Blockly() {
                 </Grid2>
                 <Grid2 container xs={12} md={4}>
                     <Grid2 xs={12}>
-                        <Box sx={{ borderRadius: 2, height: '100%', width: '100%', border: 1, borderColor: useTheme().palette.secondary.dark, overflow: 'auto' }}>
+                        <Box sx={{ animation: `${bounce_in_right} 1.1s both`, borderRadius: 2, height: '100%', width: '100%', border: 1, borderColor: useTheme().palette.secondary.dark, overflow: 'auto' }}>
                             <SyntaxHighlighter
                                 className='fill-height'
                                 wrapLongLines={true}
@@ -137,7 +193,7 @@ export function Blockly() {
                         </Box>
                     </Grid2>
                     <Grid2 xs={12}>
-                        <Box sx={{ borderRadius: 2, height: '100%', width: '100%', border: 1, borderColor: useTheme().palette.secondary.dark, overflow: 'auto' }}>
+                        <Box sx={{ animation: `${bounce_in_right} 1.1s both`, borderRadius: 2, height: '100%', width: '100%', border: 1, borderColor: useTheme().palette.secondary.dark, overflow: 'auto' }}>
                             <SyntaxHighlighter
                                 className='fill-height'
                                 wrapLongLines={true}

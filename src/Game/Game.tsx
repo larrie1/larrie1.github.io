@@ -18,7 +18,7 @@ export function Game() {
     }
 
     const isUnlocked = () => {
-        return activeStep !== 0 && !completed[activeStep - 1]
+        return activeStep === 0 || completed[activeStep - 1]
     }
 
     const completedSteps = () => {
@@ -65,9 +65,9 @@ export function Game() {
 
     function getLevel() {
         switch (activeStep) {
-            case 0: { return <Level1 isUnlocked={completed[0]} /> }
-            case 1: { return <Level2 isUnlocked={completed[1]} /> }
-            case 2: { return <Level3 isUnlocked={completed[2]} /> }
+            case 0: { return <Level1 isUnlocked={isUnlocked()} /> }
+            case 1: { return <Level2 isUnlocked={isUnlocked()} /> }
+            case 2: { return <Level3 isUnlocked={isUnlocked()} /> }
         }
     }
 
@@ -91,8 +91,8 @@ export function Game() {
                 ))}
             </Stepper>
             <Box sx={{ position: 'relative' }}>
-                {isUnlocked() && <Box sx={{ position: 'absolute', width: '100%', height: '100%', zIndex: 99, backdropFilter: `blur(15px)`, border: 1, borderColor: theme.palette.secondary.dark, borderRadius: 2 }}>
-                    <LockIcon sx={{ position: 'absolute', height: '100px', width: '100px', top: '50%', left: '46%' }} />
+                {!isUnlocked() && <Box sx={{ position: 'absolute', width: '100%', height: '100%', zIndex: 99, backdropFilter: `blur(15px)`, border: 1, borderColor: theme.palette.secondary.dark, borderRadius: 2 }}>
+                    <LockIcon sx={{ position: 'absolute', height: '100px', width: '100px', left: 0, right: 0, top: 0, bottom: 0,  m: 'auto' }} />
                 </Box>}
                 {getLevel()}
             </Box>
@@ -107,7 +107,7 @@ export function Game() {
                 </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
                 <Button
-                    disabled={isUnlocked()}
+                    disabled={!isUnlocked()}
                     onClick={handleNext}
                     sx={{ mr: 1 }}>
                     Next
@@ -119,7 +119,7 @@ export function Game() {
                         </Typography>
                     ) : (
                         <Button
-                            disabled={isUnlocked()}
+                            disabled={!isUnlocked()}
                             onClick={handleComplete}>
                             {completedSteps() === totalSteps() - 1
                                 ? 'Finish'

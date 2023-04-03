@@ -13,9 +13,9 @@ export function Headline(props: {variant: any, text: string}) {
                 bottom: 0,
                 height: '50%',
                 width: '100%',
-                zIndex: -1,
+                zIndex: 1,
             }}/>
-            <Typography variant={props.variant} sx={{px: .5}}>
+            <Typography variant={props.variant} sx={{px: .5, zIndex: 2}}>
                 {props.text}
             </Typography>
         </Box>

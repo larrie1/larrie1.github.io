@@ -1,4 +1,4 @@
-import { Drawer, List, ListItem, ListItemText } from '@mui/material';
+import { Button, Drawer, List, ListItem, ListItemText, Paper } from '@mui/material';
 import { useTheme } from '@mui/material/styles'
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
@@ -20,16 +20,18 @@ import { ColorModeContext } from '../context';
 const pages = ['Start', 'Game', 'Generator'];
 
 export function NavBar() {
-    const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(null);
     const theme = useTheme();
     const colorMode = React.useContext(ColorModeContext);
+    const [isOpen, setIsOpen] = useState(false)
 
-    const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
-        setAnchorElNav(event.currentTarget);
-    };
-    const handleCloseNavMenu = () => {
-        setAnchorElNav(null);
-    };
+    const onMenuClick = () => {
+        setIsOpen(!isOpen)
+    }
+
+    const onButtonClick = (page: string) => {
+        onMenuClick()
+        return page === 'Start' ? '/#' : `/#/${page.toLowerCase()}`
+    }
 
     function MobileNav() {
         return (
@@ -45,45 +47,36 @@ export function NavBar() {
                     }} >
                     <img src={require('../Assets/logo.png')} width={50} height={50} />
                 </IconButton>
-                <Box sx={{
-                    display: { xs: 'flex', md: 'none' },
-                }}>
-                    <IconButton
-                        size="large"
-                        aria-label="account of current user"
-                        aria-controls="menu-appbar"
-                        aria-haspopup="true"
-                        onClick={handleOpenNavMenu}
-                        color="inherit"
-                        href='/'
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Menu
-                        id="menu-appbar"
-                        anchorEl={anchorElNav}
-                        anchorOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                        }}
-                        keepMounted
-                        transformOrigin={{
-                            vertical: 'bottom',
-                            horizontal: 'right',
-                        }}
-                        open={Boolean(anchorElNav)}
-                        onClose={handleCloseNavMenu}
+                <IconButton
+                    size="large"
+                    onClick={onMenuClick}
+                    color="primary"
+                    sx={{ display: { sx: 'flex', md: 'none' } }}>
+                    <MenuIcon />
+                </IconButton>
+                {isOpen &&
+                    <Paper
+                        variant='outlined'
                         sx={{
-                            display: { xs: 'block', md: 'none' },
-                        }}
-                    >
+                            position: 'fixed',
+                            top: 60,
+                            right: 40,
+                            zIndex: 99,
+                            background: theme.palette.background.default,
+                            display: { sx: 'flex', md: 'none' },
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            p: 2,
+                        }}>
                         {pages.map((page) => (
-                            <MenuItem key={page} onClick={handleCloseNavMenu}>
-                                <Typography textAlign="center" color={'black'}>{page}</Typography>
-                            </MenuItem>
+                            <Button sx={{display: 'flex'}} href={page === 'Start' ? '/#' : `/#/${page.toLowerCase()}`}>
+                                {page}
+                            </Button>
                         ))}
-                    </Menu>
-                </Box>
+                        <IconButton key={"mode"} sx={{ display: 'flex', right: 0, left: 0, mr: 'auto', ml: 'auto' }} onClick={colorMode.toggleColorMode} color="primary">
+                            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                        </IconButton>
+                    </Paper>}
             </>
         )
     }
@@ -118,8 +111,8 @@ export function NavBar() {
                         }} >
                         <img
                             src={require('../Assets/logo.png')}
-                            width={'100%'}
-                            height={'100%'} />
+                            width='100%'
+                            height='100%' />
                     </IconButton>
 
                     <Box sx={{
@@ -128,7 +121,7 @@ export function NavBar() {
                         justifyContent: 'end',
                     }}>
                         {pages.map((page, index) => (
-                            <NavButton key={index} page={page}/>
+                            <NavButton key={index} page={page} />
                         ))}
                         <IconButton key={"mode"} sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="primary">
                             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
@@ -137,43 +130,5 @@ export function NavBar() {
                 </Toolbar>
             </Container>
         </AppBar>
-    );
-}
-
-function DrawerComponent() {
-    const [openDrawer, setOpenDrawer] = useState(false);
-    return (
-        <>
-            <Drawer
-                open={openDrawer}
-                onClose={() => setOpenDrawer(false)}
-            >
-                <List>
-                    <ListItem onClick={() => setOpenDrawer(false)}>
-                        <ListItemText>
-                            <Link to="/">Home</Link>
-                        </ListItemText>
-                    </ListItem>
-                    <ListItem onClick={() => setOpenDrawer(false)}>
-                        <ListItemText>
-                            <Link to="/about">About</Link>
-                        </ListItemText>
-                    </ListItem>
-                    <ListItem onClick={() => setOpenDrawer(false)}>
-                        <ListItemText>
-                            <Link to="/contact">Contact</Link>
-                        </ListItemText>
-                    </ListItem>
-                    <ListItem onClick={() => setOpenDrawer(false)}>
-                        <ListItemText>
-                            <Link to="/about">Faq</Link>
-                        </ListItemText>
-                    </ListItem>
-                </List>
-            </Drawer>
-            <IconButton onClick={() => setOpenDrawer(!openDrawer)}>
-                <MenuIcon />
-            </IconButton>
-        </>
     );
 }

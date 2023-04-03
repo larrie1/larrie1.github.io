@@ -18,6 +18,7 @@ export function Footer() {
             <Container maxWidth='xl' sx={{
                 display: 'flex',
                 flexDirection: 'row',
+                alignItems: 'center',
             }}>
                 <Typography variant='body2' color='grey.600' sx={{flex: 1}}>
                     Designed and developed by André Peters
