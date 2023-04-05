@@ -81,7 +81,7 @@ export function Blockly(props: { xmlKey: string, rowsCorrectKey: string }) {
                 json
             )
             addResult(actualResult, index)
-            allRowsCorrect = row[0] === undefined ? true : actualResult === row[0]
+            allRowsCorrect = row[1] === undefined ? true : actualResult === row[1]
             console.log((index + 1) + " Row:")
             console.log("Expected Result: " + (row[0] || "undefined"))
             console.log("Acutal Result: " + actualResult)

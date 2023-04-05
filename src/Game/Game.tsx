@@ -16,10 +16,6 @@ export function Game() {
         [k: number]: boolean;
     }>({})
 
-    const totalSteps = () => {
-        return steps.length
-    }
-
     const isUnlocked = () => {
         var key = ""
         switch(activeStep) {
@@ -36,19 +32,22 @@ export function Game() {
     }
 
     const resetLevel = () => {
-        for(var i = activeStep; i < steps.length; i++) {
+        for(var i = activeStep; i <= steps.length; i++) {
             var key = ""
-            switch(activeStep) {
+            switch(i) {
                 case 0: {
                     key = level1rowsCorrectKey
+                    completed[0] = false
                     break
                 }
                 case 1: {
                     key = level2rowsCorrectKey
+                    completed[1] = false
                     break
                 }
                 case 2: {
                     key = level3rowsCorrectKey
+                    completed[2] = false
                     break
                 }
             }
@@ -61,11 +60,11 @@ export function Game() {
     }
 
     const isLastStep = () => {
-        return activeStep === totalSteps() - 1
+        return activeStep === steps.length - 1
     }
 
     const allStepsCompleted = () => {
-        return completedSteps() === totalSteps()
+        return completedSteps() === steps.length
     }
 
     const handleNext = () => {
