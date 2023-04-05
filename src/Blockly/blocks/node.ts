@@ -1,11 +1,9 @@
 import Blockly from 'blockly'
-import { level2Table } from '../data/level1';
 import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
 
-Blockly.Blocks['node'] = {
-    dataHeader: level2Table[0],
-    dataBody: level2Table[1],
+export function createNode(head: string[], body: any[][]) {
+    Blockly.Blocks['node'] = {
     itemCount: 0,
     minInputs: 2,
     decision: 0,
@@ -91,11 +89,11 @@ Blockly.Blocks['node'] = {
         }
     },
     generateDecisions: function () {
-        return level2Table[0].slice(2, level2Table[0].length).map((decision: string, index: number) => [decision, index.toString()])
+        return head.slice(2, head.length).map((decision: string, index: number) => [decision, index.toString()])
     },
     generateChoices: function (decision: number) {
         const options: any[] = []
-        this.dataBody.forEach((row: any[]) => {
+        body.forEach((row: any[]) => {
             row.slice(2, row.length).forEach((val: any, index: number) => {
                 if (index === decision && !options.includes(val.toString())) {
                     options.push(val.toString())
@@ -104,4 +102,4 @@ Blockly.Blocks['node'] = {
         })
         return options.map((val: any, index: number) => [val, val])
     },
-};
+};}

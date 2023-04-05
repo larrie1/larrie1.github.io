@@ -4,9 +4,11 @@ import AddIcon from '@mui/icons-material/Add';
 import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
+import { useTheme } from '@mui/material/styles'
 
 export function BasicTable() {
     const [isResultVisible, setResultVisible] = useState(false)
+    const theme = useTheme()
 
     const onResultClick = () => {
         setResultVisible(!isResultVisible)
@@ -42,7 +44,7 @@ export function BasicTable() {
                                         key={index}
                                         hover={true}
                                         sx={{
-                                            background: row[0] !== undefined ? row[0] === row[1] ? alpha('#009688', .3) : alpha('#f44336', .3) : 'transparent',
+                                            background: row[0] !== undefined ? row[1] === undefined ? alpha(theme.palette.primary.main, .3) : row[0] === row[1] ? alpha('#009688', .3) : alpha('#f44336', .3) : 'transparent',
                                             '&:last-child td, &:last-child th': { border: 0 },
                                         }}
                                     >

@@ -2,6 +2,7 @@ import { Typography, Box, SvgIcon, keyframes, Link } from '@mui/material';
 import { useRef } from 'react';
 import { ReactComponent as StartSvg } from '../Assets/undraw_start.svg'
 import { ReactComponent as ArrowSvg } from '../Assets/undraw_straight-arrow.svg'
+import { wobbleHorBottom } from '../Utils/animations';
 
 const drop = keyframes`
 0% {
@@ -134,7 +135,7 @@ export function Start() {
             alignSelf: 'center',
             cursor: 'pointer',
             filter: `brightness(80%)`,
-            animation: `${drop} 10s infinite`,
+            animation: `${wobbleHorBottom} 0.8s infinite`,
             scrollBehavior: 'smooth',
             '&:hover': {
               filter: `brightness(100%)`,

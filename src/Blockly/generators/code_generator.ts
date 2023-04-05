@@ -1,5 +1,6 @@
 import Blockly from 'blockly'
 import { javascriptGenerator } from 'blockly/javascript';
+import { NODE_TYPES } from '../../ID3/decision-tree';
 
 export const codeGenerator: any = new Blockly.Generator('CODE');
 
@@ -22,27 +23,21 @@ codeGenerator['logic_boolean'] = function (block: Blockly.Block) {
 };
 
 codeGenerator['node'] = function (block: Blockly.Block) {
-    var decision = block.getFieldValue('DECISION');
-    const values = []
-    const dropDowns = []
+    var decision = block.getFieldValue('DECISION')
     let counter = 0
-    let nextBlock = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
-    let nextDropDown = block.getFieldValue('CHOICE' + counter);
-    while (nextDropDown) {
-        dropDowns.push(nextDropDown)
-        values.push(nextBlock)
+    let choice = block.getFieldValue('CHOICE' + counter)
+    let value = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
+    let json = ""
+
+    while(choice) {
         counter++
-        nextDropDown = block.getFieldValue('CHOICE' + counter);
-        nextBlock = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
+        json += `"${choice}"` + ': ' + value + ', '
+        choice = block.getFieldValue('CHOICE' + counter); 
+        value = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
     }
-    var childStr = ""
-    for (let i = 0; i < dropDowns.length; i++) {
-        if (i === dropDowns.length - 1) {
-            childStr += `"${dropDowns[i]}"` + ': ' + values[i]
-        } else {
-            childStr += `"${dropDowns[i]}"` + ': ' + values[i] + ', '
-        }
-    }
-    const str = '{"Decision": ' + `"${decision}"` + ', ' + childStr + '}'
+
+    json += '"type": ' + `"${NODE_TYPES.LEAF}"`
+
+    const str = '{"Decision": ' + `"${decision}"` + ', ' + '"type": ' + `"${NODE_TYPES.DECISION}"` + ', ' + json + '}'
     return [str, codeGenerator.PRECEDENCE];
 };

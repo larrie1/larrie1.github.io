@@ -6,11 +6,17 @@ import { Blockly } from '../../Blockly'
 import { Box, Typography } from "@mui/material";
 import { Headline } from "../../Utils/Headline";
 import { useTheme } from '@mui/material/styles'
+import { scaleInVerTop } from "../../Utils/animations";
+
+const headLine = level2Table[0]
+const body = level2Table[1]
+export const level2xmlKey = "level2blocks"
+export const level2rowsCorrectKey = "level2done"
 
 export function Level2(props: { isUnlocked: boolean }) {
     const theme = useTheme()
-    const [rows, setRows] = useState(level2Table[1])
-    const [head, setHead] = useState(level2Table[0])
+    const [rows, setRows] = useState(body)
+    const [head, setHead] = useState(headLine)
 
     const table = {
         head: head,
@@ -33,7 +39,7 @@ export function Level2(props: { isUnlocked: boolean }) {
     return (
         <TableContext.Provider value={table}>
             {props.isUnlocked && <TableButton />}
-            <Box sx={{ border: 1, borderColor: theme.palette.secondary.dark, borderRadius: 2, px: 5, pb: 5, pt: 3, mb: 2, background: theme.palette.secondary.light }}>
+            <Box sx={{ animation: `${scaleInVerTop} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`, border: 1, borderColor: theme.palette.secondary.dark, borderRadius: 2, px: 5, pb: 5, pt: 3, mb: 2, background: theme.palette.secondary.light }}>
                 <Headline variant="h4" text="Level 2" />
                 <Typography variant="body1">
                     Once upon a time, there was a passionate tennis player named Sarah. She loved nothing more than hitting the court and playing a few sets with her friends. However, Sarah knew that certain weather conditions could impact her game.
@@ -48,7 +54,7 @@ export function Level2(props: { isUnlocked: boolean }) {
                     Try to help Sarah and create a Decision Tree that predicts her Decision!
                 </Typography>
             </Box>
-            <Blockly />
+            <Blockly xmlKey={level2xmlKey} rowsCorrectKey={level2rowsCorrectKey} />
         </TableContext.Provider>
     )
 }

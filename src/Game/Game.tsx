@@ -3,6 +3,9 @@ import { useState } from 'react';
 import { Level1, Level2, Level3 } from './Levels';
 import { useTheme } from '@mui/material/styles'
 import LockIcon from '@mui/icons-material/Lock';
+import { level1rowsCorrectKey } from './Levels/Level1';
+import { level2rowsCorrectKey } from './Levels/Level2';
+import { level3rowsCorrectKey } from './Levels/Level3';
 
 const steps = ['Level 1', 'Level 2', 'Level 3']
 
@@ -18,7 +21,39 @@ export function Game() {
     }
 
     const isUnlocked = () => {
-        return activeStep === 0 || completed[activeStep - 1]
+        var key = ""
+        switch(activeStep) {
+            case 1: {
+                key = level1rowsCorrectKey
+                break
+            }
+            case 2: {
+                key = level2rowsCorrectKey
+                break
+            }
+        }
+        return activeStep === 0 || localStorage.getItem(key) === 'true'
+    }
+
+    const resetLevel = () => {
+        for(var i = activeStep; i < steps.length; i++) {
+            var key = ""
+            switch(activeStep) {
+                case 0: {
+                    key = level1rowsCorrectKey
+                    break
+                }
+                case 1: {
+                    key = level2rowsCorrectKey
+                    break
+                }
+                case 2: {
+                    key = level3rowsCorrectKey
+                    break
+                }
+            }
+            localStorage.setItem(key, 'false')
+        }
     }
 
     const completedSteps = () => {
@@ -105,27 +140,20 @@ export function Game() {
                 >
                     Back
                 </Button>
+                <Button
+                    color="inherit"
+                    disabled={!isUnlocked()}
+                    onClick={resetLevel}
+                    sx={{ mr: 1 }}
+                >
+                    reset level
+                </Button>
                 <Box sx={{ flex: '1 1 auto' }} />
                 <Button
-                    disabled={!isUnlocked()}
                     onClick={handleNext}
                     sx={{ mr: 1 }}>
                     Next
                 </Button>
-                {activeStep !== steps.length &&
-                    (completed[activeStep] ? (
-                        <Typography variant="caption" sx={{ display: 'inline-block' }}>
-                            Step {activeStep + 1} already completed
-                        </Typography>
-                    ) : (
-                        <Button
-                            disabled={!isUnlocked()}
-                            onClick={handleComplete}>
-                            {completedSteps() === totalSteps() - 1
-                                ? 'Finish'
-                                : 'Complete Step'}
-                        </Button>
-                    ))}
             </Box>
         </Box>
     );
