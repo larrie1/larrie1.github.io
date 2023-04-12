@@ -2,79 +2,9 @@ import { Typography, Box, SvgIcon, keyframes, Link } from '@mui/material';
 import { useRef } from 'react';
 import { ReactComponent as StartSvg } from '../Assets/undraw_start.svg'
 import { ReactComponent as ArrowSvg } from '../Assets/undraw_straight-arrow.svg'
-import { wobbleHorBottom } from '../Utils/animations';
-
-const drop = keyframes`
-0% {
-  -webkit-transform: translateY(-45px);
-          transform: translateY(-45px);
-  -webkit-animation-timing-function: ease-in;
-          animation-timing-function: ease-in;
-  opacity: 1;
-}
-2.4% {
-  opacity: 1;
-}
-4% {
-  -webkit-transform: translateY(-24px);
-          transform: translateY(-24px);
-  -webkit-animation-timing-function: ease-in;
-          animation-timing-function: ease-in;
-}
-6.5% {
-  -webkit-transform: translateY(-12px);
-          transform: translateY(-12px);
-  -webkit-animation-timing-function: ease-in;
-          animation-timing-function: ease-in;
-}
-8.2% {
-  -webkit-transform: translateY(-6px);
-          transform: translateY(-6px);
-  -webkit-animation-timing-function: ease-in;
-          animation-timing-function: ease-in;
-}
-9.3% {
-  -webkit-transform: translateY(-4px);
-          transform: translateY(-4px);
-  -webkit-animation-timing-function: ease-in;
-          animation-timing-function: ease-in;
-}
-2.5%,
-5.5%,
-7.5%,
-8.7% {
-  -webkit-transform: translateY(0px);
-          transform: translateY(0px);
-  -webkit-animation-timing-function: ease-out;
-          animation-timing-function: ease-out;
-}
-10% {
-  -webkit-transform: translateY(0px);
-          transform: translateY(0px);
-  -webkit-animation-timing-function: ease-out;
-          animation-timing-function: ease-out;
-  opacity: 1;
-}
-11% {
-  -webkit-transform: translateY(0px);
-          transform: translateY(0px);
-}
-`;
-
-const leftIn = keyframes`
-0% {
-  -webkit-transform: translateX(-50px);
-          transform: translateX(-50px);
-  opacity: 0;
-}
-100% {
-  -webkit-transform: translateX(0);
-          transform: translateX(0);
-  opacity: 1;
-}
-`;
-
-
+import { strings } from '../Res/localization';
+import { leftIn, wobbleHorBottom } from '../Utils/animations';
+import { Headline } from '../Utils/Headline';
 
 export function Start() {
   const myRef = useRef<HTMLElement>(document.createElement("section"))
@@ -96,7 +26,7 @@ export function Start() {
             mt: '64px', // App Bar
             animation: `${leftIn} 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both`,
           }}>
-          Decision Trees
+          {strings.title}
         </Typography>
         <Typography
           variant='h3'
@@ -104,7 +34,7 @@ export function Start() {
           sx={{
             animation: `${leftIn} 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both`,
           }}>
-          A Learntool to understand Machine Learning Techniques
+          {strings.subtitle}
         </Typography>
         <SvgIcon
           component={StartSvg}
@@ -145,23 +75,17 @@ export function Start() {
           </SvgIcon>
       </Box>
       <section id='section1' ref={myRef}>
-        <Typography variant='h6'>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-          Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-
-          Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-
-          Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer
+        <Headline variant={'h3'} text={strings.trees} />
+        <Typography variant='h6' sx={{mb: 5}}>
+          {strings.lorem}
         </Typography>
-        <Typography variant='h6'>
-          Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
-
-          Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.
-
-          Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-
-          Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim placerat facer
+        <Headline variant={'h3'} text={strings.root} />
+        <Typography variant='h6' sx={{mb: 5}}>
+          {strings.lorem}
+        </Typography>
+        <Headline variant={'h3'} text={strings.node} />
+        <Typography variant='h6' sx={{mb: 5}}>
+          {strings.lorem}
         </Typography>
       </section>
     </>

@@ -1,9 +1,9 @@
-import { Button, Drawer, List, ListItem, ListItemText, Paper } from '@mui/material';
+import { Button, Paper } from '@mui/material';
 import { useTheme } from '@mui/material/styles'
 import Brightness4Icon from '@mui/icons-material/Brightness4';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
+import LanguageIcon from '@mui/icons-material/Language';
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
 import { NavButton } from './NavButton';
 import MenuIcon from '@mui/icons-material/Menu';
 import * as React from 'react';
@@ -11,26 +11,19 @@ import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
 import Container from '@mui/material/Container';
-import MenuItem from '@mui/material/MenuItem';
-import { ColorModeContext } from '../context';
-
-const pages = ['Start', 'Game', 'Generator'];
+import { userPrefsContext } from '../context';
+import { strings } from '../Res/localization';
 
 export function NavBar() {
     const theme = useTheme();
-    const colorMode = React.useContext(ColorModeContext);
+    const userPrefs = React.useContext(userPrefsContext)
     const [isOpen, setIsOpen] = useState(false)
+    const [isActive, setActive] = useState(-1)
+    const pages = [strings.game, strings.generator]
 
     const onMenuClick = () => {
         setIsOpen(!isOpen)
-    }
-
-    const onButtonClick = (page: string) => {
-        onMenuClick()
-        return page === 'Start' ? '/#' : `/#/${page.toLowerCase()}`
     }
 
     function MobileNav() {
@@ -69,12 +62,15 @@ export function NavBar() {
                             p: 2,
                         }}>
                         {pages.map((page) => (
-                            <Button sx={{display: 'flex'}} href={page === 'Start' ? '/#' : `/#/${page.toLowerCase()}`}>
+                            <Button sx={{ display: 'flex' }} href={pages.indexOf(page) === 0 ? '/#/game' : `/#/${page.toLowerCase()}`}>
                                 {page}
                             </Button>
                         ))}
-                        <IconButton key={"mode"} sx={{ display: 'flex', right: 0, left: 0, mr: 'auto', ml: 'auto' }} onClick={colorMode.toggleColorMode} color="primary">
+                        <IconButton key={"mode"} sx={{ display: 'flex', right: 0, left: 0, mr: 'auto', ml: 'auto' }} onClick={userPrefs.toggleColorMode} color="primary">
                             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                        </IconButton>
+                        <IconButton key={"mode"} sx={{ display: 'flex', right: 0, left: 0, mr: 'auto', ml: 'auto' }} onClick={userPrefs.toggleLocale} color="primary">
+                            <LanguageIcon />
                         </IconButton>
                     </Paper>}
             </>
@@ -100,6 +96,7 @@ export function NavBar() {
                         disableRipple
                         color='primary'
                         href='/'
+                        onClick={() => setActive(-1)}
                         sx={{
                             justifyContent: 'start',
                             display: { xs: 'none', md: 'flex' },
@@ -121,10 +118,13 @@ export function NavBar() {
                         justifyContent: 'end',
                     }}>
                         {pages.map((page, index) => (
-                            <NavButton key={index} page={page} />
+                            <NavButton key={index} page={page} href={pages.indexOf(page) === 0 ? '/#/game' : `/#/${page.toLowerCase()}`} onClick={() => setActive(index)} isActive={isActive === index} />
                         ))}
-                        <IconButton key={"mode"} sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="primary">
+                        <IconButton key={"mode"} sx={{ ml: 1 }} onClick={userPrefs.toggleColorMode} color="primary">
                             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                        </IconButton>
+                        <IconButton key={'language'} sx={{ ml: 1 }} onClick={userPrefs.toggleLocale} color='primary'>
+                            <LanguageIcon />
                         </IconButton>
                     </Box>
                 </Toolbar>

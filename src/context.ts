@@ -1,16 +1,20 @@
 import React from "react";
 
-export const ColorModeContext = React.createContext({ toggleColorMode: () => { } })
+export const userPrefsContext = React.createContext({ toggleColorMode: () => { }, toggleLocale: () => { } })
 
-export const TableContext = React.createContext<{head: string[], body: any[][], addRow: any, addResult: any}>(
+export const StepperContext = React.createContext({
+    activeStep: 0,
+    handleNext: () => {},
+    handleComplete: () => {},
+    handleSuccess: () => {},
+})
+
+export const TableContext = React.createContext<{ data: any[], target: string, features: any[], addRow: any, addResult: any }>(
     {
-        head: [],
-        body: [],
+        data: [],
+        target: "",
+        features: [],
         addRow: () => { },
         addResult: () => { },
     }
 )
-
-export const createTableContext = () => {
-    
-}

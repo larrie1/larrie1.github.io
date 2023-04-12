@@ -1,5 +1,5 @@
-import { useState } from "react";
-import { level2Table } from "../../Blockly/data/level1";
+import { useEffect, useState } from "react";
+import { lv2_data } from "../../Blockly/data/tables";
 import { TableContext } from "../../context";
 import { TableButton } from "../../Utils/TableButton";
 import { Blockly } from '../../Blockly'
@@ -7,34 +7,28 @@ import { Box, Typography } from "@mui/material";
 import { Headline } from "../../Utils/Headline";
 import { useTheme } from '@mui/material/styles'
 import { scaleInVerTop } from "../../Utils/animations";
+import { strings } from "../../Res/localization";
+import { createTable } from "../../Utils/Table";
 
-const headLine = level2Table[0]
-const body = level2Table[1]
 export const level2xmlKey = "level2blocks"
 export const level2rowsCorrectKey = "level2done"
 
 export function Level2(props: { isUnlocked: boolean }) {
+    const target = strings.lv2Decision
+    const features = [strings.outlook, strings.temperature, strings.humidity, strings.windy]
     const theme = useTheme()
-    const [rows, setRows] = useState(body)
-    const [head, setHead] = useState(headLine)
+    const [dataState, setDataState] = useState(lv2_data)
 
-    const table = {
-        head: head,
-        body: rows,
-        addRow: () => {
-            const newRow = [undefined, undefined]
-            for(var i = 2; i < head.length; i++) {
-                newRow.push(rows[Math.floor(Math.random() * rows.length)][i])
-            }
-            setRows(
-                [...rows, newRow]
-            )
-        },
-        addResult: (val: any, index: number) => {
-            rows[index][0] = val
-            setRows([...rows])
-        }
-    }
+    useEffect(() => {
+        setDataState(lv2_data)
+    }, [strings.getLanguage()])
+
+    const table = createTable(
+        dataState,
+        target,
+        features,
+        setDataState,
+    )
 
     return (
         <TableContext.Provider value={table}>

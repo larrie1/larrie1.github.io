@@ -5,6 +5,35 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import { useTheme } from '@mui/material/styles'
+import { strings } from '../Res/localization';
+
+const _ = require('lodash');
+
+export function createTable(data: any, target: string, features: string[], setData: any) {
+    return {
+        data: data,
+        target: target,
+        features: features,
+        addRow: () => {
+            const newVal = {
+                [strings.result]: undefined,
+                [target]: undefined
+            }
+            for (var i = 0; i < features.length; i++) {
+                let feature = features[i]
+                newVal[feature] = _.sample(_.map(data, feature))
+            }
+            setData(
+                [...data, newVal]
+            )
+        },
+        addResult: (val: any, index: number) => {
+            let result = strings.result
+            data[index][result] = val
+            setData([...data])
+        }
+    }
+}
 
 export function BasicTable() {
     const [isResultVisible, setResultVisible] = useState(false)
@@ -14,10 +43,20 @@ export function BasicTable() {
         setResultVisible(!isResultVisible)
     }
 
-
     return (
         <TableContext.Consumer>
             {table => {
+                let dataFiltered = table.data.map(row =>
+                    _.reduce(row, function (result: any, value: any, key: string) {
+                        if (isResultVisible && key === strings.result) {
+                            result[key] = value
+                        } else if (key !== strings.result) {
+                            result[key] = value
+                        }
+                        return result
+                    }, {})
+                )
+
                 return (
                     <TableContainer
                         sx={{ textAlign: 'end', maxHeight: '100%' }}>
@@ -27,39 +66,37 @@ export function BasicTable() {
                                     key={"head"}
                                     hover={true}
                                     sx={{ borderColor: 'black' }}>
-                                    {table.head.filter((_, index) => index === 0 ? isResultVisible : true).map((ele: string, index: number) => (
+                                    {_.map(dataFiltered[0], (_: any, key: any) =>
                                         <TableCell
-                                            key={index}
-                                            align={index === 0 ? undefined : 'right'}>
+                                            key={Math.random().toString(16).slice(2)}
+                                            align={key === table.target ? undefined : 'right'}>
                                             <Typography variant='h5'>
-                                                {ele}
+                                                {key}
                                             </Typography>
                                         </TableCell>
-                                    ))}
+                                    )}
                                 </TableRow>
                             </TableHead>
                             <TableBody>
-                                {table.body.map((row: any[], index: number) => (
+                                {dataFiltered.map((row: any, index: number) => (
                                     <TableRow
                                         key={index}
                                         hover={true}
                                         sx={{
-                                            background: row[0] !== undefined ? row[1] === undefined ? alpha(theme.palette.primary.main, .3) : row[0] === row[1] ? alpha('#009688', .3) : alpha('#f44336', .3) : 'transparent',
+                                            background: row[strings.result] !== undefined ? row[table.target] === undefined ? alpha(theme.palette.primary.main, .3) : row[strings.result] === row[table.target] ? alpha('#009688', .3) : alpha('#f44336', .3) : 'transparent',
                                             '&:last-child td, &:last-child th': { border: 0 },
-                                        }}
-                                    >
-                                        {row.filter((val, index) => index === 0 ? isResultVisible : true).map((ele: string | number | boolean, index: number) => (
+                                        }} >
+                                        {_.map(row, (value: any, key: any) =>
                                             <TableCell
-                                                key={index}
-                                                component={index === 0 ? 'th' : undefined}
-                                                scope={index === 0 ? 'row' : undefined}
-                                                align={index === 0 ? undefined : 'right'}
-                                            >
+                                                key={Math.random().toString(16).slice(2)}
+                                                component={key === table.target ? 'th' : undefined}
+                                                scope={key === table.target ? 'row' : undefined}
+                                                align={key === table.target ? undefined : 'right'} >
                                                 <Typography variant='subtitle2'>
-                                                    {ele === undefined ? '' : ele.toString()}
+                                                    {value === undefined ? '' : value.toString()}
                                                 </Typography>
-                                            </TableCell>
-                                        ))}
+                                            </TableCell>)
+                                        }
                                     </TableRow>
                                 ))}
                             </TableBody>

@@ -4,29 +4,39 @@ import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/s
 import useMediaQuery from '@mui/material/useMediaQuery'
 import { Routes, Route } from "react-router";
 import { HashRouter } from "react-router-dom";
-import { ColorModeContext } from "../context";
+import { userPrefsContext } from "../context";
 import { Game } from "../Game";
 import { Generator } from "../Generator";
 import { Start } from "../Start";
 import { theme as getDesignTokens } from "../theme";
 import { NavBar, Footer } from "../Utils";
+import { NotFound } from "../Utils/NotFound";
+import { strings } from "../Res/localization";
 
 export function App() {
     const prefersDarkMode = useMediaQuery('prefers-color-scheme: dark)');
+    const [locale, setLocale] = useState(localStorage.getItem('locale') === null ? (strings.getInterfaceLanguage() === 'de' ? 'de' : 'en') : localStorage.getItem('locale')!!)
+    strings.setLanguage(locale)
+    localStorage.setItem('locale', locale)
     localStorage.setItem(
         'mode',
         localStorage.getItem('mode') === null ?
             prefersDarkMode === true ? 'dark' : 'light' :
             localStorage.getItem('mode') as PaletteMode)
     const [mode, setMode] = useState<PaletteMode>(localStorage.getItem('mode') as PaletteMode)
-    const colorMode = React.useMemo(
+    const userPrefs = React.useMemo(
         () => ({
             toggleColorMode: () => {
                 setMode((prevMode: PaletteMode) =>
                     prevMode === 'light' ? 'dark' : 'light',
                 );
-                localStorage.setItem('mode', localStorage.getItem('mode') === 'dark' ? 'light' : 'dark');
+                localStorage.setItem('mode', localStorage.getItem('mode') === 'dark' ? 'light' : 'dark')
             },
+            toggleLocale: () => {
+                setLocale((prevLocale: string) => prevLocale === 'en' ? 'de' : 'en')
+                localStorage.setItem('locale', locale)
+                strings.setLanguage(locale)
+            }
         }),
         [],
     );
@@ -35,7 +45,7 @@ export function App() {
     theme = responsiveFontSizes(theme);
 
     return (
-        <ColorModeContext.Provider value={colorMode}>
+        <userPrefsContext.Provider value={userPrefs}>
             <ThemeProvider theme={theme}>
                 <CssBaseline />
                 <HashRouter>
@@ -45,11 +55,12 @@ export function App() {
                             <Route path='/' element={<Start />} />
                             <Route path='/game' element={<Game />} />
                             <Route path='/generator' element={<Generator />} />
+                            <Route path='*' element={<NotFound />} />
                         </Routes>
                     </Container>
                     <Footer />
                 </HashRouter>
             </ThemeProvider>
-        </ColorModeContext.Provider>
+        </userPrefsContext.Provider>
     )
 }
