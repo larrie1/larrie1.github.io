@@ -11,7 +11,6 @@ import { strings } from "../../Res/localization";
 import { createTable } from "../../Utils/Table";
 
 export const level3xmlKey = "level3blocks"
-export const level3rowsCorrectKey = "level3done"
 
 export function Level3(props: { isUnlocked: boolean }) {
     const target = strings.lv2Decision
@@ -39,7 +38,7 @@ export function Level3(props: { isUnlocked: boolean }) {
                     Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.
                 </Typography>
             </Box>
-            <Blockly xmlKey={level3xmlKey} rowsCorrectKey={level3rowsCorrectKey} />
+            <Blockly xmlKey={level3xmlKey} />
         </TableContext.Provider>
     )
 }

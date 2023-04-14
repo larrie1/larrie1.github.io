@@ -1,61 +1,28 @@
 import { Typography, Box, Stepper, Step, StepButton, Button } from '@mui/material';
-import { useEffect, useState } from 'react';
-import { Level1, Level2, Level3 } from './Levels';
 import { useTheme } from '@mui/material/styles'
 import LockIcon from '@mui/icons-material/Lock';
-import { level1rowsCorrectKey } from './Levels/Level1';
-import { level2rowsCorrectKey } from './Levels/Level2';
-import { level3rowsCorrectKey } from './Levels/Level3';
-import { StepperContext } from '../context';
 import Lottie from "lottie-react";
 import success from '../Assets/lottie_success.json'
+import { useState } from 'react';
+
+import { Level1, Level2, Level3 } from './Levels';
+import { StepperContext } from '../context';
+import { strings } from '../Res/localization';
 
 const steps = ['Level 1', 'Level 2', 'Level 3']
-const keys = [level1rowsCorrectKey, level2rowsCorrectKey, level3rowsCorrectKey]
 
 export function Game() {
     const theme = useTheme()
     const [activeStep, setActiveStep] = useState(0)
-    const [completed, setCompleted] = useState<{
-        [k: number]: boolean;
-    }>({})
+    const [completed, setCompleted] = useState<{ [k: number]: boolean }>({})
     const [successAnimation, setSuccessAnimation] = useState(false)
 
     const isUnlocked = () => {
-        var key = ""
-        switch (activeStep) {
-            case 1: {
-                key = level1rowsCorrectKey
-                break
-            }
-            case 2: {
-                key = level2rowsCorrectKey
-                break
-            }
-        }
-        return activeStep === 0 || localStorage.getItem(key) === 'true'
-    }
-
-    const resetLevel = () => {
-        for (var i = activeStep; i <= steps.length; i++) {
-            var key = ""
-            switch (i) {
-                case 0: {
-                    key = level1rowsCorrectKey
-                    break
-                }
-                case 1: {
-                    key = level2rowsCorrectKey
-                    break
-                }
-                case 2: {
-                    key = level3rowsCorrectKey
-                    break
-                }
-            }
-            localStorage.setItem(key, 'false')
-        }
-        setCompleted({})
+        if (activeStep === 1) {
+            return completed[0]
+        } else if (activeStep === 2) {
+            return completed[1]
+        } else return true
     }
 
     const completedSteps = () => {
@@ -115,6 +82,7 @@ export function Game() {
 
     const stepperContext = {
         activeStep: activeStep,
+        completed: completed,
         handleNext: handleNext,
         handleComplete: handleComplete,
         handleSuccess: handleSuccess,
@@ -145,7 +113,7 @@ export function Game() {
                         <LockIcon sx={{ position: 'absolute', height: '100px', width: '100px', left: 0, right: 0, top: 0, bottom: 0, m: 'auto' }} />
                     </Box>}
                     {successAnimation && <Box sx={{ position: 'absolute', width: '100%', height: '100%', zIndex: 99, backdropFilter: `blur(15px)`, border: 1, borderColor: theme.palette.secondary.dark, borderRadius: 2 }}>
-                        <Lottie animationData={success} loop={false} style={{height: '50%', position: 'absolute', left: 0, right: 0, bottom: 0, top: 0, margin: 'auto'}} />
+                        <Lottie animationData={success} loop={false} style={{ height: '50%', position: 'absolute', left: 0, right: 0, bottom: 0, top: 0, margin: 'auto' }} />
                     </Box>}
                     {getLevel()}
                 </Box>
@@ -156,21 +124,21 @@ export function Game() {
                         onClick={handleBack}
                         sx={{ mr: 1 }}
                     >
-                        Back
+                        {strings.back}
                     </Button>
                     <Button
                         color="inherit"
                         disabled={!isUnlocked()}
-                        onClick={resetLevel}
+                        onClick={handleReset}
                         sx={{ mr: 1 }}
                     >
-                        reset level
+                        {strings.reset}
                     </Button>
                     <Box sx={{ flex: '1 1 auto' }} />
                     <Button
                         onClick={handleNext}
                         sx={{ mr: 1 }}>
-                        Next
+                        {strings.next}
                     </Button>
                 </Box>
             </Box>

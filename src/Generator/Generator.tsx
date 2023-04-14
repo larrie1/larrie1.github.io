@@ -35,7 +35,7 @@ export function Generator() {
                         This is the Generator, here you can test your skills against the ID3 Machine Learning Algorithm. Create a Data Set and try to solve it by creating a Decision Tree.
                     </Typography>
                 </Box>
-                <Blockly xmlKey='generatorblocks' rowsCorrectKey="generatordone" />
+                <Blockly xmlKey='generatorblocks' />
             </Box>
         </TableContext.Provider>
     );

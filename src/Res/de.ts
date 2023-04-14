@@ -30,4 +30,8 @@ export const de = {
     check_code: 'Prüfe Code',
     clear_workspace: 'Arbeitsbereich löschen',
     show_tree: 'Baumdiagramm anzeigen',
+    reset: 'Zurücksetzen',
+    back: 'Zurück',
+    next: 'Weiter',
+    show_result: 'Ergebnis anzeigen',
 }

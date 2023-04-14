@@ -30,4 +30,8 @@ export const en = {
     check_code: 'Check code',
     clear_workspace: 'Clear workspace',
     show_tree: 'Show tree graph',
+    reset: 'Reset',
+    back: 'Back',
+    next: 'Next',
+    show_result: 'Show result',
 }

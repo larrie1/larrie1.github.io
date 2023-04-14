@@ -1,14 +1,17 @@
 import { Typography, Box, SvgIcon, keyframes, Link } from '@mui/material';
 import { useRef } from 'react';
-import { ReactComponent as StartSvg } from '../Assets/undraw_start.svg'
-import { ReactComponent as ArrowSvg } from '../Assets/undraw_straight-arrow.svg'
+import { ReactComponent as ArrowSvg } from '../Assets/undraw_arrow.svg'
 import { strings } from '../Res/localization';
-import { leftIn, wobbleHorBottom } from '../Utils/animations';
+import { leftIn, slideInTop, wobbleHorBottom } from '../Utils/animations';
 import { Headline } from '../Utils/Headline';
+import block1 from '../Assets/blockly1.png'
+import block5 from '../Assets/block5.png'
+import block3 from '../Assets/block3.png'
+import block4 from '../Assets/block4.png'
 
 export function Start() {
   const myRef = useRef<HTMLElement>(document.createElement("section"))
-  const executeScroll = () => myRef.current.scrollIntoView() 
+  const executeScroll = () => myRef.current.scrollIntoView()
 
   return (
     <>
@@ -36,18 +39,59 @@ export function Start() {
           }}>
           {strings.subtitle}
         </Typography>
-        <SvgIcon
-          component={StartSvg}
-          inheritViewBox
+        <Box
+          component='img'
+          alt='Blockly Block Example'
+          src={block1}
           sx={{
-            width: '50vw',
-            height: '50vh',
+            animation: `${slideInTop} 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
+            width: '800px',
             position: 'absolute',
             display: { xs: 'none', md: 'flex' },
-            zIndex: '-1',
+            zIndex: '-2',
             right: 0,
             top: 100,
           }} />
+          <Box
+          component='img'
+          alt='Blockly Block Example'
+          src={block5}
+          sx={{
+            animation: `${slideInTop} 2.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
+            width: '600px',
+            position: 'absolute',
+            display: { xs: 'none', md: 'flex' },
+            zIndex: '-2',
+            top: -50,
+            left: 350,
+          }} />
+          <Box
+          component='img'
+          alt='Blockly Block Example'
+          src={block4}
+          sx={{
+            animation: `${slideInTop} 1s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
+            width: '350px',
+            position: 'absolute',
+            display: { xs: 'none', md: 'flex' },
+            zIndex: '-2',
+            top: 50,
+            right: 0,
+          }} />
+          <Box
+          component='img'
+          alt='Blockly Block Example'
+          src={block3}
+          sx={{
+            animation: `${slideInTop} 1.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
+            width: '800px',
+            position: 'absolute',
+            display: { xs: 'none', md: 'flex' },
+            zIndex: '-2',
+            bottom: 0,
+            left: 0,
+          }} />
+        <Box sx={{ position: 'absolute', width: '100%', height: '100%', backdropFilter: `blur(5px)`, zIndex: -1 }} />
         <SvgIcon
           component={ArrowSvg}
           inheritViewBox
@@ -71,20 +115,20 @@ export function Start() {
               filter: `brightness(100%)`,
             }
           }}>
-            <Link href='#section1'/>
-          </SvgIcon>
+          <Link href='#section1' />
+        </SvgIcon>
       </Box>
       <section id='section1' ref={myRef}>
         <Headline variant={'h3'} text={strings.trees} />
-        <Typography variant='h6' sx={{mb: 5}}>
+        <Typography variant='h6' sx={{ mb: 5 }}>
           {strings.lorem}
         </Typography>
         <Headline variant={'h3'} text={strings.root} />
-        <Typography variant='h6' sx={{mb: 5}}>
+        <Typography variant='h6' sx={{ mb: 5 }}>
           {strings.lorem}
         </Typography>
         <Headline variant={'h3'} text={strings.node} />
-        <Typography variant='h6' sx={{mb: 5}}>
+        <Typography variant='h6' sx={{ mb: 5 }}>
           {strings.lorem}
         </Typography>
       </section>

@@ -59,7 +59,7 @@ export function BasicTable() {
 
                 return (
                     <TableContainer
-                        sx={{ textAlign: 'end', maxHeight: '100%' }}>
+                        sx={{ textAlign: 'end', height: '100%' }}>
                         <Table stickyHeader sx={{ flex: '1' }}>
                             <TableHead>
                                 <TableRow

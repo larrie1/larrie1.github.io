@@ -1,9 +1,10 @@
-import { Button, Fab, Paper, Typography } from "@mui/material";
+import { Box, Button, Fab, Paper, Typography } from "@mui/material";
 import { useState } from "react";
 import { BasicTable } from "./Table";
 import TocIcon from '@mui/icons-material/Toc';
 import { TableContext } from "../context";
 import { useTheme } from '@mui/material/styles'
+import { Rnd } from "react-rnd";
 
 export function TableButton() {
     const [visible, setVisible] = useState(false)
@@ -21,21 +22,30 @@ export function TableButton() {
                                 <TocIcon />
                             </Fab>
                             {visible &&
-                                <Paper
-                                    variant='outlined'
-                                    sx={{
-                                        position: 'fixed',
-                                        bottom: 110,
-                                        right: 90,
-                                        zIndex: 98,
-                                        width: '50%',
-                                        height: '60%',
-                                        background: 'transparent',
-                                        backdropFilter: `blur(20px)`,
-                                        overflow: 'hidden',
-                                    }}>
-                                    <BasicTable />
-                                </Paper>}
+                                <Box sx={{position: 'fixed', zIndex: 99, bottom: 550, right: 550, height: '50px', width: '50px'}}>
+                                    <Rnd 
+                                style={{
+                                    position: 'fixed',
+                                    zIndex: 99,
+                                    backdropFilter: `blur(20px)`,
+                                }}
+                                default={{
+                                    x: 0,
+                                    y: 0,
+                                    width:  500,
+                                    height: 500,
+                                }}>
+                                    <Paper
+                                        variant='outlined'
+                                        sx={{
+                                            width: '100%', // 50
+                                            height: '100%', // 60
+                                            background: 'transparent',
+                                        }}>
+                                        <BasicTable />
+                                    </Paper>
+                                </Rnd>
+                                    </Box>}
                         </>
                     </TableContext.Provider>
                 )

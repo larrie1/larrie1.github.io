@@ -11,7 +11,6 @@ import { strings } from "../../Res/localization";
 import { createTable } from "../../Utils/Table";
 
 export const level2xmlKey = "level2blocks"
-export const level2rowsCorrectKey = "level2done"
 
 export function Level2(props: { isUnlocked: boolean }) {
     const target = strings.lv2Decision
@@ -48,7 +47,7 @@ export function Level2(props: { isUnlocked: boolean }) {
                     Try to help Sarah and create a Decision Tree that predicts her Decision!
                 </Typography>
             </Box>
-            <Blockly xmlKey={level2xmlKey} rowsCorrectKey={level2rowsCorrectKey} />
+            <Blockly xmlKey={level2xmlKey} />
         </TableContext.Provider>
     )
 }

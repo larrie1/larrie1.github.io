@@ -1,8 +1,36 @@
 import Blockly from 'blockly'
+import { codeGenerator } from '../generators/code_generator';
+import { jsonGenerator } from '../generators/json_generator';
 import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
 
 const _ = require('lodash');
+
+export function createLeaf(leaf: string, key: number) {
+    codeGenerator['leaf' + key] = function (block: Blockly.Block) {
+        const leaf = block.getFieldValue("LEAF")
+        const code = `"${leaf}"`;
+        return [code, codeGenerator.PRECEDENCE];
+    };
+
+    jsonGenerator['leaf' + key] = function (block: Blockly.Block) {
+        const leaf = block.getFieldValue('LEAF')
+        const code = `"${leaf}"`;
+        return [code, jsonGenerator.PRECEDENCE];
+    };
+
+    Blockly.Blocks['leaf' + key] = {
+        init: function () {
+            this.appendDummyInput()
+                .appendField(new Blockly.FieldLabelSerializable(leaf), "LEAF");
+            this.setInputsInline(true);
+            this.setOutput(true, null);
+            this.setColour(180);
+            this.setTooltip("This is a leaf, it represents your Decision");
+            this.setHelpUrl("");
+        }
+    };
+}
 
 export function createNode(data: any, target: string, features: string[]) {
     Blockly.Blocks['node'] = {
@@ -35,6 +63,15 @@ export function createNode(data: any, target: string, features: string[]) {
                 input?.removeField('CHOICE' + i)
                 input?.appendField(new Blockly.FieldDropdown(choices), "CHOICE" + i)
             }
+        },
+        mutationToDom: function () {
+            const container = Blockly.utils.xml.createElement('mutation');
+            container.setAttribute('itemCount', this.itemCount);
+            return container;
+        },
+        domToMutation: function (xmlElement: any) {
+            const targetCount = parseInt(xmlElement.getAttribute('itemCount'), 10);
+            this.updateShape(targetCount);
         },
         saveExtraState: function () {
             return {
@@ -91,6 +128,6 @@ export function createNode(data: any, target: string, features: string[]) {
             }
         },
         generateDecisions: () => features.map((feature: string) => [feature, feature]),
-        generateChoices: (decision: any) => _.uniq(_.map(data, decision)).map((val: any) => [val.toString(), val.toString()]),
+        generateChoices: (decision: any) => _.uniq(_.map(data, decision)).map((val: any) => {console.log(val); return [val.toString(), val.toString()]}),
     };
 }

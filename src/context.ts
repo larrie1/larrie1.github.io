@@ -2,8 +2,9 @@ import React from "react";
 
 export const userPrefsContext = React.createContext({ toggleColorMode: () => { }, toggleLocale: () => { } })
 
-export const StepperContext = React.createContext({
+export const StepperContext = React.createContext<{activeStep: number, completed: { [k: number]: boolean }, handleNext: any, handleComplete: any, handleSuccess: any}>({
     activeStep: 0,
+    completed: {},
     handleNext: () => {},
     handleComplete: () => {},
     handleSuccess: () => {},

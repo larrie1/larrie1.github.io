@@ -21,33 +21,12 @@ jsonGenerator['logic_boolean'] = function (block: Blockly.Block) {
   return [code, jsonGenerator.PRECEDENCE];
 };
 
-jsonGenerator['node'] = function (block: Blockly.Block) {
-  var decision = block.getFieldValue('DECISION');
-  const values = []
-  const dropDowns = []
-  let counter = 0
-  let nextBlock = jsonGenerator.valueToCode(block, counter.toString(), jsonGenerator.PRECEDENCE) || null
-  let nextDropDown = block.getFieldValue('CHOICE' + counter);
-  while (nextDropDown) {
-    dropDowns.push(nextDropDown)
-    values.push(nextBlock)
-    counter++
-    nextDropDown = block.getFieldValue('CHOICE' + counter);
-    nextBlock = jsonGenerator.valueToCode(block, counter.toString(), jsonGenerator.PRECEDENCE) || null
-  }
-  var childStr = ""
-  for (let i = 0; i < dropDowns.length; i++) {
-    if (i === dropDowns.length - 1) {
-      childStr += `"${dropDowns[i]}"` + ': ' + values[i]
-    } else {
-      childStr += `"${dropDowns[i]}"` + ': ' + values[i] + ',\n'
-    }
-  }
-  const str = '"Decision": ' + `"${decision}"` + ',\n' + childStr
-  const indentedValueString = jsonGenerator.prefixLines(str, jsonGenerator.INDENT);
-  const code = '{\n' + indentedValueString + '\n}';
+jsonGenerator['leaf'] = function (block: Blockly.Block) {
+  const leaf = block.getField("LEAF")
+  const code = `"${leaf}"`;
   return [code, jsonGenerator.PRECEDENCE];
 };
+
 jsonGenerator['node'] = function (block: Blockly.Block) {
   var decision = block.getFieldValue('DECISION')
   let counter = 0

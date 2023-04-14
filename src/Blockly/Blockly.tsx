@@ -18,13 +18,13 @@ import { Tree } from 'react-tree-graph';
 import { scaleInHorLeft, scaleInHorRight, scaleInVerCenter } from '../Utils/animations';
 import './Graph.css'
 import { useTheme } from '@mui/material/styles'
-import { createNode } from './blocks/node';
+import { createLeaf, createNode } from './blocks/node';
 import { DecisionTree } from '../ID3/decision-tree';
 import { strings } from '../Res/localization';
 
+const _ = require('lodash');
 
-
-export function Blockly(props: { xmlKey: string, rowsCorrectKey: string }) {
+export function Blockly(props: { xmlKey: string }) {
     const [blockJSON, setBlockJSON] = useState("");
     const [jsonString, setJsonString] = useState("");
     const [graphVisible, setGraphVisible] = useState(false)
@@ -39,7 +39,8 @@ export function Blockly(props: { xmlKey: string, rowsCorrectKey: string }) {
     const [seed, setSeed] = useState(1);
     const { handleComplete } = useContext(StepperContext)
     const { handleSuccess } = useContext(StepperContext)
-    const [startAnimation, setStartAnimation] = useState(false)
+    const { completed } = useContext(StepperContext)
+    const { activeStep } = useContext(StepperContext)
 
     useEffect(() => {
         if (treeBoxRef.current !== null) {
@@ -55,6 +56,27 @@ export function Blockly(props: { xmlKey: string, rowsCorrectKey: string }) {
         setSeed(Math.random())
     }, [strings.getLanguage()])
 
+    const createToolBox = (data: any, target: string) => {
+        const blocks = []
+        const leafs = _.uniq(_.flatten(_.map(data, target)).filter((leaf: any) => leaf !== undefined))
+        leafs.forEach((leaf: any, index: number) => {
+            createLeaf(leaf, index)
+            blocks.push({
+                'kind': 'block',
+                'type': 'leaf' + index,
+            })
+        })
+        blocks.push({
+            'kind': 'block',
+            'type': 'node',
+        })
+
+        return {
+            kind: "flyoutToolbox",
+            contents: blocks,
+        }
+    }
+
     createNode(data, target, features)
 
     const onShowGraphClick = () => setGraphVisible(!graphVisible)
@@ -67,15 +89,12 @@ export function Blockly(props: { xmlKey: string, rowsCorrectKey: string }) {
         localStorage.setItem(props.xmlKey, xml)
     }
     const initialXml = localStorage.getItem(props.xmlKey) === null ?
-        '<xml xmlns="https://developers.google.com/blockly/xml"><block type="node" x="70" y="30"></block></xml>' :
+        '<xml xmlns="https://developers.google.com/blockly/xml"><block type="node" x="100" y="100"></block></xml>' :
         localStorage.getItem(props.xmlKey)!!;
 
     const clearWorkspace = () => {
         saveXML('<xml xmlns="https://developers.google.com/blockly/xml"><block type="node" x="70" y="30"></block></xml>')
-    }
-
-    const showXML = () => {
-        localStorage.setItem(props.xmlKey, '<xml xmlns="https://developers.google.com/blockly/xml"><block type="node" x="10" y="10"><field name="DECISION">2</field><field name="CHOICE0">false</field><field name="CHOICE1">true</field><value name="0"><block type="node"><field name="DECISION">0</field><field name="CHOICE0">true</field><field name="CHOICE1">false</field><value name="0"><block type="text"><field name="TEXT">Gutes Wetter</field></block></value><value name="1"><block type="text"><field name="TEXT">Schlechtes Wetter</field></block></value></block></value><value name="1"><block type="text"><field name="TEXT">Schlechtes Wetter</field></block></value></block></xml>')
+        setSeed(Math.random())
     }
 
     async function checkCode() {
@@ -97,12 +116,11 @@ export function Blockly(props: { xmlKey: string, rowsCorrectKey: string }) {
             console.log("Expected Result: " + (obj[target] || "undefined"))
             console.log("Acutal Result: " + actualResult)
         })
-        if (allRowsCorrect && localStorage.getItem(props.rowsCorrectKey) !== 'true') {
+        if (allRowsCorrect && !completed[activeStep]) {
             handleSuccess()
             await new Promise(res => setTimeout(res, 1500))
             handleComplete()
         }
-        localStorage.setItem(props.rowsCorrectKey, allRowsCorrect.toString())
     }
 
     function checkRow(obj: any, block: any): any {
@@ -139,6 +157,36 @@ export function Blockly(props: { xmlKey: string, rowsCorrectKey: string }) {
             }
         }
         if (children.length > 0) return children
+    }
+
+    function onShowResult(json: any) {
+        var blocks = ''
+        let decision = json["value"]
+        let choices = _.uniq(_.map(data, decision))
+        if (json['type'] === 'decision') {
+            blocks += '<block type="node" x="100" y="100"><field name="DECISION">' + decision + '</field>'
+            blocks += '<mutation itemCount="' + choices.length + '"></mutation>'
+            choices.forEach((choice: any, index: number) => {
+                blocks += '<field name="CHOICE' + index + '">' + choice + '</field>'
+            })
+            choices.forEach((choice: any, index: number) => {
+                if (json[choice] !== null || json[choice] !== undefined) {
+                    blocks += '<value name="' + index + '">' + onShowResult(json[choice]) + '</value>'
+                }
+            })
+            blocks += '</block>'
+        } else {
+            blocks += '<block type="leaf0"><field name="LEAF">' + decision + '</field></block>'
+        }
+        return blocks
+    }
+
+    const showResult = () => {
+        var dt = new DecisionTree(data, target, features);
+        console.log(localStorage.getItem(props.xmlKey))
+        const blocks = onShowResult(dt.createTree())
+        saveXML('<xml xmlns="https://developers.google.com/blockly/xml">' + blocks + '</xml>')
+        setSeed(Math.random())
     }
 
     return (
@@ -191,6 +239,17 @@ export function Blockly(props: { xmlKey: string, rowsCorrectKey: string }) {
                     }}>
                     {strings.show_tree}
                 </Button>
+                <Button
+                    variant='outlined'
+                    onClick={showResult}
+                    sx={{
+                        borderRadius: 25,
+                        borderColor: 'primary',
+                        backgroundColor: 'transparent',
+                        mx: 1,
+                    }}>
+                    {strings.show_result}
+                </Button>
             </Box>
             <Grid2 container spacing={3}>
                 <Grid2 xs={12} md={8}>
@@ -198,11 +257,13 @@ export function Blockly(props: { xmlKey: string, rowsCorrectKey: string }) {
                         <BlocklyWorkspace
                             key={seed}
                             className='fill-height'
-                            toolboxConfiguration={toolboxCategories}
+                            toolboxConfiguration={createToolBox(data, target)}
                             initialXml={initialXml}
                             onXmlChange={saveXML}
                             onWorkspaceChange={workspaceDidChange}
                             workspaceConfiguration={{
+                                trashcan: true,
+                                scrollbars: true,
                                 theme: useTheme().palette.mode === 'dark' ? darkTheme : lightTheme,
                                 grid: {
                                     spacing: 20,
@@ -214,31 +275,17 @@ export function Blockly(props: { xmlKey: string, rowsCorrectKey: string }) {
                         />
                     </Box>
                 </Grid2>
-                <Grid2 container xs={12} md={4}>
-                    <Grid2 xs={12}>
-                        <Box sx={{ animation: `${scaleInHorRight} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`, borderRadius: 2, height: '100%', width: '100%', border: 1, borderColor: useTheme().palette.secondary.dark, overflow: 'auto' }}>
-                            <SyntaxHighlighter
-                                className='fill-height'
-                                wrapLongLines={true}
-                                language={json}
-                                style={useTheme().palette.mode === 'dark' ? atelierCaveDark : atelierCaveLight}
-                            >
-                                {id3Code}
-                            </SyntaxHighlighter>
-                        </Box>
-                    </Grid2>
-                    <Grid2 xs={12}>
-                        <Box sx={{ animation: `${scaleInHorRight} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`, borderRadius: 2, height: '100%', width: '100%', border: 1, borderColor: useTheme().palette.secondary.dark, overflow: 'auto' }}>
-                            <SyntaxHighlighter
-                                className='fill-height'
-                                wrapLongLines={true}
-                                language={json}
-                                style={useTheme().palette.mode === 'dark' ? atelierCaveDark : atelierCaveLight}
-                            >
-                                {jsonString}
-                            </SyntaxHighlighter>
-                        </Box>
-                    </Grid2>
+                <Grid2 xs={12} md={4}>
+                    <Box sx={{ animation: `${scaleInHorRight} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`, borderRadius: 2, height: '100%', width: '100%', border: 1, borderColor: useTheme().palette.secondary.dark, overflow: 'hidden' }}>
+                        <SyntaxHighlighter
+                            className='fill-height'
+                            wrapLongLines={true}
+                            language={json}
+                            style={useTheme().palette.mode === 'dark' ? atelierCaveDark : atelierCaveLight}
+                        >
+                            {jsonString}
+                        </SyntaxHighlighter>
+                    </Box>
                 </Grid2>
             </Grid2>
         </>

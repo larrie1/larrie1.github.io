@@ -313,7 +313,7 @@ export const scaleInVerCenter = keyframes`
     opacity: 1;
   }`
 
-  export const drop = keyframes`
+export const drop = keyframes`
   0% {
     -webkit-transform: translateY(-45px);
             transform: translateY(-45px);
@@ -369,8 +369,8 @@ export const scaleInVerCenter = keyframes`
             transform: translateY(0px);
   }
   `
-  
-  export const leftIn = keyframes`
+
+export const leftIn = keyframes`
   0% {
     -webkit-transform: translateX(-50px);
             transform: translateX(-50px);
@@ -382,3 +382,15 @@ export const scaleInVerCenter = keyframes`
     opacity: 1;
   }
   `
+
+export const slideInTop = keyframes`
+0% {
+        -webkit-transform: translateY(-1000px);
+                transform: translateY(-1000px);
+        opacity: 0;
+      }
+      100% {
+        -webkit-transform: translateY(0);
+                transform: translateY(0);
+        opacity: 1;
+}`

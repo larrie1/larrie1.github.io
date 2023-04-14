@@ -1,4 +1,4 @@
-import { Container, CssBaseline, PaletteMode } from "@mui/material";
+import { Box, Container, CssBaseline, PaletteMode } from "@mui/material";
 import React, { useState } from "react";
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
