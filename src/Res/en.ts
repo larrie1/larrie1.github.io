@@ -48,7 +48,7 @@ export const en = {
     level1_task: 'not yet defined',
     leaf_missing: 'Leaf is missing!',
     node_missing: 'Decision is missing!',
-    block_intro_1: '',
+    block_intro_1: 'not yet defined',
     not_again: 'Do not show again',
     block_intro_title: 'Introduction: Block',
     block_intro_2: 'not yet defined',
@@ -56,5 +56,7 @@ export const en = {
     done: 'done',
     show_json: 'Show JSON',
     analyse_title: 'Analyse: Block',
-
+    advice: 'Advice',
+    json_error: 'No contiguous tree',
+    
 }

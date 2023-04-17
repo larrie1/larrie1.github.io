@@ -22,7 +22,7 @@ import { strings } from '../Res/localization';
 import { IntroDialog } from '../Game/Intro';
 import { createToolBox } from './toolbox';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, TooltipProps, ResponsiveContainer } from 'recharts';
-import { nameUsedWithAnyType } from 'blockly/core/variables';
+import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 
 const _ = require('lodash');
 
@@ -32,6 +32,7 @@ export function Blockly(props: { xmlKey: string }) {
     const [jsonString, setJsonString] = useState("");
     const [graphVisible, setGraphVisible] = useState(false)
     const [showJson, setShowJson] = useState(false)
+    const [jsonError, setJsonError] = useState(false)
 
     /* Table */
     const { data } = useContext(TableContext)
@@ -90,6 +91,15 @@ export function Blockly(props: { xmlKey: string }) {
     useEffect(() => {
         setSeed(Math.random())
     }, [strings.getLanguage()])
+
+    useEffect(() => {
+        try {
+            JSON.parse(blockCode)
+            setJsonError(false)
+        } catch (e) {
+            setJsonError(true)
+        }
+    }, [blockCode])
 
     function workspaceDidChange(workspace: BlocklyLib.WorkspaceSvg) {
         setJsonString(jsonGenerator.workspaceToCode(workspace));
@@ -181,11 +191,11 @@ export function Blockly(props: { xmlKey: string }) {
         let id3Data = getAnalyseData(id3Json)
         const data: any[] = []
         blockData.forEach((row: any) => {
-            let id3Gain = _.find(id3Data, {name: row.name})
+            let id3Gain = _.find(id3Data, { name: row.name })
             if (id3Gain === undefined) {
-                data.push({name: row.name, actual_gain: row.gain})
+                data.push({ name: row.name, actual_gain: row.gain })
             } else {
-                data.push({name: row.name, actual_gain: row.gain, expected_gain: id3Gain.gain})
+                data.push({ name: row.name, actual_gain: row.gain, expected_gain: id3Gain.gain })
             }
         })
         return data
@@ -245,11 +255,11 @@ export function Blockly(props: { xmlKey: string }) {
 
     const functionalities = [
         [strings.check_code, checkCode],
-        [strings.clear_workspace, clearWorkspace],
-        [strings.show_tree, onShowGraphClick],
         [strings.show_result, showResult],
+        [strings.advice, handleAdvice],
+        [strings.show_tree, onShowGraphClick],
         [strings.show_json, handleShowJson],
-        ["Tipp", handleAdvice]
+        [strings.clear_workspace, clearWorkspace],
     ]
 
     return (
@@ -269,20 +279,25 @@ export function Blockly(props: { xmlKey: string }) {
                             className: 'custom'
                         }} />
                 </Box>}
-            <Box ref={treeBoxRef} sx={{ flexDirection: 'row', my: 2, flex: 1, display: 'flex' }}>
-                {functionalities.map((val: any[]) =>
-                    <Button
-                        key={Math.random()}
-                        variant='outlined'
-                        onClick={val[1]}
-                        sx={{
-                            borderRadius: 25,
-                            borderColor: 'primary',
-                            backgroundColor: 'transparent',
-                            mx: 1,
-                        }}>
-                        {val[0]}
-                    </Button>
+            <Box ref={treeBoxRef} sx={{ flexDirection: 'row', my: 2, flex: 1, display: 'flex', alignItems: 'end' }}>
+                {functionalities.map((val: any[], index: number) =>
+                    <>
+                        <Button
+                            key={Math.random()}
+                            variant={index == 0 ? 'contained' : 'outlined'}
+                            onClick={val[1]}
+                            disabled={jsonError}
+                            sx={{
+                                height: index == 0 ? '50px' : '40px',
+                                borderRadius: 25,
+                                borderColor: 'primary',
+                                backgroundColor: index == 0 ? 'primary' : 'transparent',
+                                mx: 1,
+                            }}>
+                            {val[0]}
+                        </Button>
+                        {index == 2 && <Box sx={{ flex: 1 }} />}
+                    </>
                 )}
             </Box>
             <Grid2 container spacing={3}>
@@ -307,6 +322,18 @@ export function Blockly(props: { xmlKey: string }) {
                                 },
                             }}
                         />
+                        {jsonError && <Box sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            position: 'absolute',
+                            top: 0,
+                            right: 0,
+                            m: 3,
+                            color: 'red',
+                        }}>
+                            <ErrorOutlineIcon sx={{mx: 1}} />
+                            <Typography>{strings.json_error}</Typography>
+                        </Box>}
                     </Box>
                 </Grid2>
                 {showJson && <Grid2 xs={12} md={4}>

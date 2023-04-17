@@ -209,8 +209,7 @@ export const bounce_in_right = keyframes`
   }`
 
 export const wobbleHorBottom = keyframes`
-0%,
-  100% {
+0%, 100% {
     -webkit-transform: translateX(0%);
             transform: translateX(0%);
     -webkit-transform-origin: 50% 50%;
@@ -236,6 +235,15 @@ export const wobbleHorBottom = keyframes`
     -webkit-transform: translateX(-6px) rotate(-1.2deg);
             transform: translateX(-6px) rotate(-1.2deg);
   }`
+
+export const pause_between_iterations = keyframes`
+25.1%, 100% {
+        -webkit-transform: translateX(0%);
+                transform: translateX(0%);
+        -webkit-transform-origin: 50% 50%;
+                transform-origin: 50% 50%;
+}
+`
 
 export const scaleInTop = keyframes`
 0% {

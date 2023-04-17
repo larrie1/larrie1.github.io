@@ -56,6 +56,8 @@ export const de = {
     done: 'fertig',
     show_json: 'JSON Anzeigen',
     analyse_title: 'Analyse: Block',
+    advice: 'Tipp',
+    json_error: 'Kein zusammenhängender Baum',
     
 
 }

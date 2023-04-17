@@ -13,20 +13,26 @@ import { createTable } from "../../Utils/Table";
 export const level4xmlKey = "level4blocks"
 
 export function Level4(props: { isUnlocked: boolean }) {
-    const target = strings.lv3Decision
-    const features = [strings.outlook, strings.temperature, strings.humidity, strings.windy]
     const theme = useTheme()
-    const [dataState, setDataState] = useState(lv3_data)
+    const [data, setTable] = useState(lv3_data)
+
+    const setData = (newData: any) => {
+        setTable({
+            target: data.target,
+            features: data.features,
+            data: newData
+        })
+    }
 
     useEffect(() => {
-        setDataState(lv3_data)
+        setTable(lv3_data)
     }, [strings.getLanguage()])
 
     const table = createTable(
-        dataState,
-        target,
-        features,
-        setDataState,
+        data.data,
+        data.target,
+        data.features,
+        setData,
     )
 
     return (

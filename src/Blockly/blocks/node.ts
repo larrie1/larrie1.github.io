@@ -52,7 +52,7 @@ export function createNode(data: any, target: string, features: string[]) {
             _.remove(filteredFeatures, (feature: any) => feature === parentBlock!!.getFieldValue('DECISION'))
             parentBlock = parentBlock.getParent()
         }
-        console.log(filteredFeatures)
+        //console.log(filteredFeatures)
         filteredData.map((row: any) => {
             _.reduce(row, function(result: any, value: any, key: any) {
                 if (filteredFeatures.includes(key)) {
@@ -69,7 +69,7 @@ export function createNode(data: any, target: string, features: string[]) {
                 return result 
             }, {})
         })*/
-        console.log(filteredData)
+        //console.log(filteredData)
 
         while (choice) {
             counter++

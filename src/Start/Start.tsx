@@ -2,7 +2,7 @@ import { Typography, Box, SvgIcon, keyframes, Link } from '@mui/material';
 import { useRef } from 'react';
 import { ReactComponent as ArrowSvg } from '../Assets/undraw_arrow.svg'
 import { strings } from '../Res/localization';
-import { leftIn, slideInTop, wobbleHorBottom } from '../Utils/animations';
+import { leftIn, pause_between_iterations, slideInTop, wobbleHorBottom } from '../Utils/animations';
 import { Headline } from '../Utils/Headline';
 import block1 from '../Assets/blockly1.png'
 import block5 from '../Assets/block5.png'
@@ -109,7 +109,7 @@ export function Start() {
             alignSelf: 'center',
             cursor: 'pointer',
             filter: `brightness(80%)`,
-            animation: `${wobbleHorBottom} 0.8s infinite`,
+            animation: `${wobbleHorBottom} 0.8s infinite, ${pause_between_iterations} 4s infinite`,
             scrollBehavior: 'smooth',
             '&:hover': {
               filter: `brightness(100%)`,
@@ -119,6 +119,7 @@ export function Start() {
         </SvgIcon>
       </Box>
       <section id='section1' ref={myRef}>
+        <Box sx={{height: '64px'}} />
         <Headline variant={'h3'} text={strings.trees} />
         <Typography variant='h6' sx={{ mb: 5 }}>
           {strings.lorem}

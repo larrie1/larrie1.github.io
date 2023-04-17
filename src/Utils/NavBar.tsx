@@ -14,6 +14,8 @@ import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import { userPrefsContext } from '../context';
 import { strings } from '../Res/localization';
+import { useLocation } from 'react-router';
+import { BreakfastDiningTwoTone } from '@mui/icons-material';
 
 export function NavBar() {
     const theme = useTheme();
@@ -21,10 +23,28 @@ export function NavBar() {
     const [isOpen, setIsOpen] = useState(false)
     const [isActive, setActive] = useState(-1)
     const pages = [strings.game, strings.generator]
+    const location = useLocation()
 
     const onMenuClick = () => {
         setIsOpen(!isOpen)
     }
+
+    React.useEffect(() => {
+        switch(location.pathname) {
+            case '/game': {
+                setActive(0)
+                break
+            }
+            case '/generator': {
+                setActive(1)
+                break
+            }
+            default: {
+                setActive(-1)
+                break
+            }
+        }
+    }, [location.pathname])
 
     function MobileNav() {
         return (
@@ -118,7 +138,7 @@ export function NavBar() {
                         justifyContent: 'end',
                     }}>
                         {pages.map((page, index) => (
-                            <NavButton key={index} page={page} href={pages.indexOf(page) === 0 ? '/#/game' : `/#/${page.toLowerCase()}`} onClick={() => setActive(index)} isActive={isActive === index} />
+                            <NavButton key={index} page={page} href={pages.indexOf(page) === 0 ? '/#/game' : `/#/${page.toLowerCase()}`} isActive={isActive === index} />
                         ))}
                         <IconButton key={"mode"} sx={{ ml: 1 }} onClick={userPrefs.toggleColorMode} color="primary">
                             {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}

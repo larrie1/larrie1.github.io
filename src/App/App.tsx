@@ -1,4 +1,4 @@
-import { Box, Container, CssBaseline, PaletteMode } from "@mui/material";
+import { Container, CssBaseline, PaletteMode } from "@mui/material";
 import React, { useState } from "react";
 import { createTheme, responsiveFontSizes, ThemeProvider } from '@mui/material/styles'
 import useMediaQuery from '@mui/material/useMediaQuery'
@@ -55,7 +55,7 @@ export function App() {
                             <Route path='/' element={<Start />} />
                             <Route path='/game' element={<Game />} />
                             <Route path='/generator' element={<Generator />} />
-                            <Route path='*' element={<NotFound />} />
+                            <Route path='/*' element={<NotFound />} />
                         </Routes>
                     </Container>
                     <Footer />

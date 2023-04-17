@@ -1,4 +1,4 @@
-import { Backdrop, Box, Button, Checkbox, IconButton, Typography } from "@mui/material";
+import { Backdrop, Box, Button, Checkbox, IconButton, stepClasses, Typography } from "@mui/material";
 import { useTheme } from '@mui/material/styles'
 import { useEffect, useState } from "react";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
@@ -47,7 +47,7 @@ export function IntroDialog(props: { open: boolean, title: string, steps: any[],
             {props.steps[step]}
             <Box sx={{ width: '100%', display: 'flex', flexDirection: 'row', justifyContent: 'end' }}>
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
-                    {props.handleNotAgain !== undefined && <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+                    {props.handleNotAgain !== undefined && step == props.steps.length -1 && <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                         <Typography variant={'body2'} color={'secondary.dark'}>
                             {strings.not_again}
                         </Typography>
