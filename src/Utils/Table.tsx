@@ -36,7 +36,7 @@ export function createTable(data: any, target: string, features: string[], setDa
 }
 
 export function BasicTable() {
-    const [isResultVisible, setResultVisible] = useState(false)
+    const [isResultVisible, setResultVisible] = useState(true)
     const theme = useTheme()
 
     const onResultClick = () => {

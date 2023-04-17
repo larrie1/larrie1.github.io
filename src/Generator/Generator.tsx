@@ -1,7 +1,7 @@
 import { Typography, Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { Blockly } from '../Blockly';
-import { lv2_data } from '../Blockly/data/tables';
+import { lv3_data } from '../Blockly/data/tables';
 import { TableContext } from '../context';
 import { Headline } from '../Utils/Headline';
 import { useTheme } from '@mui/material/styles'
@@ -10,13 +10,13 @@ import { strings } from '../Res/localization';
 import { createTable } from '../Utils/Table';
 
 export function Generator() {
-    const target = strings.lv2Decision
+    const target = strings.lv3Decision
     const features = [strings.outlook, strings.temperature, strings.humidity, strings.windy]
     const theme = useTheme()
-    const [dataState, setDataState] = useState(lv2_data)
+    const [dataState, setDataState] = useState(lv3_data)
 
     useEffect(() => {
-        setDataState(lv2_data)
+        setDataState(lv3_data)
     }, [strings.getLanguage()])
 
     const table = createTable(

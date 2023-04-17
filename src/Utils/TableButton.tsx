@@ -7,7 +7,7 @@ import { useTheme } from '@mui/material/styles'
 import { Rnd } from "react-rnd";
 
 export function TableButton() {
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(true)
     const theme = useTheme()
 
     const onClick = () => setVisible(!visible)
@@ -18,11 +18,11 @@ export function TableButton() {
                 return (
                     <TableContext.Provider value={table}>
                         <>
-                            <Fab color='primary' onClick={onClick} sx={{ position: 'fixed', bottom: 40, right: 60 }}>
+                            <Fab color='primary' onClick={onClick} sx={{ position: 'fixed', bottom: 40, right: 60, zIndex: 90 }}>
                                 <TocIcon />
                             </Fab>
                             {visible &&
-                                <Box sx={{position: 'fixed', zIndex: 99, bottom: 550, right: 550, height: '50px', width: '50px'}}>
+                                <Box sx={{position: 'fixed', zIndex: 90, bottom: 550, right: 550, height: '50px', width: '50px'}}>
                                     <Rnd 
                                 style={{
                                     position: 'fixed',

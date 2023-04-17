@@ -1,31 +1,24 @@
-export const toolboxCategories = (leafs: any[]) => {
-    var blockList = []
-    for (var leaf of leafs) {
-        blockList.push({
-            kind: "block",
-            type: "text",
+import { createLeaf } from "./blocks/node";
+
+const _ = require('lodash');
+
+export const createToolBox = (data: any, target: string) => {
+    const blocks = []
+    blocks.push({
+        'kind': 'block',
+        'type': 'node',
+    })
+    const leafs = _.uniq(_.flatten(_.map(data, target)).filter((leaf: any) => leaf !== undefined))
+    leafs.forEach((leaf: any, index: number) => {
+        createLeaf(leaf, index)
+        blocks.push({
+            'kind': 'block',
+            'type': 'leaf' + index,
         })
-    }
+    })
 
     return {
         kind: "flyoutToolbox",
-        contents: [
-            {
-                kind: "block",
-                type: "math_number",
-            },
-            {
-                kind: "block",
-                type: "logic_boolean",
-            },
-            {
-                kind: "block",
-                type: "text",
-            },
-            {
-                kind: "block",
-                type: "node",
-            },
-        ],
-    };
+        contents: blocks,
+    }
 }

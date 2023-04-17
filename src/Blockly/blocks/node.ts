@@ -1,5 +1,6 @@
 import Blockly from 'blockly'
-import { codeGenerator } from '../generators/code_generator';
+import { gain, NODE_TYPES } from '../../ID3/decision-tree';
+import { strings } from '../../Res/localization';
 import { jsonGenerator } from '../generators/json_generator';
 import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
@@ -9,7 +10,7 @@ const _ = require('lodash');
 export function createLeaf(leaf: string, key: number) {
     codeGenerator['leaf' + key] = function (block: Blockly.Block) {
         const leaf = block.getFieldValue("LEAF")
-        const code = `"${leaf}"`;
+        const code = '{"value": ' + `"${leaf}"` + ',"type": ' + `"${NODE_TYPES.LEAF}"` + '}';
         return [code, codeGenerator.PRECEDENCE];
     };
 
@@ -26,13 +27,64 @@ export function createLeaf(leaf: string, key: number) {
             this.setInputsInline(true);
             this.setOutput(true, null);
             this.setColour(180);
-            this.setTooltip("This is a leaf, it represents your Decision");
+            this.setTooltip(strings.leaf_tooltip);
             this.setHelpUrl("");
         }
     };
 }
 
+export const codeGenerator: any = new Blockly.Generator('CODE');
+
+codeGenerator.PRECEDENCE = 0;
+
 export function createNode(data: any, target: string, features: string[]) {
+    codeGenerator['node'] = function (block: Blockly.Block) {
+        var decision = block.getFieldValue('DECISION')
+        let counter = 0
+        let choice = block.getFieldValue('CHOICE' + counter)
+        let value = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
+        let json = ""
+        let filteredFeatures = [...features]
+        let filteredData = [...data]
+        _.remove(filteredFeatures, (feature: any) => feature === decision)
+        let parentBlock = block.getParent()
+        while(parentBlock) {
+            _.remove(filteredFeatures, (feature: any) => feature === parentBlock!!.getFieldValue('DECISION'))
+            parentBlock = parentBlock.getParent()
+        }
+        console.log(filteredFeatures)
+        filteredData.map((row: any) => {
+            _.reduce(row, function(result: any, value: any, key: any) {
+                if (filteredFeatures.includes(key)) {
+                    result[key] = value
+                }
+                return result 
+            }, {})
+        })
+        /*_.forEach(filteredData, function(row: any) {
+            _.reduce(row, function(result: any, value: any, key: any) {
+                if (filteredFeatures.includes(key)) {
+                    result[key] = value
+                }
+                return result 
+            }, {})
+        })*/
+        console.log(filteredData)
+
+        while (choice) {
+            counter++
+            json += `"${choice}"` + ': ' + value + ', '
+            choice = block.getFieldValue('CHOICE' + counter);
+            value = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
+        }
+
+        json += '"gain": ' + gain(data, target, decision) + ', '
+        json += '"type": ' + `"${NODE_TYPES.DECISION}"`
+
+        const str = '{"value": ' + `"${decision}"` + ', ' + json + '}'
+        return [str, codeGenerator.PRECEDENCE];
+    }
+
     Blockly.Blocks['node'] = {
         itemCount: 0,
         minInputs: 2,
@@ -47,7 +99,7 @@ export function createNode(data: any, target: string, features: string[]) {
                 .appendField(new Blockly.FieldDropdown(this.generateDecisions, this.validate), "DECISION")
             this.setOutput(true, null)
             this.setColour(230)
-            this.setTooltip("This is a Node it connects with other Nodes or Leafs")
+            this.setTooltip(strings.node_tooltip)
             this.setHelpUrl("")
             this.updateShape(this.minInputs)
         },
@@ -128,6 +180,6 @@ export function createNode(data: any, target: string, features: string[]) {
             }
         },
         generateDecisions: () => features.map((feature: string) => [feature, feature]),
-        generateChoices: (decision: any) => _.uniq(_.map(data, decision)).map((val: any) => {console.log(val); return [val.toString(), val.toString()]}),
+        generateChoices: (decision: any) => _.uniq(_.map(data, decision)).map((val: any) => [val.toString(), val.toString()]),
     };
 }

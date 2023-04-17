@@ -15,6 +15,7 @@ export function Footer() {
                 borderColor: theme.palette.secondary.dark,
                 mt: 10,
                 p: 5,
+                zIndex: 99,
             }}>
             <Container maxWidth='xl' sx={{
                 display: 'flex',
