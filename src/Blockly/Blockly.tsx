@@ -1,7 +1,7 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, IconButton, Typography } from '@mui/material';
 import { BlocklyWorkspace } from 'react-blockly';
 import "./Blockly.css";
-import { useContext, useEffect, useReducer, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { darkTheme, lightTheme } from './blocklyTheme';
 import BlocklyLib from 'blockly';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
@@ -23,6 +23,7 @@ import { IntroDialog } from '../Game/Intro';
 import { createToolBox } from './toolbox';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, TooltipProps, ResponsiveContainer } from 'recharts';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
+import ReplayIcon from '@mui/icons-material/Replay';
 
 const _ = require('lodash');
 
@@ -33,6 +34,8 @@ export function Blockly(props: { xmlKey: string }) {
     const [graphVisible, setGraphVisible] = useState(false)
     const [showJson, setShowJson] = useState(false)
     const [jsonError, setJsonError] = useState(false)
+    const [blockJson, setBlockJson] = useState<{ value: any, gain: any, type: string }>()
+    const [loading, setLoading] = useState(true)
 
     /* Table */
     const { data } = useContext(TableContext)
@@ -67,16 +70,25 @@ export function Blockly(props: { xmlKey: string }) {
 
     const onShowGraphClick = () => setGraphVisible(!graphVisible)
 
+    const handleReplay = () => {
+        handleClose()
+    }
+
     const getSplits = (tree: any) => _.partition(tree, ['type', 'decision'])[0].length + 1
 
-    const initialXml = localStorage.getItem(props.xmlKey) === null ?
-        '<xml xmlns="https://developers.google.com/blockly/xml"><block type="node" x="100" y="100"></block></xml>' :
-        localStorage.getItem(props.xmlKey)!!;
+    let initialXml = localStorage.getItem(props.xmlKey) !== null ?
+        localStorage.getItem(props.xmlKey)!! :
+        '<xml xmlns="https://developers.google.com/blockly/xml"><block type="node" x="100" y="100"></block></xml>'
 
     const clearWorkspace = () => {
         saveXML('<xml xmlns="https://developers.google.com/blockly/xml"><block type="node" x="70" y="30"></block></xml>')
         setSeed(Math.random())
     }
+
+    useEffect(() => {
+        if (!data && !target && !features) setLoading(true)
+        else if (data.length > 0 && features.length > 1 && target !== '') setLoading(false)
+    }, [TableContext])
 
     useEffect(() => {
         if (treeBoxRef.current !== null) {
@@ -94,7 +106,7 @@ export function Blockly(props: { xmlKey: string }) {
 
     useEffect(() => {
         try {
-            JSON.parse(blockCode)
+            setBlockJson(JSON.parse(blockCode))
             setJsonError(false)
         } catch (e) {
             setJsonError(true)
@@ -106,19 +118,15 @@ export function Blockly(props: { xmlKey: string }) {
         setBlockCode(codeGenerator.workspaceToCode(workspace));
     }
 
-    function saveXML(xml: string) {
-        localStorage.setItem(props.xmlKey, xml)
-    }
+    const  saveXML = (xml: string) => localStorage.setItem(props.xmlKey, xml)
 
     async function checkCode() {
-        const json = JSON.parse(blockCode)
-        console.log(json)
         var allRowsCorrect = true
 
         data.forEach((obj, index) => {
             const actualResult = checkRow(
                 obj,
-                json
+                blockJson
             )
             addResult(actualResult, index)
             if (actualResult !== obj[target] && obj[target] !== undefined) allRowsCorrect = false
@@ -199,7 +207,6 @@ export function Blockly(props: { xmlKey: string }) {
             }
         })
         return data
-
     }
 
     const ToolTip = ({ active, payload, label }: TooltipProps<number, string>) => {
@@ -217,14 +224,13 @@ export function Blockly(props: { xmlKey: string }) {
 
     const Analyse = () => {
         var dt = createTree(data, target, features);
-        var json = JSON.parse(blockCode)
-        let blockSplits = getSplits(json)
+        let blockSplits = getSplits(blockJson)
         let id3Splits = getSplits(dt)
         return (
             <>
                 <ResponsiveContainer width='90%' height={300}>
                     <BarChart
-                        data={analyseData(json, dt)}
+                        data={analyseData(blockJson, dt)}
                         margin={{
                             top: 20,
                             right: 0,
@@ -250,7 +256,7 @@ export function Blockly(props: { xmlKey: string }) {
     }
 
     function handleAdvice() {
-        console.log(JSON.parse(blockCode))
+        console.log(blockJson)
     }
 
     const functionalities = [
@@ -262,22 +268,35 @@ export function Blockly(props: { xmlKey: string }) {
         [strings.clear_workspace, clearWorkspace],
     ]
 
+    if (loading) return <CircularProgress />
+
     return (
         <>
-            {showAnalyse && <IntroDialog title={strings.analyse_title} open={showAnalyse} steps={[Analyse()]} handleClose={handleClose} />}
+            {showAnalyse && <IntroDialog title={strings.analyse_title} open={showAnalyse} steps={[Analyse()]} handleClose={handleClose} customButton={<IconButton sx={{ color: 'primary' }}><ReplayIcon /></IconButton>} />}
             {graphVisible &&
                 <Box sx={{ animation: `${scaleInVerCenter} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`, width: '100%', background: theme.palette.secondary.light, border: 1, borderRadius: 2, borderColor: theme.palette.secondary.dark }}>
-                    <Tree
-                        data={JSON.parse(blockCode)}
+                    {jsonError ? <Box sx={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        color: 'red',
+                        height: '500px',
+                        width: '100%',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}>
+                        <ErrorOutlineIcon sx={{ mx: 1 }} />
+                        <Typography>{strings.json_error}</Typography>
+                    </Box> : <Tree
+                        data={blockJson}
                         height={500}
                         width={width}
                         animated={true}
                         labelProp={"value"}
-                        keyProp={"Id"}
+                        keyProp={"gain"}
                         getChildren={getChildren}
                         svgProps={{
                             className: 'custom'
-                        }} />
+                        }} />}
                 </Box>}
             <Box ref={treeBoxRef} sx={{ flexDirection: 'row', my: 2, flex: 1, display: 'flex', alignItems: 'end' }}>
                 {functionalities.map((val: any[], index: number) =>
@@ -302,7 +321,7 @@ export function Blockly(props: { xmlKey: string }) {
             </Box>
             <Grid2 container spacing={3}>
                 <Grid2 xs={12} md={showJson ? 8 : 12}>
-                    <Box sx={{ animation: `${scaleInHorLeft} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`, height: '800px', borderRadius: 2, overflow: 'hidden', border: 1, borderColor: useTheme().palette.secondary.dark }}>
+                    <Box sx={{ animation: `${scaleInHorLeft} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`, height: '800px', borderRadius: 2, overflow: 'hidden', border: 1, borderColor: theme.palette.secondary.dark }}>
                         <BlocklyWorkspace
                             key={seed}
                             className='fill-height'
@@ -313,11 +332,11 @@ export function Blockly(props: { xmlKey: string }) {
                             workspaceConfiguration={{
                                 trashcan: true,
                                 scrollbars: true,
-                                theme: useTheme().palette.mode === 'dark' ? darkTheme : lightTheme,
+                                theme: theme.palette.mode === 'dark' ? darkTheme : lightTheme,
                                 grid: {
                                     spacing: 20,
                                     length: 3,
-                                    colour: useTheme().palette.mode === 'dark' ? '#424242' : '#bdbdbd',
+                                    colour: theme.palette.mode === 'dark' ? '#424242' : '#bdbdbd',
                                     snap: true,
                                 },
                             }}
@@ -331,7 +350,7 @@ export function Blockly(props: { xmlKey: string }) {
                             m: 3,
                             color: 'red',
                         }}>
-                            <ErrorOutlineIcon sx={{mx: 1}} />
+                            <ErrorOutlineIcon sx={{ mx: 1 }} />
                             <Typography>{strings.json_error}</Typography>
                         </Box>}
                     </Box>

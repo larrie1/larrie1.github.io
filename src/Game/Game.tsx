@@ -78,7 +78,7 @@ export function Game() {
 
     return (
         <StepperContext.Provider value={stepperContext}>
-            <Box sx={{ mt: '104px', position: 'relative' }}>
+            <Box sx={{ mt: '40px', position: 'relative' }}>
                 <IntroDialog title={strings.block_intro_title} open={intro} steps={getIntros()} handleClose={handleClose} handleNotAgain={handleNotAgain} />
                 <Stepper
                     nonLinear

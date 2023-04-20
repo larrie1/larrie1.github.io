@@ -11,6 +11,9 @@ export function Footer() {
     return (
         <Box
             sx={{
+                bottom: 0,
+                right: 0,
+                left: 0,
                 borderTop: 1,
                 borderColor: theme.palette.secondary.dark,
                 mt: 10,

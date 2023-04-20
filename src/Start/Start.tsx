@@ -17,7 +17,7 @@ export function Start() {
     <>
       <Box sx={{
         display: 'flex',
-        height: '100vh',
+        height: `calc(100vh - 64px)`,
         justifyContent: 'center',
         flexDirection: 'column',
         position: 'relative',
@@ -26,7 +26,6 @@ export function Start() {
           variant='h1'
           letterSpacing={'6px'}
           sx={{
-            mt: '64px', // App Bar
             animation: `${leftIn} 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both`,
           }}>
           {strings.title}

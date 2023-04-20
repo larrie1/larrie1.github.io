@@ -12,6 +12,7 @@ import { theme as getDesignTokens } from "../theme";
 import { NavBar, Footer } from "../Utils";
 import { NotFound } from "../Utils/NotFound";
 import { strings } from "../Res/localization";
+import { CreateTableDialog } from "../Generator/TableDialog";
 
 export function App() {
     const prefersDarkMode = useMediaQuery('prefers-color-scheme: dark)');
@@ -50,11 +51,11 @@ export function App() {
                 <CssBaseline />
                 <HashRouter>
                     <NavBar />
-                    <Container maxWidth='xl'>
+                    <Container maxWidth='xl' sx={{pt: '64px'}}>
                         <Routes>
                             <Route path='/' element={<Start />} />
                             <Route path='/game' element={<Game />} />
-                            <Route path='/generator' element={<Generator />} />
+                            <Route path='/generator' element={<CreateTableDialog />} />
                             <Route path='/*' element={<NotFound />} />
                         </Routes>
                     </Container>

@@ -7,7 +7,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import { Headline } from "../Utils/Headline";
 import { strings } from "../Res/localization";
 
-export function IntroDialog(props: { open: boolean, title: string, steps: any[], handleClose: () => void, handleNotAgain?: () => void }) {
+export function IntroDialog(props: { open: boolean, title: string, steps: any[], handleClose: () => void, handleNotAgain?: () => void, customButton?: any }) {
     const theme = useTheme()
     const [checked, setCheck] = useState(false)
     const [step, setStep] = useState(0)
@@ -54,6 +54,7 @@ export function IntroDialog(props: { open: boolean, title: string, steps: any[],
                         <Checkbox checked={checked} onChange={handleChange} size="small" sx={{ color: 'secondary.dark' }} />
                     </Box>}
                     <Box sx={{ display: 'flex', flexDirection: 'row', justifyContent: 'end' }}>
+                        {props.customButton !== undefined ? props.customButton : null}
                         {props.steps.length > 1 && (step === 0 ? <IconButton sx={{ color: 'secondary.dark' }}>
                             <KeyboardArrowLeftIcon fontSize="large" />
                         </IconButton> : <IconButton onClick={handlePrevious} sx={{ color: 'primary.main' }}>

@@ -58,6 +58,6 @@ export const de = {
     analyse_title: 'Analyse: Block',
     advice: 'Tipp',
     json_error: 'Kein zusammenhängender Baum',
-    
+    target: 'Entscheidung',
 
 }

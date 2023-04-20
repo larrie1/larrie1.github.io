@@ -58,5 +58,5 @@ export const en = {
     analyse_title: 'Analyse: Block',
     advice: 'Advice',
     json_error: 'No contiguous tree',
-    
+    target: 'Decision',
 }
