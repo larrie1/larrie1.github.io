@@ -1,7 +1,7 @@
 import { Typography, Box, SvgIcon, keyframes, Link } from '@mui/material';
 import { useRef } from 'react';
 import { ReactComponent as ArrowSvg } from '../Assets/undraw_arrow.svg'
-import { strings } from '../Res/localization';
+import { localizedStrings } from '../Res/localization';
 import { leftIn, pause_between_iterations, slideInTop, wobbleHorBottom } from '../Utils/animations';
 import { Headline } from '../Utils/Headline';
 import block1 from '../Assets/blockly1.png'
@@ -28,7 +28,7 @@ export function Start() {
           sx={{
             animation: `${leftIn} 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both`,
           }}>
-          {strings.title}
+          {localizedStrings.title}
         </Typography>
         <Typography
           variant='h3'
@@ -36,7 +36,7 @@ export function Start() {
           sx={{
             animation: `${leftIn} 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both`,
           }}>
-          {strings.subtitle}
+          {localizedStrings.subtitle}
         </Typography>
         <Box
           component='img'
@@ -119,17 +119,17 @@ export function Start() {
       </Box>
       <section id='section1' ref={myRef}>
         <Box sx={{height: '64px'}} />
-        <Headline variant={'h3'} text={strings.trees} />
+        <Headline variant={'h3'} text={localizedStrings.trees} />
         <Typography variant='h6' sx={{ mb: 5 }}>
-          {strings.lorem}
+          {localizedStrings.lorem}
         </Typography>
-        <Headline variant={'h3'} text={strings.root} />
+        <Headline variant={'h3'} text={localizedStrings.root} />
         <Typography variant='h6' sx={{ mb: 5 }}>
-          {strings.lorem}
+          {localizedStrings.lorem}
         </Typography>
-        <Headline variant={'h3'} text={strings.node} />
+        <Headline variant={'h3'} text={localizedStrings.node} />
         <Typography variant='h6' sx={{ mb: 5 }}>
-          {strings.lorem}
+          {localizedStrings.lorem}
         </Typography>
       </section>
     </>

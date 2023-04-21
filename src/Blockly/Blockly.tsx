@@ -18,8 +18,8 @@ import './Graph.css'
 import { useTheme } from '@mui/material/styles'
 import { codeGenerator, createNode } from './blocks/node';
 import { createTree } from '../ID3/decision-tree';
-import { strings } from '../Res/localization';
-import { IntroDialog } from '../Game/Intro';
+import { localizedStrings } from '../Res/localization';
+import { IntroDialog } from '../Game/Intro/Intro';
 import { createToolBox } from './toolbox';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, TooltipProps, ResponsiveContainer } from 'recharts';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
@@ -42,9 +42,8 @@ export function Blockly(props: { xmlKey: string }) {
     const { target } = useContext(TableContext)
     const { features } = useContext(TableContext)
     const { addResult } = useContext(TableContext)
-    const [width, setWidth] = useState(0);
     const treeBoxRef = useRef<HTMLDivElement>(null)
-    const [seed, setSeed] = useState(1);
+    const [seed, setSeed] = useState(1)
 
     createNode(data, target, features)
 
@@ -87,22 +86,12 @@ export function Blockly(props: { xmlKey: string }) {
 
     useEffect(() => {
         if (!data && !target && !features) setLoading(true)
-        else if (data.length > 0 && features.length > 1 && target !== '') setLoading(false)
+        else if (data.length > 0 && features.length > 0 && target !== '') setLoading(false)
     }, [TableContext])
 
     useEffect(() => {
-        if (treeBoxRef.current !== null) {
-            setWidth(treeBoxRef.current.offsetWidth)
-        }
-    }, [treeBoxRef]);
-
-    useEffect(() => {
         setSeed(Math.random())
-    }, [theme.palette.mode])
-
-    useEffect(() => {
-        setSeed(Math.random())
-    }, [strings.getLanguage()])
+    }, [theme.palette.mode, localizedStrings.getLanguage(), props.xmlKey])
 
     useEffect(() => {
         try {
@@ -118,7 +107,7 @@ export function Blockly(props: { xmlKey: string }) {
         setBlockCode(codeGenerator.workspaceToCode(workspace));
     }
 
-    const  saveXML = (xml: string) => localStorage.setItem(props.xmlKey, xml)
+    const saveXML = (xml: string) => localStorage.setItem(props.xmlKey, xml)
 
     async function checkCode() {
         var allRowsCorrect = true
@@ -142,13 +131,13 @@ export function Blockly(props: { xmlKey: string }) {
         const valueFromTable = obj[block.value]
         const valueFromBlock = block[valueFromTable]
         if (valueFromBlock === null) {
-            return strings.leaf_missing
+            return localizedStrings.leaf_missing
+        } else if (valueFromBlock === undefined) {
+            return localizedStrings.node_missing
         } else if (valueFromBlock.type === 'leaf') {
             return valueFromBlock.value
-        } else if (valueFromBlock.type === 'decision') {
-            return checkRow(obj, valueFromBlock)
         } else {
-            return strings.node_missing
+            return checkRow(obj, valueFromBlock)
         }
     }
 
@@ -256,49 +245,55 @@ export function Blockly(props: { xmlKey: string }) {
     }
 
     function handleAdvice() {
+        console.log(data)
         console.log(blockJson)
     }
 
     const functionalities = [
-        [strings.check_code, checkCode],
-        [strings.show_result, showResult],
-        [strings.advice, handleAdvice],
-        [strings.show_tree, onShowGraphClick],
-        [strings.show_json, handleShowJson],
-        [strings.clear_workspace, clearWorkspace],
+        [localizedStrings.check_code, checkCode],
+        [localizedStrings.show_result, showResult],
+        [localizedStrings.advice, handleAdvice],
+        [localizedStrings.show_tree, onShowGraphClick],
+        [localizedStrings.show_json, handleShowJson],
+        [localizedStrings.clear_workspace, clearWorkspace],
     ]
 
-    if (loading) return <CircularProgress />
+    if (loading) {
+        return <Box sx={{ width: '100%', height: '1000px' }}>
+            <CircularProgress sx={{ position: 'absolute', height: '100px', width: '100px', left: 0, right: 0, top: 0, bottom: 0, m: 'auto' }} />
+        </Box>
+    }
 
     return (
         <>
-            {showAnalyse && <IntroDialog title={strings.analyse_title} open={showAnalyse} steps={[Analyse()]} handleClose={handleClose} customButton={<IconButton sx={{ color: 'primary' }}><ReplayIcon /></IconButton>} />}
+            {showAnalyse && <IntroDialog title={localizedStrings.analyse_title} open={showAnalyse} steps={[Analyse()]} handleClose={handleClose} customButton={<IconButton sx={{ color: 'primary' }}><ReplayIcon /></IconButton>} />}
             {graphVisible &&
                 <Box sx={{ animation: `${scaleInVerCenter} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`, width: '100%', background: theme.palette.secondary.light, border: 1, borderRadius: 2, borderColor: theme.palette.secondary.dark }}>
-                    {jsonError ? <Box sx={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        color: 'red',
-                        height: '500px',
-                        width: '100%',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}>
+                    {jsonError ? <Box
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'row',
+                            color: 'red',
+                            height: '500px',
+                            width: '100%',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                        }}>
                         <ErrorOutlineIcon sx={{ mx: 1 }} />
-                        <Typography>{strings.json_error}</Typography>
-                    </Box> : <Tree
-                        data={blockJson}
-                        height={500}
-                        width={width}
-                        animated={true}
-                        labelProp={"value"}
-                        keyProp={"gain"}
-                        getChildren={getChildren}
-                        svgProps={{
-                            className: 'custom'
-                        }} />}
+                        <Typography>{localizedStrings.json_error}</Typography>
+                    </Box> : <ResponsiveContainer width='100%' height={500}>
+                        <Tree
+                            data={blockJson}
+                            animated={true}
+                            labelProp={"value"}
+                            keyProp={"gain"}
+                            getChildren={getChildren}
+                            svgProps={{
+                                className: 'custom'
+                            }} />
+                    </ResponsiveContainer>}
                 </Box>}
-            <Box ref={treeBoxRef} sx={{ flexDirection: 'row', my: 2, flex: 1, display: 'flex', alignItems: 'end' }}>
+            <Box sx={{ flexDirection: 'row', my: 2, flex: 1, display: 'flex', alignItems: 'end' }}>
                 {functionalities.map((val: any[], index: number) =>
                     <>
                         <Button
@@ -351,7 +346,7 @@ export function Blockly(props: { xmlKey: string }) {
                             color: 'red',
                         }}>
                             <ErrorOutlineIcon sx={{ mx: 1 }} />
-                            <Typography>{strings.json_error}</Typography>
+                            <Typography>{localizedStrings.json_error}</Typography>
                         </Box>}
                     </Box>
                 </Grid2>

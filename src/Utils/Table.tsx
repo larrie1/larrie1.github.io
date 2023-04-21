@@ -5,7 +5,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { useState } from 'react';
 import { useTheme } from '@mui/material/styles'
-import { strings } from '../Res/localization';
+import { localizedStrings } from '../Res/localization';
 
 const _ = require('lodash');
 
@@ -16,19 +16,19 @@ export function createTable(data: any, target: string, features: string[], setDa
         features: features,
         addRow: () => {
             const newVal = {
-                [strings.result]: undefined,
+                [localizedStrings.result]: undefined,
                 [target]: undefined
             }
             for (var i = 0; i < features.length; i++) {
                 let feature = features[i]
-                newVal[feature] = _.sample(_.map(data, feature))
+                newVal[feature] = _.sample(_.uniq(_.map(data, feature)))
             }
             setData(
                 [...data, newVal]
             )
         },
         addResult: (val: any, index: number) => {
-            let result = strings.result
+            let result = localizedStrings.result
             data[index][result] = val
             setData([...data])
         }
@@ -48,9 +48,9 @@ export function BasicTable() {
             {table => {
                 let dataFiltered = table.data.map(row =>
                     _.reduce(row, function (result: any, value: any, key: string) {
-                        if (isResultVisible && key === strings.result) {
+                        if (isResultVisible && key === localizedStrings.result) {
                             result[key] = value
-                        } else if (key !== strings.result) {
+                        } else if (key !== localizedStrings.result) {
                             result[key] = value
                         }
                         return result
@@ -83,7 +83,7 @@ export function BasicTable() {
                                         key={index}
                                         hover={true}
                                         sx={{
-                                            background: row[strings.result] !== undefined ? row[table.target] === undefined ? alpha(theme.palette.primary.main, .3) : row[strings.result] === row[table.target] ? alpha('#009688', .3) : alpha('#f44336', .3) : 'transparent',
+                                            background: row[localizedStrings.result] !== undefined ? row[table.target] === undefined ? alpha(theme.palette.primary.main, .3) : row[localizedStrings.result] === row[table.target] ? alpha('#009688', .3) : alpha('#f44336', .3) : 'transparent',
                                             '&:last-child td, &:last-child th': { border: 0 },
                                         }} >
                                         {_.map(row, (value: any, key: any) =>

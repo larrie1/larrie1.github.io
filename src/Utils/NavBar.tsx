@@ -13,7 +13,7 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Container from '@mui/material/Container';
 import { userPrefsContext } from '../context';
-import { strings } from '../Res/localization';
+import { localizedStrings } from '../Res/localization';
 import { useLocation } from 'react-router';
 import { BreakfastDiningTwoTone } from '@mui/icons-material';
 
@@ -22,7 +22,7 @@ export function NavBar() {
     const userPrefs = React.useContext(userPrefsContext)
     const [isOpen, setIsOpen] = useState(false)
     const [isActive, setActive] = useState(-1)
-    const pages = [strings.game, strings.generator]
+    const pages = [localizedStrings.game, localizedStrings.generator]
     const location = useLocation()
 
     const onMenuClick = () => {

@@ -1,5 +1,8 @@
 import Blockly from 'blockly/core';
 
+/**
+ * DarkTheme for the Blockly Workspace.
+ */
 export const darkTheme = Blockly.Theme.defineTheme('dark', {
     'base': Blockly.Themes.Zelos,
     'componentStyles': {
@@ -13,6 +16,9 @@ export const darkTheme = Blockly.Theme.defineTheme('dark', {
     name: 'dark'
 });
 
+/**  
+ *  LightTheme for the Blockly Workspace. 
+ */
 export const lightTheme = Blockly.Theme.defineTheme('light', {
     'base': Blockly.Themes.Classic,
     'componentStyles': {

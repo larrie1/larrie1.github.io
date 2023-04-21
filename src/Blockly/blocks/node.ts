@@ -1,6 +1,6 @@
 import Blockly from 'blockly'
 import { gain, NODE_TYPES } from '../../ID3/decision-tree';
-import { strings } from '../../Res/localization';
+import { localizedStrings } from '../../Res/localization';
 import { jsonGenerator } from '../generators/json_generator';
 import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
@@ -27,7 +27,7 @@ export function createLeaf(leaf: string, key: number) {
             this.setInputsInline(true);
             this.setOutput(true, null);
             this.setColour(180);
-            this.setTooltip(strings.leaf_tooltip);
+            this.setTooltip(localizedStrings.leaf_tooltip);
             this.setHelpUrl("");
         }
     };
@@ -52,7 +52,6 @@ export function createNode(data: any, target: string, features: string[]) {
             _.remove(filteredFeatures, (feature: any) => feature === parentBlock!!.getFieldValue('DECISION'))
             parentBlock = parentBlock.getParent()
         }
-        //console.log(filteredFeatures)
         filteredData.map((row: any) => {
             _.reduce(row, function(result: any, value: any, key: any) {
                 if (filteredFeatures.includes(key)) {
@@ -61,15 +60,6 @@ export function createNode(data: any, target: string, features: string[]) {
                 return result 
             }, {})
         })
-        /*_.forEach(filteredData, function(row: any) {
-            _.reduce(row, function(result: any, value: any, key: any) {
-                if (filteredFeatures.includes(key)) {
-                    result[key] = value
-                }
-                return result 
-            }, {})
-        })*/
-        //console.log(filteredData)
 
         while (choice) {
             counter++
@@ -99,7 +89,7 @@ export function createNode(data: any, target: string, features: string[]) {
                 .appendField(new Blockly.FieldDropdown(this.generateDecisions, this.validate), "DECISION")
             this.setOutput(true, null)
             this.setColour(230)
-            this.setTooltip(strings.node_tooltip)
+            this.setTooltip(localizedStrings.node_tooltip)
             this.setHelpUrl("")
             this.updateShape(this.minInputs)
         },

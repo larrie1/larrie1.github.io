@@ -1,11 +1,11 @@
-import { Backdrop, Box, Button, Checkbox, IconButton, stepClasses, Typography } from "@mui/material";
+import { Backdrop, Box, Button, Checkbox, IconButton, Typography } from "@mui/material";
 import { useTheme } from '@mui/material/styles'
 import { useEffect, useState } from "react";
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft';
 import CloseIcon from '@mui/icons-material/Close';
-import { Headline } from "../Utils/Headline";
-import { strings } from "../Res/localization";
+import { Headline } from "../../Utils/Headline";
+import { localizedStrings } from "../../Res/localization";
 
 export function IntroDialog(props: { open: boolean, title: string, steps: any[], handleClose: () => void, handleNotAgain?: () => void, customButton?: any }) {
     const theme = useTheme()
@@ -49,7 +49,7 @@ export function IntroDialog(props: { open: boolean, title: string, steps: any[],
                 <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                     {props.handleNotAgain !== undefined && step == props.steps.length -1 && <Box sx={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
                         <Typography variant={'body2'} color={'secondary.dark'}>
-                            {strings.not_again}
+                            {localizedStrings.not_again}
                         </Typography>
                         <Checkbox checked={checked} onChange={handleChange} size="small" sx={{ color: 'secondary.dark' }} />
                     </Box>}
@@ -61,7 +61,7 @@ export function IntroDialog(props: { open: boolean, title: string, steps: any[],
                             <KeyboardArrowLeftIcon fontSize="large" />
                         </IconButton>)}
                         {step === props.steps.length - 1 ? <Button onClick={handleClose} sx={{ color: 'primary.main' }}>
-                            {strings.done}
+                            {localizedStrings.done}
                         </Button> : <IconButton onClick={handleNext} sx={{ color: 'primary.main' }}>
                             <KeyboardArrowRightIcon fontSize="large" />
                         </IconButton>}

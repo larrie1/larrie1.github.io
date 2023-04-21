@@ -3,7 +3,7 @@ import { useTheme } from '@mui/material/styles'
 import GitHubIcon from '@mui/icons-material/GitHub';
 import InstagramIcon from '@mui/icons-material/Instagram';
 import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { strings } from '../Res/localization';
+import { localizedStrings } from '../Res/localization';
 
 export function Footer() {
     const theme = useTheme()
@@ -26,7 +26,7 @@ export function Footer() {
                 alignItems: 'center',
             }}>
                 <Typography variant='body2' color='grey.600' sx={{flex: 1}}>
-                    {strings.footer}
+                    {localizedStrings.footer}
                 </Typography>
                 <Box>
                     <IconButton href='https://github.com/larrie1'>
