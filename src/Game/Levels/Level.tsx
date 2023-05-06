@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { TableContext } from "../../context";
 import { TableButton } from "../../Utils/TableButton";
 import { Blockly } from '../../Blockly'
-import { Box, Typography } from "@mui/material";
+import { Card, Typography } from "@mui/material";
 import { Headline } from "../../Utils/Headline";
-import { useTheme } from '@mui/material/styles'
 import { scaleInVerTop } from "../../Utils/animations";
 import { localizedStrings } from "../../Res/localization";
 import { createTable } from "../../Utils/Table";
@@ -16,7 +15,7 @@ import { createTable } from "../../Utils/Table";
  * @param data  the Object which contains all of the data for the Table
  * @returns     JSON Obj with the Table Context
  */
-function _levelModel(data: any) {
+function useLevel(data: any) {
     const [tableData, setTableData] = useState(data)
 
     useEffect(() => {
@@ -59,22 +58,17 @@ export function Level(
         task?: string,
     }
 ) {
-    const theme = useTheme()
-    const viewModel = _levelModel(props.data)
+    const state = useLevel(props.data)
 
     return (
-        <TableContext.Provider value={viewModel.table}>
+        <TableContext.Provider value={state.table}>
             {props.isUnlocked && <TableButton />}
-            <Box sx={{
+            <Card sx={{
                 animation: `${scaleInVerTop} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
-                border: 1,
-                borderColor: theme.palette.secondary.dark,
-                borderRadius: 2,
                 px: 5,
                 pb: 5,
                 pt: 3,
                 mb: 2,
-                background: theme.palette.secondary.light,
             }}>
                 <Headline
                     variant="h4"
@@ -92,7 +86,7 @@ export function Level(
                     >
                         {props.task}
                     </Typography>}
-            </Box>
+            </Card>
             <Blockly xmlKey={props.xmlKey} />
         </TableContext.Provider>
     )

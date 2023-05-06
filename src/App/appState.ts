@@ -9,7 +9,7 @@ import { localizedStrings } from "../Res/localization";
  * 
  * @returns JSON Object containing the theme and the user Preferences as a state 
  */
-export function _appModel() {
+export function _appState() {
     // Localization
     const [locale, setLocale] = useState(localStorage.getItem('locale') === null ? (localizedStrings.getInterfaceLanguage() === 'de' ? 'de' : 'en') : localStorage.getItem('locale')!!)
     localizedStrings.setLanguage(locale)

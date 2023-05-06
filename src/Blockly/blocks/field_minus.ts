@@ -4,8 +4,6 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-'use strict';
-
 import * as Blockly from 'blockly/core';
 import { getExtraBlockState } from './serialization_helper';
 
@@ -25,7 +23,7 @@ function onClick_(minusField: any) {
   block.minus();
   const newExtraState = getExtraBlockState(block);
 
-  if (oldExtraState != newExtraState) {
+  if (oldExtraState !== newExtraState) {
     Blockly.Events.fire(new Blockly.Events.BlockChange(
       block, 'mutation', null, oldExtraState, newExtraState));
   }

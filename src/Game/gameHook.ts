@@ -1,10 +1,14 @@
 import { useState } from "react"
 
-export default function _gameModel() {
+/**
+ *  This Method handles all the Logic from the Game Component and returns a JSON state Object.
+ * 
+ * @returns JSON object containing the context and the functionalities to handle the Stepper
+ */
+export default function useGame() {
     const [activeStep, setActiveStep] = useState(0)
     const [completed, setCompleted] = useState<{ [k: number]: boolean }>([])
     const [successAnimation, setSuccessAnimation] = useState(false)
-    const [intro, setIntro] = useState(localStorage.getItem('intro') === 'true' ? true : localStorage.getItem('intro') === null ? true : false)
 
     const handleNext = () => setActiveStep(activeStep + 1)
 
@@ -13,10 +17,6 @@ export default function _gameModel() {
     const setStep = (step: number) => () => setActiveStep(step)
 
     const handleSuccess = () => setSuccessAnimation(!successAnimation)
-
-    const handleClose = () => setIntro(false)
-
-    const handleNotAgain = () => localStorage.setItem('intro', 'false')
 
     const handleComplete = () => {
         const newCompleted = completed
@@ -40,12 +40,9 @@ export default function _gameModel() {
             handleSuccess: handleSuccess,
         },
         successAnimation: successAnimation,
-        intro: intro,
         isActiveLevelUnlocked: activeStep === 0 || completed[activeStep - 1],
         handleReset: handleReset,
         handleBack: handleBack,
-        handleNotAgain: handleNotAgain,
         setStep: setStep,
-        handleClose: handleClose,
     }
 }

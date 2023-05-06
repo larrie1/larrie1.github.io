@@ -1,13 +1,15 @@
-import { Box, Container, IconButton, Typography } from '@mui/material';
-import { useTheme } from '@mui/material/styles'
-import GitHubIcon from '@mui/icons-material/GitHub';
-import InstagramIcon from '@mui/icons-material/Instagram';
-import LinkedInIcon from '@mui/icons-material/LinkedIn';
-import { localizedStrings } from '../Res/localization';
+import GitHubIcon from '@mui/icons-material/GitHub'
+import InstagramIcon from '@mui/icons-material/Instagram'
+import LinkedInIcon from '@mui/icons-material/LinkedIn'
+import { Box, Container, IconButton, Typography } from '@mui/material'
+import { localizedStrings } from '../Res/localization'
 
+/**
+ *  This Method creates a Footer which displays Basic information about the Developer.
+ * 
+ *  @returns UI representation of the Footer that is shown across all the Pages
+ */
 export function Footer() {
-    const theme = useTheme()
-
     return (
         <Box
             sx={{
@@ -15,17 +17,21 @@ export function Footer() {
                 right: 0,
                 left: 0,
                 borderTop: 1,
-                borderColor: theme.palette.secondary.dark,
+                height: '100px',
+                borderColor: 'secondary.dark',
+                display: 'flex',
+                alignItems: 'center',
                 mt: 10,
-                p: 5,
-                zIndex: 99,
             }}>
             <Container maxWidth='xl' sx={{
                 display: 'flex',
-                flexDirection: 'row',
                 alignItems: 'center',
+                flexDirection: 'row',
             }}>
-                <Typography variant='body2' color='grey.600' sx={{flex: 1}}>
+                <Typography
+                    variant='body2'
+                    color='grey.600'
+                    sx={{ flex: 1 }}>
                     {localizedStrings.footer}
                 </Typography>
                 <Box>

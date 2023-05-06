@@ -1,20 +1,27 @@
-import { Typography, Box, Stepper, Step, StepButton, Button } from '@mui/material';
-import { useTheme } from '@mui/material/styles'
-import LockIcon from '@mui/icons-material/Lock';
-import Lottie from "lottie-react";
+import useGame from './gameHook'
+import getLevel from './Levels/Levels'
+import LockIcon from '@mui/icons-material/Lock'
+import Lottie from "lottie-react"
 import success from '../Assets/lottie_success.json'
-import { StepperContext } from '../context';
-import { localizedStrings } from '../Res/localization';
-import { IntroDialog } from './Intro/Intro';
-import { getIntros } from './Intro/intros';
-import _gameModel from './model/gameModel';
-import getLevel from './Levels/Levels';
+import { Typography, Box, Stepper, Step, StepButton, Button } from '@mui/material'
+import { useTheme } from '@mui/material/styles'
+import { StepperContext } from '../context'
+import { localizedStrings } from '../Res/localization'
+import { IntroDialog } from './Intro/IntroDialog'
+import { intros as getIntros } from './Intro/intros'
 
 const steps = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5']
+const intros = getIntros
 
+/**
+ *  This Method creates the Environment for the upcoming Level. It holds the Level Overview, and controls the 
+ *  navigation within the Game aswell as the Intro.
+ * 
+ * @returns UI Representation of the Game
+ */
 export default function Game() {
-    const gameModel = _gameModel()
-    const context = gameModel.stepperContext
+    const state = useGame()
+    const context = state.stepperContext
 
     return (
         <StepperContext.Provider value={context}>
@@ -24,10 +31,7 @@ export default function Game() {
             }}>
                 <IntroDialog
                     title={localizedStrings.block_intro_title}
-                    open={gameModel.intro}
-                    steps={getIntros()}
-                    handleClose={gameModel.handleClose}
-                    handleNotAgain={gameModel.handleNotAgain} />
+                    steps={intros} />
                 <Stepper
                     nonLinear
                     alternativeLabel
@@ -43,7 +47,7 @@ export default function Game() {
                                 <StepButton
                                     disableRipple
                                     color='inherit'
-                                    onClick={gameModel.setStep(index)}>
+                                    onClick={state.setStep(index)}>
                                     <Typography variant='subtitle2'>
                                         {label}
                                     </Typography>
@@ -52,7 +56,7 @@ export default function Game() {
                         ))}
                 </Stepper>
                 <Box sx={{ position: 'relative' }}>
-                    {!gameModel.isActiveLevelUnlocked &&
+                    {!state.isActiveLevelUnlocked &&
                         <Overlay>
                             <LockIcon sx={{
                                 position: 'absolute',
@@ -65,7 +69,7 @@ export default function Game() {
                                 m: 'auto',
                             }} />
                         </Overlay>}
-                    {gameModel.successAnimation &&
+                    {state.successAnimation &&
                         <Overlay>
                             <Lottie
                                 animationData={success}
@@ -82,23 +86,23 @@ export default function Game() {
                         </Overlay>
                     }
                     {getLevel(
-                        gameModel.stepperContext.activeStep,
-                        gameModel.stepperContext.completed[context.activeStep - 1]
+                        context.activeStep,
+                        context.completed[context.activeStep - 1]
                     )}
                 </Box>
                 <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, mt: 5 }}>
                     <Button
                         color="inherit"
                         disabled={context.activeStep === 0}
-                        onClick={gameModel.handleBack}
+                        onClick={state.handleBack}
                         sx={{ mr: 1 }}
                     >
                         {localizedStrings.back}
                     </Button>
                     <Button
                         color="inherit"
-                        disabled={!gameModel.isActiveLevelUnlocked}
-                        onClick={gameModel.handleReset}
+                        disabled={!state.isActiveLevelUnlocked}
+                        onClick={state.handleReset}
                         sx={{ mr: 1 }}
                     >
                         {localizedStrings.reset}
@@ -115,6 +119,12 @@ export default function Game() {
     )
 }
 
+/**
+ *  This Method creates an Overlay which will be displayed when a Level isn't unlocked or when you finish the Level.
+ * 
+ *  @param props    children: UI element which should be displayed within the Overlay
+ *  @returns        UI representation of an overlay
+ */
 function Overlay(props: { children: any }) {
     return (
         <Box sx={{

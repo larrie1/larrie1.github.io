@@ -1,15 +1,30 @@
+import AddIcon from '@mui/icons-material/Add'
+import VisibilityIcon from '@mui/icons-material/Visibility'
+import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
 import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Typography, Button, alpha } from '@mui/material'
-import { TableContext } from '../context';
-import AddIcon from '@mui/icons-material/Add';
-import VisibilityIcon from '@mui/icons-material/Visibility';
-import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-import { useState } from 'react';
+import { TableContext } from '../context'
+import { useState } from 'react'
 import { useTheme } from '@mui/material/styles'
-import { localizedStrings } from '../Res/localization';
+import { localizedStrings } from '../Res/localization'
 
 const _ = require('lodash');
 
-export function createTable(data: any, target: string, features: string[], setData: any) {
+/**
+ *  This Method creates a Table containing all the information it takes to create the UI for the table.
+ *  It will add a addRow method to create new Testdata and a addResult method to store the result. 
+ * 
+ * @param data Containing the main Data from the Table
+ * @param target String defining the Decision that will be targeted
+ * @param features A list of features which the decision will be based on
+ * @param setData Sets the new modified Table 
+ * @returns 
+ */
+export function createTable(
+    data: any,
+    target: string,
+    features: string[],
+    setData: (data: any) => void,
+) {
     return {
         data: data,
         target: target,
@@ -35,6 +50,13 @@ export function createTable(data: any, target: string, features: string[], setDa
     }
 }
 
+
+/**
+ *  This Method creates a Table with two Buttons at the bottom. 
+ *  With the Buttons you can add a random test row and show or hide the result column.
+ * 
+ *  @returns UI representation of a basic Table
+ */
 export function BasicTable() {
     const [isResultVisible, setResultVisible] = useState(true)
     const theme = useTheme()
@@ -59,16 +81,20 @@ export function BasicTable() {
 
                 return (
                     <TableContainer
-                        sx={{ textAlign: 'end', height: '100%' }}>
+                        sx={{
+                            textAlign: 'end',
+                            height: '100%',
+                        }}>
                         <Table stickyHeader sx={{ flex: '1' }}>
+
+                            {/* Head of the Table */}
                             <TableHead>
                                 <TableRow
                                     key={"head"}
-                                    hover={true}
-                                    sx={{ borderColor: 'black' }}>
+                                    hover={true}>
                                     {_.map(dataFiltered[0], (_: any, key: any) =>
                                         <TableCell
-                                            key={Math.random().toString(16).slice(2)}
+                                            key={Math.random()}
                                             align={key === table.target ? undefined : 'right'}>
                                             <Typography variant='h5'>
                                                 {key}
@@ -77,18 +103,26 @@ export function BasicTable() {
                                     )}
                                 </TableRow>
                             </TableHead>
+
+                            {/* Tablecontent */}
                             <TableBody>
                                 {dataFiltered.map((row: any, index: number) => (
                                     <TableRow
                                         key={index}
                                         hover={true}
                                         sx={{
-                                            background: row[localizedStrings.result] !== undefined ? row[table.target] === undefined ? alpha(theme.palette.primary.main, .3) : row[localizedStrings.result] === row[table.target] ? alpha('#009688', .3) : alpha('#f44336', .3) : 'transparent',
+                                            backgroundColor: row[localizedStrings.result] !== undefined ? (
+                                                row[table.target] === undefined ?
+                                                    alpha(theme.palette.primary.main, .3) : (
+                                                        row[localizedStrings.result] === row[table.target] ?
+                                                            alpha('#009688', .3) : alpha('#f44336', .3)
+                                                    )
+                                            ) : 'transparent',
                                             '&:last-child td, &:last-child th': { border: 0 },
                                         }} >
                                         {_.map(row, (value: any, key: any) =>
                                             <TableCell
-                                                key={Math.random().toString(16).slice(2)}
+                                                key={Math.random()}
                                                 component={key === table.target ? 'th' : undefined}
                                                 scope={key === table.target ? 'row' : undefined}
                                                 align={key === table.target ? undefined : 'right'} >
@@ -101,31 +135,19 @@ export function BasicTable() {
                                 ))}
                             </TableBody>
                         </Table>
-                        <Button
-                            variant='outlined'
-                            onClick={table.addRow}
-                            sx={{
-                                m: 1,
-                                borderRadius: 25,
-                                borderColor: 'primary',
-                                backgroundColor: 'transparent',
-                            }}>
+
+                        {/* Buttons to modify table */}
+                        <Button onClick={table.addRow}>
                             <AddIcon sx={{ mr: 1 }} />
                             <Typography>
-                                Add Random Test Row
+                                {localizedStrings.random_test}
                             </Typography>
                         </Button>
-                        <Button
-                            variant='outlined'
-                            onClick={onResultClick}
-                            sx={{
-                                m: 1,
-                                borderRadius: 25,
-                                borderColor: 'primary',
-                                backgroundColor: 'transparent',
-                            }}>
-                            {isResultVisible ? <VisibilityOffIcon sx={{ mr: 1 }} /> : <VisibilityIcon sx={{ mr: 1 }} />}
-                            {isResultVisible ? <Typography>Hide Result</Typography> : <Typography>Show Result</Typography>}
+                        <Button onClick={onResultClick}>
+                            {isResultVisible ?
+                                <VisibilityOffIcon sx={{ mr: 1 }} /> :
+                                <VisibilityIcon sx={{ mr: 1 }} />}
+                            <Typography>{localizedStrings.result}</Typography>
                         </Button>
                     </TableContainer>
                 )

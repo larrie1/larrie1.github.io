@@ -1,3 +1,6 @@
+/**
+ *  German translations
+ */
 export const de = {
     title: 'Entscheidungsbäume',
     subtitle: 'Ein Lerntool zum verstehen von Entcheidungsbäumen',
@@ -80,4 +83,16 @@ export const de = {
     fruit: 'Obst',
     vegetables: 'Gemüse',
     taste: 'Geschmack',
+    random_test: 'Zufälligen Test hinzufügen',
+    generator_step1: 'Bitte trage hier ein welche Entscheidung du mithilfe des Baums treffen möchtest. Es kann sich um alles deiner Wahl handeln, jedoch kannst du deine Wahl nicht mehr ändern.',
+    generator_step2: 'Hier kannst du nun deine Features einfügen, die bestimmen für welche Entscheidung wir uns entscheiden bzw. woran man deine Entscheidung messen kann. Ein Beispiel wäre, dass du anhand von Fell einen Hund von einem Menschen unterscheiden kannst.',
+    generator_step3: 'Fülle hier deine Tabelle mit Leben! Du solltest für jede Entscheidung alle Parameter ausfüllen.',
+    decision: 'Entscheidung',
+    features: 'Features',
+    data: 'Daten',
+    generator_title: 'Erstelle dir dein Eigenes Level!',
+    valid_features: 'Es gibt noch unbelegte Features!',
+    enough_features: 'Es sind noch nicht genügend Features definiert worden!',
+    missing_data: 'Es fehlen noch daten in der Tabelle!',
+
 }

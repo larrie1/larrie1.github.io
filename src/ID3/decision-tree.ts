@@ -1,11 +1,20 @@
-const assert = require('assert');
 const _ = require('lodash');
 
+/**
+ * 
+ */
 export const NODE_TYPES = {
   DECISION: 'decision',
   LEAF: 'leaf'
 }
 
+/**
+ * 
+ * @param data 
+ * @param target 
+ * @param features 
+ * @returns 
+ */
 export function createTree(
   data: any,
   target: string,
@@ -49,6 +58,11 @@ export function createTree(
   return node;
 }
 
+/**
+ * 
+ * @param vals 
+ * @returns 
+ */
 export function entropy(vals: any) {
   let uniqueVals = _.uniq(vals);
   let probs = uniqueVals.map((x: any) => {
@@ -64,6 +78,13 @@ export function entropy(vals: any) {
   }, 0);
 }
 
+/**
+ * 
+ * @param data 
+ * @param target 
+ * @param feature 
+ * @returns 
+ */
 export function gain(data: any, target: string, feature: string) {
   let attrVals = _.uniq(_.map(data, feature));
   let setEntropy = entropy(_.map(data, target));
@@ -84,6 +105,13 @@ export function gain(data: any, target: string, feature: string) {
   return setEntropy - sumOfEntropies;
 }
 
+/**
+ * 
+ * @param data 
+ * @param target 
+ * @param features 
+ * @returns 
+ */
 export function maxGain(data: any, target: string, features: string[]) {
   let maxGain, maxGainFeature;
   for (let feature of features) {
@@ -96,6 +124,12 @@ export function maxGain(data: any, target: string, features: string[]) {
   return { gain: maxGain, name: maxGainFeature };
 }
 
+/**
+ * 
+ * @param value 
+ * @param list 
+ * @returns 
+ */
 export function prob(value: any, list: any) {
   let occurrences = _.filter(list, function (element: any) {
     return element === value
@@ -106,10 +140,20 @@ export function prob(value: any, list: any) {
   return numOccurrences / numElements;
 }
 
+/**
+ * 
+ * @param n 
+ * @returns 
+ */
 export function log2(n: any) {
   return Math.log(n) / Math.log(2);
 }
 
+/**
+ * 
+ * @param list 
+ * @returns 
+ */
 export function mostCommon(list: any) {
   let elementFrequencyMap: any = {};
   let largestFrequency = -1;

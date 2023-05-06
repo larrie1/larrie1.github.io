@@ -19,11 +19,12 @@ import { useTheme } from '@mui/material/styles'
 import { codeGenerator, createNode } from './blocks/node';
 import { createTree } from '../ID3/decision-tree';
 import { localizedStrings } from '../Res/localization';
-import { IntroDialog } from '../Game/Intro/Intro';
+import { IntroDialog } from '../Game/Intro/IntroDialog';
 import { createToolBox } from './toolbox';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, TooltipProps, ResponsiveContainer } from 'recharts';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
 import ReplayIcon from '@mui/icons-material/Replay';
+import { CustomDialog } from '../Utils';
 
 const _ = require('lodash');
 
@@ -42,7 +43,6 @@ export function Blockly(props: { xmlKey: string }) {
     const { target } = useContext(TableContext)
     const { features } = useContext(TableContext)
     const { addResult } = useContext(TableContext)
-    const treeBoxRef = useRef<HTMLDivElement>(null)
     const [seed, setSeed] = useState(1)
 
     createNode(data, target, features)
@@ -211,10 +211,11 @@ export function Blockly(props: { xmlKey: string }) {
         return null
     }
 
-    const Analyse = () => {
+    function Analyse() {
         var dt = createTree(data, target, features);
         let blockSplits = getSplits(blockJson)
         let id3Splits = getSplits(dt)
+        console.log(analyseData(blockJson, dt))
         return (
             <>
                 <ResponsiveContainer width='90%' height={300}>
@@ -266,7 +267,13 @@ export function Blockly(props: { xmlKey: string }) {
 
     return (
         <>
-            {showAnalyse && <IntroDialog title={localizedStrings.analyse_title} open={showAnalyse} steps={[Analyse()]} handleClose={handleClose} customButton={<IconButton sx={{ color: 'primary' }}><ReplayIcon /></IconButton>} />}
+            <CustomDialog
+                handleClose={handleClose}
+                bottomNavigation={undefined}
+                open={showAnalyse}
+                title={localizedStrings.analyse_title}>
+                {showAnalyse && <Analyse />}
+            </CustomDialog>
             {graphVisible &&
                 <Box sx={{ animation: `${scaleInVerCenter} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`, width: '100%', background: theme.palette.secondary.light, border: 1, borderRadius: 2, borderColor: theme.palette.secondary.dark }}>
                     {jsonError ? <Box
@@ -298,19 +305,16 @@ export function Blockly(props: { xmlKey: string }) {
                     <>
                         <Button
                             key={Math.random()}
-                            variant={index == 0 ? 'contained' : 'outlined'}
+                            variant={index === 0 ? 'contained' : 'outlined'}
                             onClick={val[1]}
                             disabled={jsonError}
                             sx={{
-                                height: index == 0 ? '50px' : '40px',
-                                borderRadius: 25,
-                                borderColor: 'primary',
-                                backgroundColor: index == 0 ? 'primary' : 'transparent',
+                                height: index === 0 ? '50px' : '40px',
                                 mx: 1,
                             }}>
                             {val[0]}
                         </Button>
-                        {index == 2 && <Box sx={{ flex: 1 }} />}
+                        {index === 2 && <Box sx={{ flex: 1 }} />}
                     </>
                 )}
             </Box>

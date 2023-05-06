@@ -1,26 +1,33 @@
-import { Box, Typography } from "@mui/material"
-import { localizedStrings } from "../../Res/localization";
 import blockHighlightedChoices from '../../Assets/block_highlighted_choices.png'
 import blockHighlightedDecision from '../../Assets/block_highlighted_decision.png'
 import blockHighlightedPlus from '../../Assets/block_highlighted_plus.png'
 import blockHighlightedRightConnectors from '../../Assets/block_highlighted_right_connectors.png'
 import blockHighlightedLeftConnector from '../../Assets/block_highlighted_left_connector.png'
+import { Box, Typography } from "@mui/material"
+import { localizedStrings } from "../../Res/localization";
 
-export const getIntros = () => [
-    createIntro(blockHighlightedDecision, localizedStrings.block_intro_1),
-    createIntro(blockHighlightedChoices, localizedStrings.block_intro_2),
-    createIntro(blockHighlightedPlus, localizedStrings.block_intro_3),
-    createIntro(blockHighlightedLeftConnector, localizedStrings.block_intro_3),
-    createIntro(blockHighlightedRightConnectors, localizedStrings.block_intro_3),
+export const intros = [
+    <Intro img={blockHighlightedDecision} description={localizedStrings.block_intro_1} />,
+    <Intro img={blockHighlightedChoices} description={localizedStrings.block_intro_2} />,
+    <Intro img={blockHighlightedPlus} description={localizedStrings.block_intro_3} />,
+    <Intro img={blockHighlightedLeftConnector} description={localizedStrings.block_intro_3} />,
+    <Intro img={blockHighlightedRightConnectors} description={localizedStrings.block_intro_3} />,
 ]
 
-function createIntro(img: any, description: string) {
+/**
+ * This Method creates a step for the Intro. It just holds an image and a description of the respective step. 
+ * 
+ * @param img The Image which will be displayed to describe this step
+ * @param description The Text wich will be displayed to describe this step
+ * @returns UI representation of an Intro step
+ */
+function Intro(props: {img: any, description: string}) {
     return (
         <>
             <Box
                 component='img'
                 alt='Blockly Block Example'
-                src={img}
+                src={props.img}
                 sx={{
                     mt: 7,
                     mb: 4,
@@ -28,9 +35,16 @@ function createIntro(img: any, description: string) {
                     display: 'flex',
                     width: '60%',
                 }} />
-                <Box sx={{height: '1px', backgroundColor: 'secondary.dark', mx: 4, mb: 3}} />
-            <Typography variant={"body1"} sx={{ mb: 3, mx: 1 }}>
-                {description}
+            <Box sx={{
+                height: '1px',
+                backgroundColor: 'secondary.dark',
+                mx: 4,
+                mb: 3,
+            }} />
+            <Typography
+                variant={"body1"}
+                sx={{ mb: 3, mx: 1 }}>
+                {props.description}
             </Typography>
         </>
     )

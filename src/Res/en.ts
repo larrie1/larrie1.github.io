@@ -1,3 +1,6 @@
+/**
+ *  English Translations
+ */
 export const en = {
     title: 'Decision Trees',
     subtitle: 'A Learntool to understand Machine Learning Techniques',
@@ -82,4 +85,15 @@ export const en = {
     fruit: 'Obst',
     vegetables: 'Gemüse',
     taste: 'Geschmack',
+    random_test: 'Add random test',
+    generator_step1: 'Bitte trage hier ein welche Entscheidung du mithilfe des Baums treffen möchtest. Es kann sich um alles deiner Wahl handeln, jedoch kannst du deine Wahl nicht mehr ändern.',
+    generator_step2: '',
+    generator_step3: '',
+    decision: 'Decision',
+    features: 'Features',
+    data: 'Data',
+    generator_title: '',
+    valid_features: 'Es gibt noch unbelegte Features!',
+    enough_features: '',
+    missing_data: '',
 }
