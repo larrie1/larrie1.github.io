@@ -27,8 +27,10 @@ export default function useGame() {
     }
 
     const handleReset = () => {
+        localStorage.setItem('intro', 'true')
         setActiveStep(0)
         setCompleted([])
+        window.location.reload()
     }
 
     return {

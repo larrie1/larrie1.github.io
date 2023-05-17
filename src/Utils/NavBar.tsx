@@ -10,7 +10,6 @@ import { userPrefsContext } from '../context'
 import { localizedStrings } from '../Res/localization'
 import { useLocation } from 'react-router'
 
-const pages = [localizedStrings.game, localizedStrings.generator]
 const routes = ['/#/game', '/#/generator']
 
 /**
@@ -117,12 +116,14 @@ function NavButtons() {
     const theme = useTheme()
     const userPrefs = React.useContext(userPrefsContext)
     const location = useLocation()
+    const pages = [localizedStrings.game, localizedStrings.generator]
+    console.log(location.pathname)
 
     return (
         <>
             {pages.map((page, index) => (
                 <Button
-                    variant={location.pathname == routes[index] ? 'contained' : 'outlined'}
+                    variant={('/#' + location.pathname) == routes[index] ? 'contained' : 'outlined'}
                     href={routes[index]}
                     sx={{ display: 'flex' }}>
                     {page}

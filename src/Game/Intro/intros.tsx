@@ -3,10 +3,12 @@ import blockHighlightedDecision from '../../Assets/block_highlighted_decision.pn
 import blockHighlightedPlus from '../../Assets/block_highlighted_plus.png'
 import blockHighlightedRightConnectors from '../../Assets/block_highlighted_right_connectors.png'
 import blockHighlightedLeftConnector from '../../Assets/block_highlighted_left_connector.png'
+import blockClean from '../../Assets/block_clean.png'
 import { Box, Typography } from "@mui/material"
 import { localizedStrings } from "../../Res/localization";
 
 export const intros = [
+    <Intro img={blockClean} description={localizedStrings.block_intro_1} />,
     <Intro img={blockHighlightedDecision} description={localizedStrings.block_intro_1} />,
     <Intro img={blockHighlightedChoices} description={localizedStrings.block_intro_2} />,
     <Intro img={blockHighlightedPlus} description={localizedStrings.block_intro_3} />,

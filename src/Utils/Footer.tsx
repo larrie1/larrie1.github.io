@@ -21,7 +21,7 @@ export function Footer() {
                 borderColor: 'secondary.dark',
                 display: 'flex',
                 alignItems: 'center',
-                mt: 10,
+                mt: 2,
             }}>
             <Container maxWidth='xl' sx={{
                 display: 'flex',

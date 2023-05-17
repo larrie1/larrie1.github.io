@@ -43,7 +43,6 @@ export const theme = (mode: PaletteMode) => ({
                             key: Math.random(),
                             borderRadius: 25,
                             borderColor: 'primary',
-                            backgroundColor: 'transparent',
                             m: 1,
                         }
                     ),

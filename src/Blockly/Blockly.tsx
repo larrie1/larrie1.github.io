@@ -1,4 +1,4 @@
-import { Box, Button, CircularProgress, IconButton, Typography } from '@mui/material';
+import { Box, Button, CircularProgress, IconButton, SvgIcon, Typography } from '@mui/material';
 import { BlocklyWorkspace } from 'react-blockly';
 import "./Blockly.css";
 import { useContext, useEffect, useRef, useState } from 'react';
@@ -8,6 +8,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atelierCaveDark, atelierCaveLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import './blocks/';
 import './generators';
+import SvgComponent from '../Assets/logo_built_with';
 import { jsonGenerator } from './generators/json_generator';
 import { StepperContext, TableContext } from '../context';
 import Grid2 from '@mui/material/Unstable_Grid2';
@@ -19,11 +20,9 @@ import { useTheme } from '@mui/material/styles'
 import { codeGenerator, createNode } from './blocks/node';
 import { createTree } from '../ID3/decision-tree';
 import { localizedStrings } from '../Res/localization';
-import { IntroDialog } from '../Game/Intro/IntroDialog';
 import { createToolBox } from './toolbox';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, TooltipProps, ResponsiveContainer } from 'recharts';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import ReplayIcon from '@mui/icons-material/Replay';
 import { CustomDialog } from '../Utils';
 
 const _ = require('lodash');
@@ -253,7 +252,6 @@ export function Blockly(props: { xmlKey: string }) {
     const functionalities = [
         [localizedStrings.check_code, checkCode],
         [localizedStrings.show_result, showResult],
-        [localizedStrings.advice, handleAdvice],
         [localizedStrings.show_tree, onShowGraphClick],
         [localizedStrings.show_json, handleShowJson],
         [localizedStrings.clear_workspace, clearWorkspace],
@@ -314,7 +312,7 @@ export function Blockly(props: { xmlKey: string }) {
                             }}>
                             {val[0]}
                         </Button>
-                        {index === 2 && <Box sx={{ flex: 1 }} />}
+                        {index === 1 && <Box sx={{ flex: 1 }} />}
                     </>
                 )}
             </Box>
@@ -340,6 +338,19 @@ export function Blockly(props: { xmlKey: string }) {
                                 },
                             }}
                         />
+                        <SvgIcon
+                            component={SvgComponent}
+                            inheritViewBox
+                            sx={{
+                                display: 'flex',
+                                height: '40px',
+                                width: '100px',
+                                position: 'absolute',
+                                bottom: 0,
+                                zIndex: 80,
+                                left: 0,
+                                m: 5,
+                            }} />
                         {jsonError && <Box sx={{
                             display: 'flex',
                             flexDirection: 'row',

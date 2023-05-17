@@ -64,8 +64,8 @@ export const de = {
     car: 'Auto',
     motorcycle: 'Motorrad',
     level1_decision: 'Welches Fahrzeug?',
-    level5_description: 'Keine daten',
-    level5_task: 'keine Daten',
+    level5_description: 'Es war einmal eine leidenschaftliche Tennisspielerin namens Sarah. Sie liebte nichts mehr, als auf den Platz zu gehen und ein paar Sets mit ihren Freunden zu spielen. Sarah wusste jedoch, dass bestimmte Wetterbedingungen ihr Spiel beeinträchtigen könnten. An einem sonnigen Morgen wachte Sarah auf und überprüfte die Wetter-App auf ihrem Telefon. Sie sah, dass die Temperatur 85 Grad Fahrenheit betrug, die Luftfeuchtigkeit 70 % betrug, der Wind 8 Meilen pro Stunde wehte und die Aussicht teilweise bewölkt war. Sarah wusste, dass diese Faktoren über Erfolg oder Misserfolg ihres Tennisspiels entscheiden konnten. Sie begann über ihre Vorlieben für jeden dieser Faktoren nachzudenken. Es machte ihr nichts aus, bei warmem Wetter zu spielen, aber 85 Grad könnten ihr zu schaffen machen. Sie bevorzugte eine Luftfeuchtigkeit unter 60 % und eine Windgeschwindigkeit von nicht mehr als 5 Meilen pro Stunde. Was die Aussichten angeht, machte es ihr nichts aus, bei teilweise bewölkten Bedingungen zu spielen, aber sie bevorzugte einen sonnigen Tag. Also beschloss Sarah, eine Entscheidung basierend auf ihren Vorlieben zu treffen. Sie überprüfte die Temperatur und stellte fest, dass es für ihren Geschmack etwas zu heiß war. Auch die Luftfeuchtigkeit war etwas hoch und der Wind war stärker als ihr lieb war. Sie schaute auf die Aussicht und sah, dass es teilweise bewölkt war. Nachdem sie all diese Faktoren berücksichtigt hatte, beschloss Sarah, für diesen Tag auf Tennis zu verzichten. Sie wusste, dass die Wetterbedingungen es schwierig machen könnten, ihr bestes Spiel zu spielen, und sie wollte keine Verletzungen oder Frustrationen riskieren. Stattdessen entschied sie sich, zu Hause zu bleiben, sich zu entspannen und an einem anderen Tag Tennis zu spielen, wenn das Wetter ihr besser gefiel.',
+    level5_task: 'Versuchen Sie, Sarah zu helfen und erstellen Sie einen Entscheidungsbaum, der ihre Entscheidung vorhersagt!',
     level2_description: 'Keine daten',
     level2_task: 'keine Daten',
     level3_description: 'Keine daten',
@@ -74,7 +74,7 @@ export const de = {
     level4_task: 'keine Daten',
     level4_decision: 'Wie ist das Wetter',
     level5_decision: 'Tennis spielen',
-    generator_description: 'This is the Generator, here you can test your skills against the ID3 Machine Learning Algorithm. Create a Data Set and try to solve it by creating a Decision Tree.',
+    generator_description: 'Dies ist der Generator. Hier können Sie Ihre Fähigkeiten anhand des ID3-Algorithmus für maschinelles Lernen testen. Erstellen Sie einen Datensatz und versuchen Sie, ihn durch die Erstellung eines Entscheidungsbaums zu lösen.',
     level2_decision: 'Obst oder Gemüse?',
     sweet: 'süß',
     salty: 'salzig',
@@ -94,5 +94,8 @@ export const de = {
     valid_features: 'Es gibt noch unbelegte Features!',
     enough_features: 'Es sind noch nicht genügend Features definiert worden!',
     missing_data: 'Es fehlen noch daten in der Tabelle!',
+    correct: 'Richtig',
+    incorrect: 'Falsch',
+    guessed: 'Vorhersage',
 
 }

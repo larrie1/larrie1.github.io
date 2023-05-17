@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
-import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Typography, Button, alpha } from '@mui/material'
+import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Typography, Button, alpha, Box } from '@mui/material'
 import { TableContext } from '../context'
 import { useState } from 'react'
 import { useTheme } from '@mui/material/styles'
@@ -136,6 +136,45 @@ export function BasicTable() {
                             </TableBody>
                         </Table>
 
+                        {/* Legend */}
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'row',
+                                position: 'absolute',
+                                p: 1,
+                                bottom: 0,
+                                justifyContent: 'end',
+                                borderTop: 1,
+                                borderRight: 1,
+                                borderColor: 'secondary.dark',
+                            }}>
+                            <Typography
+                                color={'#009688'}
+                                sx={{
+                                    mr: 1,
+                                    fontSize: 10,
+                                }}>
+                                {localizedStrings.correct}
+                            </Typography>
+                            <Typography
+                                color={'#f44336'}
+                                sx={{
+                                    mr: 1,
+                                    fontSize: 10,
+                                }}>
+                                {localizedStrings.incorrect}
+                            </Typography>
+                            <Typography
+                                color={'primary'}
+                                sx={{
+                                    mr: 1,
+                                    fontSize: 10,
+                                }}>
+                                {localizedStrings.guessed}
+                            </Typography>
+                        </Box>
+
                         {/* Buttons to modify table */}
                         <Button onClick={table.addRow}>
                             <AddIcon sx={{ mr: 1 }} />
@@ -147,7 +186,9 @@ export function BasicTable() {
                             {isResultVisible ?
                                 <VisibilityOffIcon sx={{ mr: 1 }} /> :
                                 <VisibilityIcon sx={{ mr: 1 }} />}
-                            <Typography>{localizedStrings.result}</Typography>
+                            <Typography>
+                                {localizedStrings.result}
+                            </Typography>
                         </Button>
                     </TableContainer>
                 )

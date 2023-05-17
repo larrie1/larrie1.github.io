@@ -90,7 +90,7 @@ export default function Game() {
                         context.completed[context.activeStep - 1]
                     )}
                 </Box>
-                <Box sx={{ display: 'flex', flexDirection: 'row', pt: 2, mt: 5 }}>
+                <Box sx={{ display: 'flex', flexDirection: 'row', mt: 2 }}>
                     <Button
                         color="inherit"
                         disabled={context.activeStep === 0}
