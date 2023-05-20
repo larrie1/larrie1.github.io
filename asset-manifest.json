@@ -1,11 +1,12 @@
 {
   "files": {
     "main.css": "/static/css/main.423dae38.css",
-    "main.js": "/static/js/main.9b284390.js",
+    "main.js": "/static/js/main.51e6e3ff.js",
     "static/media/block5.png": "/static/media/block5.b60c67b4cbd33c83ffe1.png",
     "static/media/blockly1.png": "/static/media/blockly1.b8a8688fbde6a28ead04.png",
     "static/media/block3.png": "/static/media/block3.e8fbc20f5d98bc73129c.png",
     "static/media/roboto-all-400-normal.woff": "/static/media/roboto-all-400-normal.c5d001fa922fa66a147f.woff",
+    "static/media/block_connected.png": "/static/media/block_connected.80be9a4c22866b46c333.png",
     "static/media/block4.png": "/static/media/block4.eb6f81c29e3792fb389f.png",
     "static/media/block_highlighted_plus.png": "/static/media/block_highlighted_plus.78164a394c85cea9e408.png",
     "static/media/block_highlighted_choices.png": "/static/media/block_highlighted_choices.5b93a8831be0237331cc.png",
@@ -13,8 +14,11 @@
     "static/media/block_highlighted_left_connector.png": "/static/media/block_highlighted_left_connector.192894de539bb1d8d38d.png",
     "static/media/block_highlighted_decision.png": "/static/media/block_highlighted_decision.097bbd9d0aac8567e813.png",
     "static/media/block_clean.png": "/static/media/block_clean.869dbe45788a61bfa24a.png",
+    "static/media/undraw_bibliophile.svg": "/static/media/undraw_bibliophile.a0b09ac0bb8fff2b79788a37f77d26b7.svg",
     "static/media/logo.png": "/static/media/logo.fe972cf276c2f01fee2a.png",
+    "static/media/undraw_gaming.svg": "/static/media/undraw_gaming.b6570bf4f678124473058833b4d381d8.svg",
     "static/media/undraw_page_not_found.svg": "/static/media/undraw_page_not_found.bdf1c60c297dc6528f56fe6a382dacdf.svg",
+    "static/media/undraw_building_blocks.svg": "/static/media/undraw_building_blocks.329c66f0728393baa7918c0ebc80d69a.svg",
     "static/media/roboto-latin-400-normal.woff2": "/static/media/roboto-latin-400-normal.b009a76ad6afe4ebd301.woff2",
     "static/media/roboto-cyrillic-ext-400-normal.woff2": "/static/media/roboto-cyrillic-ext-400-normal.804378952da8a10faae2.woff2",
     "static/media/roboto-latin-ext-400-normal.woff2": "/static/media/roboto-latin-ext-400-normal.861b791f9de857a6e7bc.woff2",
@@ -25,10 +29,10 @@
     "static/media/undraw_arrow.svg": "/static/media/undraw_arrow.2c95932e67e89b146a46a04e387012ab.svg",
     "index.html": "/index.html",
     "main.423dae38.css.map": "/static/css/main.423dae38.css.map",
-    "main.9b284390.js.map": "/static/js/main.9b284390.js.map"
+    "main.51e6e3ff.js.map": "/static/js/main.51e6e3ff.js.map"
   },
   "entrypoints": [
     "static/css/main.423dae38.css",
-    "static/js/main.9b284390.js"
+    "static/js/main.51e6e3ff.js"
   ]
 }
