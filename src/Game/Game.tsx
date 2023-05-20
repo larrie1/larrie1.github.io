@@ -3,7 +3,9 @@ import getLevel from './Levels/Levels'
 import LockIcon from '@mui/icons-material/Lock'
 import Lottie from "lottie-react"
 import success from '../Assets/lottie_success.json'
-import { Typography, Box, Stepper, Step, StepButton, Button } from '@mui/material'
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
+import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
+import { Typography, Box, Stepper, Step, StepButton, Button, Card } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { StepperContext } from '../context'
 import { localizedStrings } from '../Res/localization'
@@ -11,7 +13,6 @@ import { IntroDialog } from './Intro/IntroDialog'
 import { intros as getIntros } from './Intro/intros'
 
 const steps = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5']
-const intros = getIntros
 
 /**
  *  This Method creates the Environment for the upcoming Level. It holds the Level Overview, and controls the 
@@ -21,6 +22,7 @@ const intros = getIntros
  */
 export default function Game() {
     const state = useGame()
+    const intros = getIntros()
     const context = state.stepperContext
 
     return (
@@ -97,6 +99,7 @@ export default function Game() {
                         onClick={state.handleBack}
                         sx={{ mr: 1 }}
                     >
+                        <KeyboardArrowLeftIcon />
                         {localizedStrings.back}
                     </Button>
                     <Button
@@ -112,6 +115,7 @@ export default function Game() {
                         onClick={context.handleNext}
                         sx={{ mr: 1 }}>
                         {localizedStrings.next}
+                        <KeyboardArrowRightIcon />
                     </Button>
                 </Box>
             </Box>
@@ -127,17 +131,15 @@ export default function Game() {
  */
 function Overlay(props: { children: any }) {
     return (
-        <Box sx={{
+        <Card sx={{
             position: 'absolute',
             width: '100%',
             height: '100%',
             zIndex: 89,
+            background: 'transparent',
             backdropFilter: `blur(15px)`,
-            border: 1,
-            borderColor: useTheme().palette.secondary.dark,
-            borderRadius: 2,
         }}>
             {props.children}
-        </Box>
+        </Card>
     )
 }

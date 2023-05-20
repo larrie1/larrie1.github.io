@@ -5,9 +5,13 @@ import { Headline } from "../Utils"
 import { scaleInVerTop } from "../Utils/animations"
 
 /**
+ *  This Method creates the second Step. In this Step the features of the 
+ *  Level are getting collected. 
  * 
- * @param props 
- * @returns 
+ *  @param props    features: State Variable which holds the actual list of Features
+ *                  setFeatures: Function that will be called when a new Feature is getting entered
+ *                  isUnlocked: Boolean that indicates if this step is unlocked or not, because a Decision is missing
+ *  @returns        UI representation of the first step
  */
  export function Step2(props: {
     features: string[],

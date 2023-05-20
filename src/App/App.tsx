@@ -25,7 +25,7 @@ export function App() {
                 <CssBaseline />
                 <HashRouter>
                     <NavBar />
-                    <Container maxWidth='xl' sx={{pt: '64px'}}>
+                    <Container maxWidth='xl' sx={{pt: '64px', minHeight: 'calc(100vh - 100px)'}}>
                         <Routes>
                             <Route path='/' element={<Start />} />
                             <Route path='/game' element={<Game />} />

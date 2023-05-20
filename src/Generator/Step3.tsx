@@ -6,13 +6,18 @@ import { scaleInVerTop } from "../Utils/animations"
 
 /**
  * 
- * @param props 
- * @returns 
+ *  @param props    target: State Variable holding the actual Target to read from
+ *                  features: State Variable holding the actual Features to read from
+ *                  data: State Variable holding the actual Data to read from
+ *                  setData: Functioon that will be called whenever the data of the table changes
+ *                  isUnlocked: Boolean that indicates if this step is unlocked or not, because a Decision/Feature is missing
+ *  @returns        UI representation of the first step
  */
  export function Step3(props: {
     target: string,
     features: string[],
-    data: any, setData: any,
+    data: any, 
+    setData: any,
     isUnlocked: boolean,
 }) {
 

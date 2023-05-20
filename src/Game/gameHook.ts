@@ -1,4 +1,7 @@
 import { useState } from "react"
+import { useNavigate } from 'react-router-dom'
+
+const maxSteps = 4
 
 /**
  *  This Method handles all the Logic from the Game Component and returns a JSON state Object.
@@ -9,8 +12,15 @@ export default function useGame() {
     const [activeStep, setActiveStep] = useState(0)
     const [completed, setCompleted] = useState<{ [k: number]: boolean }>([])
     const [successAnimation, setSuccessAnimation] = useState(false)
+    const nav = useNavigate()
 
-    const handleNext = () => setActiveStep(activeStep + 1)
+    const handleNext = () => {
+        if (activeStep == maxSteps) {
+            nav('/generator')
+        } else {
+            setActiveStep(activeStep + 1)
+        }
+    }
 
     const handleBack = () => setActiveStep(activeStep - 1)
 
@@ -27,7 +37,7 @@ export default function useGame() {
     }
 
     const handleReset = () => {
-        localStorage.setItem('intro', 'true')
+        localStorage.clear()
         setActiveStep(0)
         setCompleted([])
         window.location.reload()

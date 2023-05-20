@@ -38,6 +38,8 @@ export function CustomDialog(props: {
 
     return <Backdrop open={props.open}>
         <Card sx={{
+            display: 'flex',
+            flexDirection: 'column',
             width: '30vw',
             minWidth: '300px',
             height: '70vh',
@@ -60,10 +62,13 @@ export function CustomDialog(props: {
                     <CloseIcon />
                 </IconButton>
             </Box>
-            {props.children}
+            <Box sx={{
+                height: '100%',
+            }}>
+                {props.children}
+            </Box>
             <Box sx={{
                 width: '100%',
-                display: 'flex',
                 flexDirection: 'row',
                 justifyContent: 'end',
             }}>

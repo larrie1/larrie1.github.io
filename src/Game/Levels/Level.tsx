@@ -1,8 +1,9 @@
+import InfoIcon from '@mui/icons-material/Info';
 import { useEffect, useState } from "react";
 import { TableContext } from "../../context";
 import { TableButton } from "../../Utils/TableButton";
 import { Blockly } from '../../Blockly'
-import { Card, Typography } from "@mui/material";
+import { Card, Typography, Box, alpha } from "@mui/material";
 import { Headline } from "../../Utils/Headline";
 import { scaleInVerTop } from "../../Utils/animations";
 import { localizedStrings } from "../../Res/localization";
@@ -56,6 +57,7 @@ export function Level(
         description: string,
         isUnlocked: boolean,
         task?: string,
+        intro?: string,
     }
 ) {
     const state = useLevel(props.data)
@@ -74,6 +76,22 @@ export function Level(
                     variant="h4"
                     text={props.title}
                 />
+                {props.intro && <Box sx={{
+                    display: 'flex',
+                    backgroundColor: 'primary.main',
+                    border: 1,
+                    borderColor: 'secondary.light',
+                    borderRadius: 2,
+                    p: 2,
+                    m: 1,
+                    justfiyItems: 'center',
+                    color: 'grey.400'
+                }}>
+                    <InfoIcon sx={{ mr: 2 }} />
+                    <Typography variant="body1">
+                        {props.intro}
+                    </Typography>
+                </Box>}
                 <Typography
                     variant="body1"
                     sx={{ mb: 2 }}

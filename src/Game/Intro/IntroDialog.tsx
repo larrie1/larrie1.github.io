@@ -46,6 +46,7 @@ function IntroNavigation(props: {state: any}) {
                 display: 'flex',
                 flexDirection: 'row',
                 alignItems: 'center',
+                justifyContent: 'end',
             }}>
                 <Typography variant={'body2'} color={'secondary.dark'}>
                     {localizedStrings.not_again}

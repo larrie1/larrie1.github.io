@@ -1,8 +1,8 @@
-import { PaletteMode, useMediaQuery } from "@mui/material";
+import React, { useState } from "react"
+import { PaletteMode, useMediaQuery } from "@mui/material"
 import { createTheme, responsiveFontSizes } from '@mui/material/styles'
-import React, { useState } from "react";
-import { theme as getDesignTokens } from "../theme";
-import { localizedStrings } from "../Res/localization";
+import { theme as getDesignTokens } from "../theme"
+import { localizedStrings } from "../Res/localization"
 
 /** This Method creates the function that control the theme and the Language changes.
  *  It sets the previous or device Language as default and, if the user prefers dark Mode, dark Mode as default.

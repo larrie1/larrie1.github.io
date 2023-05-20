@@ -46,7 +46,9 @@ export function createNode(data: any, target: string, features: string[]) {
         let json = ""
         let filteredFeatures = [...features]
         let filteredData = [...data]
-        _.remove(filteredFeatures, (feature: any) => feature === decision)
+        //_.remove(filteredFeatures, (feature: any) => feature === decision)
+        // find value of choice where value === this.decision
+        // filter data for all values 
         let parentBlock = block.getParent()
         while(parentBlock) {
             _.remove(filteredFeatures, (feature: any) => feature === parentBlock!!.getFieldValue('DECISION'))
@@ -67,8 +69,11 @@ export function createNode(data: any, target: string, features: string[]) {
             choice = block.getFieldValue('CHOICE' + counter);
             value = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
         }
+        console.log(decision)
+        console.log(filteredFeatures)
+        console.log(filteredData)
 
-        json += '"gain": ' + gain(data, target, decision) + ', '
+        json += '"gain": ' + gain(filteredData, target, decision) + ', '
         json += '"type": ' + `"${NODE_TYPES.DECISION}"`
 
         const str = '{"value": ' + `"${decision}"` + ', ' + json + '}'

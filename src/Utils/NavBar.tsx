@@ -3,7 +3,7 @@ import Brightness7Icon from '@mui/icons-material/Brightness7'
 import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
 import React from 'react'
-import { Button, Card, AppBar, Toolbar, IconButton, Container, Box } from '@mui/material'
+import { Button, Card, AppBar, Toolbar, Tooltip, IconButton, Container, Box } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
 import { userPrefsContext } from '../context'
@@ -37,6 +37,7 @@ export function NavBar() {
                             }
                         }} >
                         <img
+                            alt={''}
                             src={require('../Assets/logo.png')}
                             width='100%'
                             height='100%' />
@@ -80,7 +81,7 @@ function MobileNav() {
                     justifyContent: 'start',
                     display: { xs: 'flex', md: 'none' },
                 }} >
-                <img src={require('../Assets/logo.png')} width={50} height={50} />
+                <img src={require('../Assets/logo.png')} width={50} height={50} alt={''} />
             </IconButton>
             <IconButton
                 onClick={onMenuClick}
@@ -117,28 +118,34 @@ function NavButtons() {
     const userPrefs = React.useContext(userPrefsContext)
     const location = useLocation()
     const pages = [localizedStrings.game, localizedStrings.generator]
-    console.log(location.pathname)
 
     return (
         <>
             {pages.map((page, index) => (
                 <Button
-                    variant={('/#' + location.pathname) == routes[index] ? 'contained' : 'outlined'}
+                    key={page+index}
+                    variant={('/#' + location.pathname) === routes[index] ? 'contained' : 'outlined'}
                     href={routes[index]}
                     sx={{ display: 'flex' }}>
                     {page}
                 </Button>
             ))}
-            <IconButton
-                sx={{ ml: 1 }}
-                onClick={userPrefs.toggleColorMode}>
-                {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-            </IconButton>
-            <IconButton
-                sx={{ ml: 1 }}
-                onClick={userPrefs.toggleLocale}>
-                <LanguageIcon />
-            </IconButton>
+            <Tooltip title={localizedStrings.darkmode} >
+                <IconButton
+                    key={'mode'}
+                    sx={{ ml: 1 }}
+                    onClick={userPrefs.toggleColorMode}>
+                    {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+                </IconButton>
+            </Tooltip>
+            <Tooltip title={localizedStrings.language} >
+                <IconButton
+                    key={'lang'}
+                    sx={{ ml: 1 }}
+                    onClick={userPrefs.toggleLocale}>
+                    <LanguageIcon />
+                </IconButton>
+            </Tooltip>
         </>
     )
 }

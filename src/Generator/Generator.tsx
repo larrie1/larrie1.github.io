@@ -9,8 +9,10 @@ import { Step3 } from './Step3'
 import { useGenerator } from './generatorHook'
 
 /**
+ *  This Method creates the Generator Page. It has 3 Steps that needs to be done to 
+ *  create a Level with the entered Data inside the Steps. 
  * 
- * @returns 
+ *  @returns UI representation of the Generator Page
  */
 export function Generator() {
     const state = useGenerator()
@@ -85,11 +87,13 @@ export function Generator() {
             </Box>
         )
     } else {
-        return <Level
+        return <Box sx={{ mt: 3 }}>
+            <Level
             xmlKey={`generator${Math.random()}`}
             data={state.table}
             title='Generator'
             description={localizedStrings.generator_description}
             isUnlocked={true} />
+        </Box>
     }
 }

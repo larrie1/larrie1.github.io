@@ -1,8 +1,9 @@
 import TocIcon from '@mui/icons-material/Toc';
-import { Box, Fab, Paper } from "@mui/material";
+import { Box, Fab, Paper, Tooltip } from "@mui/material";
 import { useState } from "react";
 import { BasicTable } from "./Table";
 import { Rnd } from "react-rnd";
+import { localizedStrings } from '../Res/localization';
 
 /**
  *  This Method creates a Button which can display the Table for each Level.
@@ -18,17 +19,19 @@ export function TableButton() {
 
     return (
         <>
-            <Fab
-                color='primary'
-                onClick={onClick}
-                sx={{
-                    position: 'fixed',
-                    bottom: 40,
-                    right: 60,
-                    zIndex: zIndex,
-                }}>
-                <TocIcon />
-            </Fab>
+            <Tooltip title={localizedStrings.table} >
+                <Fab
+                    color='primary'
+                    onClick={onClick}
+                    sx={{
+                        position: 'fixed',
+                        bottom: 40,
+                        right: 60,
+                        zIndex: zIndex,
+                    }}>
+                    <TocIcon />
+                </Fab>
+            </Tooltip>
             {visible &&
                 // wrapper Box to keep position
                 <Box sx={{

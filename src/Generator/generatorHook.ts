@@ -3,8 +3,10 @@ import { localizedStrings } from "../Res/localization"
 import { createTable } from "../Utils/Table"
 
 /**
- * 
- * @returns 
+ *  This Method validates the user Input from the Steps inside the Generator. It will
+ *  also serve the Data to the Generator.
+ *  
+ *  @returns JSON Object containing the Data needed from the Generator.
  */
 export function useGenerator() {
     const [target, setTarget] = useState("")

@@ -1,7 +1,7 @@
 import AddIcon from '@mui/icons-material/Add'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
-import { Table, TableContainer, TableHead, TableRow, TableCell, TableBody, Typography, Button, alpha, Box } from '@mui/material'
+import { Table, TableContainer, TableHead, TableRow, TableCell, Tooltip, TableBody, Typography, Button, alpha, Box } from '@mui/material'
 import { TableContext } from '../context'
 import { useState } from 'react'
 import { useTheme } from '@mui/material/styles'
@@ -80,117 +80,124 @@ export function BasicTable() {
                 )
 
                 return (
-                    <TableContainer
-                        sx={{
-                            textAlign: 'end',
-                            height: '100%',
-                        }}>
-                        <Table stickyHeader sx={{ flex: '1' }}>
-
-                            {/* Head of the Table */}
-                            <TableHead>
-                                <TableRow
-                                    key={"head"}
-                                    hover={true}>
-                                    {_.map(dataFiltered[0], (_: any, key: any) =>
-                                        <TableCell
-                                            key={Math.random()}
-                                            align={key === table.target ? undefined : 'right'}>
-                                            <Typography variant='h5'>
-                                                {key}
-                                            </Typography>
-                                        </TableCell>
-                                    )}
-                                </TableRow>
-                            </TableHead>
-
-                            {/* Tablecontent */}
-                            <TableBody>
-                                {dataFiltered.map((row: any, index: number) => (
+                    <>
+                        <TableContainer
+                            sx={{
+                                textAlign: 'end',
+                                height: '100%',
+                            }}>
+                            <Table stickyHeader sx={{ mb: '65px' }}>
+                                {/* Head of the Table */}
+                                <TableHead>
                                     <TableRow
-                                        key={index}
-                                        hover={true}
-                                        sx={{
-                                            backgroundColor: row[localizedStrings.result] !== undefined ? (
-                                                row[table.target] === undefined ?
-                                                    alpha(theme.palette.primary.main, .3) : (
-                                                        row[localizedStrings.result] === row[table.target] ?
-                                                            alpha('#009688', .3) : alpha('#f44336', .3)
-                                                    )
-                                            ) : 'transparent',
-                                            '&:last-child td, &:last-child th': { border: 0 },
-                                        }} >
-                                        {_.map(row, (value: any, key: any) =>
+                                        key={"head"}
+                                        hover={true}>
+                                        {_.map(dataFiltered[0], (_: any, key: any) =>
                                             <TableCell
                                                 key={Math.random()}
-                                                component={key === table.target ? 'th' : undefined}
-                                                scope={key === table.target ? 'row' : undefined}
-                                                align={key === table.target ? undefined : 'right'} >
-                                                <Typography variant='subtitle2'>
-                                                    {value === undefined ? '' : value.toString()}
+                                                align={key === table.target ? undefined : 'right'}>
+                                                <Typography variant='h5'>
+                                                    {key}
                                                 </Typography>
-                                            </TableCell>)
-                                        }
+                                            </TableCell>
+                                        )}
                                     </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
+                                </TableHead>
 
-                        {/* Legend */}
+                                {/* Tablecontent */}
+                                <TableBody>
+                                    {dataFiltered.map((row: any, index: number) => (
+                                        <TableRow
+                                            key={index}
+                                            hover={true}
+                                            sx={{
+                                                backgroundColor: row[localizedStrings.result] !== undefined ? (
+                                                    row[table.target] === undefined ?
+                                                        alpha(theme.palette.primary.main, .3) : (
+                                                            row[localizedStrings.result] === row[table.target] ?
+                                                                alpha('#009688', .3) : alpha('#f44336', .3)
+                                                        )
+                                                ) : 'transparent',
+                                                '&:last-child td, &:last-child th': { border: 0 },
+                                            }} >
+                                            {_.map(row, (value: any, key: any) =>
+                                                <TableCell
+                                                    key={Math.random()}
+                                                    component={key === table.target ? 'th' : undefined}
+                                                    scope={key === table.target ? 'row' : undefined}
+                                                    align={key === table.target ? undefined : 'right'} >
+                                                    <Typography variant='subtitle2'>
+                                                        {value === undefined ? '' : value.toString()}
+                                                    </Typography>
+                                                </TableCell>)
+                                            }
+                                        </TableRow>
+                                    ))}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
                         <Box
                             sx={{
+                                position: 'fixed',
+                                bottom: 0,
+                                height: '65px',
                                 display: 'flex',
                                 flexDirection: 'row',
-                                position: 'absolute',
-                                p: 1,
-                                bottom: 0,
-                                justifyContent: 'end',
+                                width: '100%',
+                                backgroundColor: 'background.default',
                                 borderTop: 1,
-                                borderRight: 1,
                                 borderColor: 'secondary.dark',
                             }}>
-                            <Typography
-                                color={'#009688'}
+                            {/* Legend */}
+                            <Box
                                 sx={{
-                                    mr: 1,
-                                    fontSize: 10,
+                                    p: 1,
+                                    bottom: 0,
+                                    borderRight: 1,
+                                    borderColor: 'secondary.dark',
                                 }}>
-                                {localizedStrings.correct}
-                            </Typography>
-                            <Typography
-                                color={'#f44336'}
-                                sx={{
-                                    mr: 1,
-                                    fontSize: 10,
-                                }}>
-                                {localizedStrings.incorrect}
-                            </Typography>
-                            <Typography
-                                color={'primary'}
-                                sx={{
-                                    mr: 1,
-                                    fontSize: 10,
-                                }}>
-                                {localizedStrings.guessed}
-                            </Typography>
-                        </Box>
+                                <Typography
+                                    color={'#009688'}
+                                    sx={{
+                                        mr: 1,
+                                        fontSize: 10,
+                                    }}>
+                                    {localizedStrings.correct}
+                                </Typography>
+                                <Typography
+                                    color={'#f44336'}
+                                    sx={{
+                                        mr: 1,
+                                        fontSize: 10,
+                                    }}>
+                                    {localizedStrings.incorrect}
+                                </Typography>
+                                <Typography
+                                    color={'primary'}
+                                    sx={{
+                                        mr: 1,
+                                        fontSize: 10,
+                                    }}>
+                                    {localizedStrings.guessed}
+                                </Typography>
+                            </Box>
+                            <Box sx={{ flex: 1 }} />
 
-                        {/* Buttons to modify table */}
-                        <Button onClick={table.addRow}>
-                            <AddIcon sx={{ mr: 1 }} />
-                            <Typography>
-                                {localizedStrings.random_test}
-                            </Typography>
-                        </Button>
-                        <Button onClick={onResultClick}>
-                            {isResultVisible ?
-                                <VisibilityOffIcon sx={{ mr: 1 }} /> :
-                                <VisibilityIcon sx={{ mr: 1 }} />}
-                            <Typography>
-                                {localizedStrings.result}
-                            </Typography>
-                        </Button>
-                    </TableContainer>
+                            {/* Buttons to modify table */}
+                            <Tooltip title={localizedStrings.random_test}>
+                                <Button onClick={table.addRow}>
+                                    <AddIcon />
+                                </Button>
+                            </Tooltip>
+                            <Tooltip title={localizedStrings.result}>
+                                <Button onClick={onResultClick}>
+                                    {isResultVisible ?
+                                        <VisibilityOffIcon /> :
+                                        <VisibilityIcon />}
+                                </Button>
+                            </Tooltip>
+                        </Box>
+                    </>
                 )
             }}
         </TableContext.Consumer>

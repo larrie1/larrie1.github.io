@@ -21,14 +21,14 @@ export function createTree(
   features: string[],
 ) {
   let targets = _.uniq(_.map(data, target));
-  if (targets.length == 1) {
+  if (targets.length === 1) {
     return {
       type: NODE_TYPES.LEAF,
       value: targets[0],
     };
   }
 
-  if (features.length == 0) {
+  if (features.length === 0) {
     let topTarget = mostCommon(targets);
     return {
       type: NODE_TYPES.LEAF,
@@ -49,8 +49,7 @@ export function createTree(
   };
 
   _.forEach(possibleValues, (featureVal: any) => {
-    const featureValDataSample = data.filter((dataRow: any) => dataRow[bestFeatureName] == featureVal);
-    const featureValDataSampleSize = featureValDataSample.length;
+    const featureValDataSample = data.filter((dataRow: any) => dataRow[bestFeatureName] === featureVal);
 
     node[featureVal] = createTree(featureValDataSample, target, remainingFeatures);
   });

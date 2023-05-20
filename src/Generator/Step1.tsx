@@ -4,9 +4,12 @@ import { Headline } from "../Utils"
 import { scaleInVerTop } from "../Utils/animations"
 
 /**
+ *  This Method creates the first Step for the Generator. You have to enter
+ *  a decision to continue.
  * 
- * @param props 
- * @returns 
+ *  @param props target: Variable of the actual Decision entered 
+ *               setTarget: Function that will get called when changing the Decision. 
+ *  @returns     UI representation of the first step
  */
  export function Step1(props: {
     target: string,

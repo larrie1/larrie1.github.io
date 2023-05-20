@@ -4,16 +4,20 @@ import blockHighlightedPlus from '../../Assets/block_highlighted_plus.png'
 import blockHighlightedRightConnectors from '../../Assets/block_highlighted_right_connectors.png'
 import blockHighlightedLeftConnector from '../../Assets/block_highlighted_left_connector.png'
 import blockClean from '../../Assets/block_clean.png'
+import blockConnected from '../../Assets/block_connected.png'
+import blockDecision from '../../Assets/block_decision.png'
 import { Box, Typography } from "@mui/material"
 import { localizedStrings } from "../../Res/localization";
 
-export const intros = [
+export const intros = () => [
     <Intro img={blockClean} description={localizedStrings.block_intro_1} />,
-    <Intro img={blockHighlightedDecision} description={localizedStrings.block_intro_1} />,
-    <Intro img={blockHighlightedChoices} description={localizedStrings.block_intro_2} />,
-    <Intro img={blockHighlightedPlus} description={localizedStrings.block_intro_3} />,
-    <Intro img={blockHighlightedLeftConnector} description={localizedStrings.block_intro_3} />,
-    <Intro img={blockHighlightedRightConnectors} description={localizedStrings.block_intro_3} />,
+    <Intro img={blockHighlightedDecision} description={localizedStrings.block_intro_2} />,
+    <Intro img={blockHighlightedChoices} description={localizedStrings.block_intro_3} />,
+    <Intro img={blockHighlightedPlus} description={localizedStrings.block_intro_4} />,
+    <Intro img={blockHighlightedLeftConnector} description={localizedStrings.block_intro_5} />,
+    <Intro img={blockHighlightedRightConnectors} description={localizedStrings.block_intro_6} />,
+    <Intro img={blockDecision} description={localizedStrings.block_intro_7} />,
+    <Intro img={blockConnected} description={localizedStrings.block_intro_8} />,
 ]
 
 /**
