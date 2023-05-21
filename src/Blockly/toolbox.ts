@@ -1,6 +1,6 @@
-import { createLeaf } from "./blocks/node";
+import _ from "lodash"
+import { createLeaf } from "./blocks/node"
 
-const _ = require('lodash');
 
 /**
  * This Method creates a ToolBox based on the Input it gets, to be able to create dynamic ToolBoxes

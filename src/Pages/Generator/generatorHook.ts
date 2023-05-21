@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
-import { localizedStrings } from "../Res/localization"
-import { createTable } from "../Utils/Table"
+import { localizedStrings } from "../../Res"
+import { createTable } from "../../Utils/Table"
 
 /**
  *  This Method validates the user Input from the Steps inside the Generator. It will

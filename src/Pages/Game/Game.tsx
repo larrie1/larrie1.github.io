@@ -2,15 +2,13 @@ import useGame from './gameHook'
 import getLevel from './Levels/Levels'
 import LockIcon from '@mui/icons-material/Lock'
 import Lottie from "lottie-react"
-import success from '../Assets/lottie_success.json'
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import { Typography, Box, Stepper, Step, StepButton, Button, Card } from '@mui/material'
-import { useTheme } from '@mui/material/styles'
-import { StepperContext } from '../context'
-import { localizedStrings } from '../Res/localization'
 import { IntroDialog } from './Intro/IntroDialog'
 import { intros as getIntros } from './Intro/intros'
+import { localizedStrings, success } from '../../Res'
+import { StepperContext } from '../../context'
 
 const steps = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5']
 
@@ -20,7 +18,7 @@ const steps = ['Level 1', 'Level 2', 'Level 3', 'Level 4', 'Level 5']
  * 
  * @returns UI Representation of the Game
  */
-export default function Game() {
+export function Game() {
     const state = useGame()
     const intros = getIntros()
     const context = state.stepperContext

@@ -1,24 +1,24 @@
 import Blockly from 'blockly'
-import { gain, NODE_TYPES } from '../../ID3/decision-tree';
-import { localizedStrings } from '../../Res/localization';
-import { jsonGenerator } from '../generators/json_generator';
+import _ from 'lodash';
+import { NODE_TYPES } from '../ID3/decision-tree';
+import { localizedStrings } from '../../Res';
 import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
 
-const _ = require('lodash');
+export const codeGenerator: any = new Blockly.Generator('CODE');
+export const jsonGenerator: any = new Blockly.Generator('JSON');
 
+jsonGenerator.PRECEDENCE = 0;
+codeGenerator.PRECEDENCE = 0;
+
+/**
+ * 
+ * @param leaf 
+ * @param key 
+ */
 export function createLeaf(leaf: string, key: number) {
-    codeGenerator['leaf' + key] = function (block: Blockly.Block) {
-        const leaf = block.getFieldValue("LEAF")
-        const code = '{"value": ' + `"${leaf}"` + ',"type": ' + `"${NODE_TYPES.LEAF}"` + '}';
-        return [code, codeGenerator.PRECEDENCE];
-    };
-
-    jsonGenerator['leaf' + key] = function (block: Blockly.Block) {
-        const leaf = block.getFieldValue('LEAF')
-        const code = `"${leaf}"`;
-        return [code, jsonGenerator.PRECEDENCE];
-    };
+    codeGenerator['leaf' + key] = leafToCode
+    jsonGenerator['leaf' + key] = leafToJson
 
     Blockly.Blocks['leaf' + key] = {
         init: function () {
@@ -33,52 +33,78 @@ export function createLeaf(leaf: string, key: number) {
     };
 }
 
-export const codeGenerator: any = new Blockly.Generator('CODE');
+function leafToJson(block: Blockly.Block) {
+    const leaf = block.getFieldValue('LEAF')
+    const code = `"${leaf}"`;
+    return [code, jsonGenerator.PRECEDENCE];
+}
 
-codeGenerator.PRECEDENCE = 0;
+function leafToCode(block: Blockly.Block) {
+    const leaf = block.getFieldValue("LEAF")
+    const code = '{"value": ' + `"${leaf}"` + ',"type": ' + `"${NODE_TYPES.LEAF}"` + '}';
+    return [code, codeGenerator.PRECEDENCE];
+}
 
-export function createNode(data: any, target: string, features: string[]) {
-    codeGenerator['node'] = function (block: Blockly.Block) {
-        var decision = block.getFieldValue('DECISION')
-        let counter = 0
-        let choice = block.getFieldValue('CHOICE' + counter)
-        let value = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
-        let json = ""
-        let filteredFeatures = [...features]
-        let filteredData = [...data]
-        //_.remove(filteredFeatures, (feature: any) => feature === decision)
-        // find value of choice where value === this.decision
-        // filter data for all values 
-        let parentBlock = block.getParent()
-        while(parentBlock) {
-            _.remove(filteredFeatures, (feature: any) => feature === parentBlock!!.getFieldValue('DECISION'))
-            parentBlock = parentBlock.getParent()
-        }
-        filteredData.map((row: any) => {
-            _.reduce(row, function(result: any, value: any, key: any) {
-                if (filteredFeatures.includes(key)) {
-                    result[key] = value
-                }
-                return result 
-            }, {})
-        })
+/**
+ * 
+ * @param block 
+ * @returns 
+ */
+function nodeToCode(block: Blockly.Block) {
+    var decision = block.getFieldValue('DECISION')
+    let counter = 0
+    let choice = block.getFieldValue('CHOICE' + counter)
+    let value = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
+    let json = ""
 
-        while (choice) {
-            counter++
-            json += `"${choice}"` + ': ' + value + ', '
-            choice = block.getFieldValue('CHOICE' + counter);
-            value = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
-        }
-        console.log(decision)
-        console.log(filteredFeatures)
-        console.log(filteredData)
-
-        json += '"gain": ' + gain(filteredData, target, decision) + ', '
-        json += '"type": ' + `"${NODE_TYPES.DECISION}"`
-
-        const str = '{"value": ' + `"${decision}"` + ', ' + json + '}'
-        return [str, codeGenerator.PRECEDENCE];
+    while (choice) {
+        counter++
+        json += `"${choice}"` + ': ' + value + ', '
+        choice = block.getFieldValue('CHOICE' + counter);
+        value = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
     }
+
+    json += '"type": ' + `"${NODE_TYPES.DECISION}"`
+
+    const str = '{"value": ' + `"${decision}"` + ', ' + json + '}'
+    return [str, codeGenerator.PRECEDENCE];
+}
+
+/**
+ * 
+ * @param block 
+ * @returns 
+ */
+function nodeToJson(block: Blockly.Block) {
+    var decision = block.getFieldValue('DECISION')
+    let counter = 0
+    let choice = block.getFieldValue('CHOICE' + counter)
+    let value = jsonGenerator.valueToCode(block, counter.toString(), jsonGenerator.PRECEDENCE) || null
+    let json = ""
+  
+    while(choice) {
+        counter++
+        json += `"${choice}"` + ': ' + value + ',\n'
+        choice = block.getFieldValue('CHOICE' + counter); 
+        value = jsonGenerator.valueToCode(block, counter.toString(), jsonGenerator.PRECEDENCE) || null
+    }
+  
+    json = json.substring(0, json.length - 2)
+  
+    const str = '"value": ' + `"${decision}"` + ',\n' + json
+    const indentedValueString = jsonGenerator.prefixLines(str, jsonGenerator.INDENT);
+    const code = '{\n' + indentedValueString + '\n}';
+    return [code, jsonGenerator.PRECEDENCE];
+  }
+
+/**
+ * 
+ * @param data 
+ * @param features 
+ */
+export function createNode(data: any, features: string[]) {
+    codeGenerator['node'] = nodeToCode
+    jsonGenerator['node'] = nodeToJson
 
     Blockly.Blocks['node'] = {
         itemCount: 0,

@@ -2,7 +2,7 @@ import GitHubIcon from '@mui/icons-material/GitHub'
 import InstagramIcon from '@mui/icons-material/Instagram'
 import LinkedInIcon from '@mui/icons-material/LinkedIn'
 import { Box, Container, IconButton, Typography } from '@mui/material'
-import { localizedStrings } from '../Res/localization'
+import { localizedStrings } from '../Res'
 
 /**
  *  This Method creates a Footer which displays Basic information about the Developer.

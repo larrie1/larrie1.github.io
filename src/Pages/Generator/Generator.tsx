@@ -1,7 +1,7 @@
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline'
 import { Box, Typography, Button } from "@mui/material"
-import { Headline } from "../Utils/Headline"
-import { localizedStrings } from "../Res/localization"
+import { Headline } from "../../Utils/Headline"
+import { localizedStrings } from "../../Res"
 import { Level } from "../Game/Levels"
 import { Step1 } from './Step1'
 import { Step2 } from './Step2'
@@ -18,13 +18,16 @@ export function Generator() {
     const state = useGenerator()
     const steps = [
         <Step1
+            key={"Step1"}
             target={state.target}
             setTarget={state.setTarget} />,
         <Step2
+            key={"Step2"}
             isUnlocked={state.step2Unlocked}
             features={state.features}
             setFeatures={state.setFeatures} />,
         <Step3
+            key={"Step3"}
             isUnlocked={state.step3Unlocked}
             target={state.target}
             features={state.features}
@@ -55,6 +58,7 @@ export function Generator() {
                         state.validateHints.map(
                             (val: (string | boolean)[]) => val[0] &&
                                 <Box
+                                    key={Math.random()}
                                     sx={{
                                         display: 'flex',
                                         flexDirection: 'row',
@@ -89,11 +93,11 @@ export function Generator() {
     } else {
         return <Box sx={{ mt: 3 }}>
             <Level
-            xmlKey={`generator${Math.random()}`}
-            data={state.table}
-            title='Generator'
-            description={localizedStrings.generator_description}
-            isUnlocked={true} />
+                xmlKey={`generator${Math.random()}`}
+                data={state.table}
+                title='Generator'
+                description={localizedStrings.generator_description}
+                isUnlocked={true} />
         </Box>
     }
 }

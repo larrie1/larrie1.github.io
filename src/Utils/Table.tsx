@@ -1,3 +1,4 @@
+import _ from 'lodash'
 import AddIcon from '@mui/icons-material/Add'
 import VisibilityIcon from '@mui/icons-material/Visibility'
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff'
@@ -5,9 +6,7 @@ import { Table, TableContainer, TableHead, TableRow, TableCell, Tooltip, TableBo
 import { TableContext } from '../context'
 import { useState } from 'react'
 import { useTheme } from '@mui/material/styles'
-import { localizedStrings } from '../Res/localization'
-
-const _ = require('lodash');
+import { localizedStrings } from '../Res'
 
 /**
  *  This Method creates a Table containing all the information it takes to create the UI for the table.

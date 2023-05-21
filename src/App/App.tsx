@@ -1,14 +1,12 @@
-import Game from "../Game";
-import { Container, CssBaseline } from "@mui/material";
+import { Container, CssBaseline } from "@mui/material"
 import { ThemeProvider } from '@mui/material/styles'
-import { Routes, Route } from "react-router";
-import { HashRouter } from "react-router-dom";
-import { userPrefsContext } from "../context";
-import { Start } from "../Start";
-import { NavBar, Footer } from "../Utils";
-import { NotFound } from "../Utils/NotFound";
-import { Generator } from "../Generator/Generator";
+import { Routes, Route } from "react-router"
+import { HashRouter } from "react-router-dom"
+import { userPrefsContext } from "../context"
+import { NavBar, Footer } from "../Utils"
+import { NotFound } from "../Utils/NotFound"
 import { _appState } from './appState'
+import { Game, Start, Generator } from "../Pages"
 
 /**
  *  This Method returns the whole app.

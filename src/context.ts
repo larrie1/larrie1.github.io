@@ -34,7 +34,7 @@ export const TableContext =
     React.createContext<{
         data: any[],
         target: string,
-        features: any[],
+        features: string[],
         addRow: any,
         addResult: any,
     }>({

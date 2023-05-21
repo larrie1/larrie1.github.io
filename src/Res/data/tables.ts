@@ -1,4 +1,4 @@
-import { localizedStrings } from "../../Res/localization"
+import { localizedStrings } from ".."
 
 /**
  *  This Method creates the JSON representation of the first Level.

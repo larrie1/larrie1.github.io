@@ -1,5 +1,5 @@
 import { SvgIcon, Box } from '@mui/material'
-import { ReactComponent as NotFoundSvg } from '../Assets/undraw_page_not_found.svg'
+import { ReactComponent as NotFoundSvg } from '../Res/Assets/undraw_page_not_found.svg'
 
 /**
  *  This Method creates a 404 not found Page as a fallback Page.

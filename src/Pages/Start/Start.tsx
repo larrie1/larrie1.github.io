@@ -1,16 +1,12 @@
-import block1 from '../Assets/blockly1.png'
-import block5 from '../Assets/block5.png'
-import block3 from '../Assets/block3.png'
-import block4 from '../Assets/block4.png'
 import { Typography, Box, SvgIcon, Card, CardActionArea, CardContent, Button } from '@mui/material'
 import { useRef } from 'react'
-import { ReactComponent as ArrowSvg } from '../Assets/undraw_arrow.svg'
-import { localizedStrings } from '../Res/localization'
-import { leftIn, pause_between_iterations, slideInTop, wobbleHorBottom } from '../Utils/animations'
-import { Headline } from '../Utils/Headline'
-import { ReactComponent as LearnSvg } from '../Assets/undraw_bibliophile.svg'
-import { ReactComponent as GameSvg } from '../Assets/undraw_gaming.svg'
-import { ReactComponent as BuildSvg } from '../Assets/undraw_building_blocks.svg'
+import { leftIn, pause_between_iterations, slideInTop, wobbleHorBottom } from '../../Utils/animations'
+import { Headline } from '../../Utils/Headline'
+import { ReactComponent as ArrowSvg } from '../../Res/Assets/undraw_arrow.svg'
+import { ReactComponent as LearnSvg } from '../../Res/Assets/undraw_bibliophile.svg'
+import { ReactComponent as GameSvg } from '../../Res/Assets/undraw_gaming.svg'
+import { ReactComponent as BuildSvg } from '../../Res/Assets/undraw_building_blocks.svg'
+import { localizedStrings, blockly1, block3, block5, block4 } from '../../Res'
 
 /**
  *  This Method creates the Start Page. It contains a Block Background and some Information about the Topic.
@@ -58,7 +54,7 @@ export function Start() {
         <Box
           component='img'
           alt='Blockly Block Example'
-          src={block1}
+          src={blockly1}
           sx={{
             animation: `${slideInTop} 2s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
             width: '800px',

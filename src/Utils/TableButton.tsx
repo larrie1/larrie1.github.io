@@ -1,9 +1,9 @@
-import TocIcon from '@mui/icons-material/Toc';
-import { Box, Fab, Paper, Tooltip } from "@mui/material";
-import { useState } from "react";
-import { BasicTable } from "./Table";
-import { Rnd } from "react-rnd";
-import { localizedStrings } from '../Res/localization';
+import TocIcon from '@mui/icons-material/Toc'
+import { Box, Fab, Paper, Tooltip } from "@mui/material"
+import { useState } from "react"
+import { BasicTable } from "./Table"
+import { Rnd } from "react-rnd"
+import { localizedStrings } from '../Res'
 
 /**
  *  This Method creates a Button which can display the Table for each Level.

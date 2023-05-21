@@ -8,38 +8,38 @@ import BlocklyLib from 'blockly';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { atelierCaveDark, atelierCaveLight } from 'react-syntax-highlighter/dist/esm/styles/hljs';
 import './blocks/';
-import './generators';
-import SvgComponent from '../Assets/logo_built_with';
-import { jsonGenerator } from './generators/json_generator';
+import SvgComponent from '../Res/Assets/logo_built_with';
 import { StepperContext, TableContext } from '../context';
 import Grid2 from '@mui/material/Unstable_Grid2';
-import json from 'react-syntax-highlighter/dist/cjs/languages/hljs/json'
 import { Tree } from 'react-tree-graph';
 import { scaleInHorLeft, scaleInHorRight, scaleInVerCenter } from '../Utils/animations';
 import './Graph.css'
 import { useTheme } from '@mui/material/styles'
-import { codeGenerator, createNode } from './blocks/node';
-import { createTree } from '../ID3/decision-tree';
-import { localizedStrings } from '../Res/localization';
+import { codeGenerator, jsonGenerator, createNode } from './blocks';
+import { createTree } from './ID3/decision-tree';
 import { createToolBox } from './toolbox';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, TooltipProps, ResponsiveContainer } from 'recharts';
+import { ResponsiveContainer } from 'recharts';
 import ErrorOutlineIcon from '@mui/icons-material/ErrorOutline';
-import { CustomDialog, Headline } from '../Utils'
+import { CustomDialog } from '../Utils'
 import { useBlockly } from './blocklyHook'
 import ExtensionIcon from '@mui/icons-material/Extension'
 import ExtensionOffIcon from '@mui/icons-material/ExtensionOff'
 import CodeIcon from '@mui/icons-material/Code'
 import CodeOffIcon from '@mui/icons-material/CodeOff'
+import { Analyse } from './analyse';
+import { localizedStrings } from '../Res';
 
 const _ = require('lodash');
 
-export function Blockly(props: { xmlKey: string }) {
+export function Blockly(
+    props: {
+        xmlKey: string
+    }
+) {
     const state = useBlockly()
     const theme = useTheme()
     const [blockCode, setBlockCode] = useState("");
     const [jsonString, setJsonString] = useState("");
-    const [graphVisible, setGraphVisible] = useState(false)
-    const [showJson, setShowJson] = useState(false)
     const [jsonError, setJsonError] = useState(false)
     const [blockJson, setBlockJson] = useState<{ value: any, gain: any, type: string }>()
     const [loading, setLoading] = useState(true)
@@ -51,7 +51,7 @@ export function Blockly(props: { xmlKey: string }) {
     const { addResult } = useContext(TableContext)
     const [seed, setSeed] = useState(1)
 
-    createNode(data, target, features)
+    createNode(data, features)
 
     /* Stepper */
     const { handleComplete } = useContext(StepperContext)
@@ -70,12 +70,6 @@ export function Blockly(props: { xmlKey: string }) {
     const handleShowAnalyse = () => setShowAnalyse(true)
 
     const getChildren = (val: any) => _.compact(_.uniq(_.map(data, val.value)).map((ele: any) => val[ele]))
-
-    const handleReplay = () => {
-        handleClose()
-    }
-
-    const getSplits = (tree: any) => _.partition(tree, ['type', 'decision'])[0].length + 1
 
     let initialXml = localStorage.getItem(props.xmlKey) !== null ?
         localStorage.getItem(props.xmlKey)!! :
@@ -172,101 +166,6 @@ export function Blockly(props: { xmlKey: string }) {
         setSeed(Math.random())
     }
 
-    const getAnalyseData = (json: any) => {
-        let data: any[] = []
-        if (json.type === 'decision') {
-            data.push({ name: json.value, gain: json.gain })
-            _.forEach(json, function (value: any, key: any) {
-                if (key !== 'gain' && key !== 'type' && key !== 'value') {
-                    data.push(getAnalyseData(value))
-                }
-            })
-        }
-        return _.flatMapDeep(data)
-    }
-
-    const analyseData = (blockJson: any, id3Json: any) => {
-        let blockData = getAnalyseData(blockJson)
-        let id3Data = getAnalyseData(id3Json)
-        const data: any[] = []
-        blockData.forEach((row: any) => {
-            let id3Gain = _.find(id3Data, { name: row.name })
-            if (id3Gain === undefined) {
-                data.push({ name: row.name, actual_gain: row.gain })
-            } else {
-                data.push({ name: row.name, actual_gain: row.gain, expected_gain: id3Gain.gain })
-            }
-        })
-        return data
-    }
-
-    const ToolTip = ({ active, payload, label }: TooltipProps<number, string>) => {
-        if (active && payload && payload.length) {
-            return (
-                <Box sx={{ background: theme.palette.secondary.light, border: 1, borderColor: theme.palette.secondary.dark, borderRadius: 2, p: 2 }}>
-                    <Typography>name: {label}</Typography>
-                    {payload[0] && payload[0].value && <Typography>{payload[0].dataKey + ': ' + payload[0].value}</Typography>}
-                    {payload[1] && payload[1].value && <Typography>{payload[1].dataKey + ': ' + payload[1].value}</Typography>}
-                </Box>
-            )
-        }
-        return null
-    }
-
-    function Analyse() {
-        var dt = createTree(data, target, features);
-        let blockSplits = getSplits(blockJson)
-        let id3Splits = getSplits(dt)
-        let splitObj = [{
-            name: target,
-            actual_splits: blockSplits,
-            expected_splits: id3Splits
-        }]
-        return (
-            <>
-                <Typography>
-                    {localizedStrings.analyse}
-                </Typography>
-                <Headline variant={"h5"} text={localizedStrings.information_gain} />
-                <ResponsiveContainer width='100%' height={300}>
-                    <BarChart
-                        data={analyseData(blockJson, dt)}
-                        margin={{
-                            top: 20,
-                            right: 0,
-                            left: 0,
-                            bottom: 20,
-                        }} >
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip content={<ToolTip />} cursor={{ fill: 'transparent' }} />
-                        <Legend />
-                        <Bar dataKey="actual_gain" fill="#6C63FF" />
-                        <Bar dataKey="expected_gain" fill="#939c00" />
-                    </BarChart>
-                </ResponsiveContainer>
-                <Headline variant={"h5"} text={localizedStrings.information_gain} />
-                <ResponsiveContainer width='50%' height={300}>
-                    <BarChart
-                        data={splitObj}
-                        margin={{
-                            top: 20,
-                            right: 0,
-                            left: 0,
-                            bottom: 20,
-                        }} >
-                        <XAxis dataKey="name" />
-                        <YAxis />
-                        <Tooltip content={<ToolTip />} cursor={{ fill: 'transparent' }} />
-                        <Legend />
-                        <Bar dataKey="actual_splits" fill="#C570FF" />
-                        <Bar dataKey="expected_splits" fill="#FFD07D" />
-                    </BarChart>
-                </ResponsiveContainer>
-            </>
-        )
-    }
-
     const functionalities = [
         [localizedStrings.check_code, checkCode],
         [localizedStrings.show_result, showResult],
@@ -285,7 +184,7 @@ export function Blockly(props: { xmlKey: string }) {
                 bottomNavigation={undefined}
                 open={showAnalyse}
                 title={localizedStrings.analyse_title}>
-                {showAnalyse && <Analyse />}
+                {showAnalyse && <Analyse data={data} target={target} features={features} blockJson={blockJson} />}
             </CustomDialog>
             {state.showTree &&
                 <Box sx={{ animation: `${scaleInVerCenter} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`, width: '100%', background: theme.palette.secondary.light, border: 1, borderRadius: 2, borderColor: theme.palette.secondary.dark }}>
@@ -315,22 +214,21 @@ export function Blockly(props: { xmlKey: string }) {
                 </Box>}
             <Box sx={{ flexDirection: 'row', my: 2, flex: 1, display: 'flex', alignItems: 'end' }}>
                 {functionalities.map((val: any[], index: number) =>
-                    <>
-                        <Button
-                            key={Math.random()}
-                            variant={index === 0 ? 'contained' : 'outlined'}
-                            onClick={val[1]}
-                            disabled={jsonError}
-                            sx={{
-                                height: index === 0 ? '50px' : '40px',
-                                mx: 1,
-                            }}>
-                            {val[0]}
-                        </Button>
-                    </>
+                    <Button
+                        key={Math.random()}
+                        variant={index === 0 ? 'contained' : 'outlined'}
+                        onClick={val[1]}
+                        disabled={jsonError}
+                        sx={{
+                            height: index === 0 ? '50px' : '40px',
+                            mx: 1,
+                        }}>
+                        {val[0]}
+                    </Button>
                 )}
                 <Box sx={{ flex: 1 }} />
                 <MuiTooltip title={localizedStrings.show_tree}>
+                    <span>
                     <Button
                         key={Math.random()}
                         onClick={state.handleTree}
@@ -340,8 +238,10 @@ export function Blockly(props: { xmlKey: string }) {
                         }}>
                         {state.showTree ? <ExtensionOffIcon fontSize='large' /> : <ExtensionIcon fontSize='large' />}
                     </Button>
+                    </span>
                 </MuiTooltip>
                 <MuiTooltip title={localizedStrings.show_json} disableFocusListener={jsonError}>
+                    <span>
                     <Button
                         key={Math.random()}
                         onClick={state.handleJson}
@@ -351,6 +251,7 @@ export function Blockly(props: { xmlKey: string }) {
                         }}>
                         {state.showJson ? <CodeOffIcon fontSize='large' /> : <CodeIcon fontSize='large' />}
                     </Button>
+                    </span>
                 </MuiTooltip>
                 <MuiTooltip title={localizedStrings.clear_workspace}>
                     <Button
@@ -416,7 +317,6 @@ export function Blockly(props: { xmlKey: string }) {
                         <SyntaxHighlighter
                             className='fill-height'
                             wrapLongLines={true}
-                            language={json}
                             style={theme.palette.mode === 'dark' ? atelierCaveDark : atelierCaveLight}
                         >
                             {jsonString}

@@ -1,13 +1,12 @@
-import InfoIcon from '@mui/icons-material/Info';
-import { useEffect, useState } from "react";
-import { TableContext } from "../../context";
-import { TableButton } from "../../Utils/TableButton";
-import { Blockly } from '../../Blockly'
-import { Card, Typography, Box, alpha } from "@mui/material";
-import { Headline } from "../../Utils/Headline";
-import { scaleInVerTop } from "../../Utils/animations";
-import { localizedStrings } from "../../Res/localization";
-import { createTable } from "../../Utils/Table";
+import InfoIcon from '@mui/icons-material/Info'
+import { useEffect, useState } from "react"
+import { Card, Typography, Box } from "@mui/material"
+import { Blockly } from '../../../Blockly'
+import { TableContext } from '../../../context'
+import { localizedStrings } from '../../../Res'
+import { TableButton, Headline } from '../../../Utils'
+import { scaleInVerTop } from '../../../Utils/animations'
+import { createTable } from '../../../Utils/Table'
 
 
 /**

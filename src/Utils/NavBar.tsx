@@ -7,7 +7,7 @@ import { Button, Card, AppBar, Toolbar, Tooltip, IconButton, Container, Box } fr
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
 import { userPrefsContext } from '../context'
-import { localizedStrings } from '../Res/localization'
+import { localizedStrings, Logo } from '../Res'
 import { useLocation } from 'react-router'
 
 const routes = ['/#/game', '/#/generator']
@@ -38,7 +38,7 @@ export function NavBar() {
                         }} >
                         <img
                             alt={''}
-                            src={require('../Assets/logo.png')}
+                            src={Logo}
                             width='100%'
                             height='100%' />
                     </IconButton>
@@ -76,12 +76,13 @@ function MobileNav() {
                 disableRipple
                 edge='start'
                 color='inherit'
+                href='/'
                 sx={{
                     flex: 1,
                     justifyContent: 'start',
                     display: { xs: 'flex', md: 'none' },
                 }} >
-                <img src={require('../Assets/logo.png')} width={50} height={50} alt={''} />
+                <img src={Logo} width={50} height={50} alt={''} />
             </IconButton>
             <IconButton
                 onClick={onMenuClick}
