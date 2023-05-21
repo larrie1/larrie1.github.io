@@ -196,7 +196,7 @@ export function Start() {
             onClick={scrollToMachineLearning}
             sx={{ display: 'flex' }}
           >
-            <Typography>
+            <Typography noWrap>
               {localizedStrings.machine_learning}
             </Typography>
           </Button>
@@ -204,7 +204,7 @@ export function Start() {
             onClick={scrollToDecisionTree}
             sx={{ display: 'flex' }}
           >
-            <Typography>
+            <Typography noWrap>
               {localizedStrings.decision_tree}
             </Typography>
           </Button>
@@ -212,7 +212,7 @@ export function Start() {
             onClick={scrollToSplits}
             sx={{ display: 'flex' }}
           >
-            <Typography>
+            <Typography noWrap>
               {localizedStrings.splits}
             </Typography>
           </Button>
@@ -220,7 +220,7 @@ export function Start() {
             onClick={scrollToInformationGain}
             sx={{ display: 'flex' }}
           >
-            <Typography>
+            <Typography noWrap>
               {localizedStrings.information_gain}
             </Typography>
           </Button>

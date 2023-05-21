@@ -1,31 +1,57 @@
-import _ from "lodash"
 import { ResponsiveContainer } from "recharts"
 import { Tree as NpmTree } from 'react-tree-graph'
 
-const getChildren = (val: any, data: any) =>
-    _.compact(
-        _.uniq(
-            _.map(data, val.value)
-        ).map(
-            (ele: any) => val[ele]
-        )
-    )
+const _ = require('lodash');
 
 /**
+ *  This Method creates a Container with a Tree Graph inside. The Tree
+ *  comes from a Module.
  * 
- * @param data 
- * @returns 
+ *  @param data  Json Object with the block Information
+ *  @returns     UI representation of a Tree Graph
  */
-export function Tree(data: any) {
+export function Tree(
+    props: {
+        data: any,
+        blockJson: any,
+    }) {
+
+    /**
+    * 
+    *   @param val 
+    *   @param data 
+    *   @returns 
+    */
+    const getChildren = (val: any) => _.compact(
+            _.uniq(
+                _.map(props.data, val.value)
+            ).map(
+                (ele: any) => {
+                    let obj = val[ele]
+                    if (obj) {
+                        obj["id"] = Math.random()
+                    }
+                    return obj
+                }
+            )
+        )
+    
+    let json = props.blockJson
+    json["id"] = Math.random()
+
     return (
-        <ResponsiveContainer width='100%' height={500}>
+        <ResponsiveContainer
+            width='100%'
+            height={500}
+        >
             <NpmTree
-                height={400}
-                width={400}
-                data={data}
+                key={"tree"}
+                height={500}
+                width={1000}
+                data={json}
                 animated={true}
                 labelProp={"value"}
-                keyProp={"name"}
+                keyProp={"id"}
                 getChildren={getChildren}
                 svgProps={{
                     className: 'custom'
