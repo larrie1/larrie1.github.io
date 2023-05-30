@@ -145,11 +145,11 @@ export function Start() {
       </Box>
       <Box sx={{
         my: 10,
-        mx: 5,
+        width: '100%',
         display: 'flex',
         flexDirection: 'row',
         position: 'relative',
-        justifyContent: 'space-between',
+        justifyContent: 'space-around',
       }}>
         <ExtendableCard
           title={localizedStrings.info}
@@ -321,11 +321,11 @@ function ExtendableCard(
 ) {
   return (
     <Card sx={{
-      width: '20vw',
+      maxWidth: '255px',
       height: '255px',
-      overflow: 'auto',
+      overflow: 'hidden',
       transition: "transform 0.15s ease-in-out, height 300ms ease-in-out",
-      "&:hover": { transform: "scale3d(1.1, 1.1, 1)", height: '450px' },
+      "&:hover": { transform: "scale3d(1.1, 1.1, 1)", height: '450px', overflow: 'auto' },
     }}>
       <div onClick={props.onClick ?? undefined}>
         <CardActionArea
