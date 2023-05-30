@@ -16,10 +16,10 @@ import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atelierCaveDark, atelierCaveLight } from 'react-syntax-highlighter/dist/esm/styles/hljs'
 import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
 import { Tree } from './tree/Tree'
-import { scaleInHorLeft, scaleInHorRight, scaleInVerCenter } from '../Utils/animations'
+import { scaleInHorLeft, scaleInHorRight } from '../Utils/animations'
 import { useTheme } from '@mui/material/styles'
 import { createToolBox } from './toolbox'
-import { CustomDialog, Headline } from '../Utils'
+import { CustomDialog } from '../Utils'
 import { useBlockly } from './blocklyHook'
 import { Analyse } from './analyse'
 import { localizedStrings } from '../Res'
@@ -222,9 +222,10 @@ export function Blockly(
                         <Card
                             sx={{
                                 animation: `${scaleInHorRight} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
-                                height: '100%',
                                 width: '100%',
-                                overflow: 'hidden',
+                                minHeight: '100%',
+                                maxHeight: '300px',
+                                overflow: 'auto',
                                 pt: 1,
                             }}>
                             <JavascriptIcon

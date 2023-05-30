@@ -145,7 +145,7 @@ export function Start() {
       </Box>
       <Box sx={{
         my: 10,
-        mx: 20,
+        mx: 5,
         display: 'flex',
         flexDirection: 'row',
         position: 'relative',
@@ -340,7 +340,7 @@ function ExtendableCard(
             inheritViewBox
             sx={{
               alignSelf: 'center',
-              width: '200px',
+              width: '100%',
               height: '200px',
             }} />
         </CardActionArea>
