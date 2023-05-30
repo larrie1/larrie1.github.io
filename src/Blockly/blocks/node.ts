@@ -35,7 +35,7 @@ export function createLeaf(leaf: string, key: number) {
 
 function leafToJson(block: Blockly.Block) {
     const leaf = block.getFieldValue('LEAF')
-    const code = `"${leaf}"`;
+    const code = `return "${leaf}";`;
     return [code, jsonGenerator.PRECEDENCE];
 }
 
@@ -80,21 +80,27 @@ function nodeToJson(block: Blockly.Block) {
     let counter = 0
     let choice = block.getFieldValue('CHOICE' + counter)
     let value = jsonGenerator.valueToCode(block, counter.toString(), jsonGenerator.PRECEDENCE) || null
-    let json = ""
-  
+    let json = block.getParent() ? "" : "/**\n* This Method finds a value for my Decision\n**/\nfunction decisionTree() {\n"
+    
     while(choice) {
         counter++
-        json += `"${choice}"` + ': ' + value + ',\n'
+        if (counter !== 1) {
+            json += jsonGenerator.prefixLines(`else if ("${decision}" === "${choice}")` + ' {\n' + jsonGenerator.prefixLines(value ? value.toString() : '/* TODO */', jsonGenerator.INDENT) + '\n}', jsonGenerator.INDENT)
+        } else {
+            json += jsonGenerator.prefixLines(`if ("${decision}" === "${choice}")` + ' {\n' + jsonGenerator.prefixLines(value ? value.toString() : '/* TODO */', jsonGenerator.INDENT) + '\n}', jsonGenerator.INDENT)
+        }
         choice = block.getFieldValue('CHOICE' + counter); 
         value = jsonGenerator.valueToCode(block, counter.toString(), jsonGenerator.PRECEDENCE) || null
     }
   
-    json = json.substring(0, json.length - 2)
-  
-    const str = '"value": ' + `"${decision}"` + ',\n' + json
-    const indentedValueString = jsonGenerator.prefixLines(str, jsonGenerator.INDENT);
-    const code = '{\n' + indentedValueString + '\n}';
-    return [code, jsonGenerator.PRECEDENCE];
+    json += jsonGenerator.prefixLines('else {\n', jsonGenerator.INDENT)
+    json += jsonGenerator.prefixLines(jsonGenerator.prefixLines('return undefined;\n', jsonGenerator.INDENT), jsonGenerator.INDENT)
+    json += jsonGenerator.prefixLines('}\n', jsonGenerator.INDENT)
+    block.getParent() ? json = json.substring(0, json.length - 1) : json += "}"
+
+    //const indentedValueString = jsonGenerator.prefixLines(str, jsonGenerator.INDENT);
+    //const code = indentedValueString;
+    return [json, jsonGenerator.PRECEDENCE];
   }
 
 /**

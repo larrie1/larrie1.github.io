@@ -7,7 +7,6 @@
 /**
  * @fileoverview A field for a plus button used for mutation.
  */
- 'use strict';
 
  import * as Blockly from 'blockly/core';
  import {getExtraBlockState} from './serialization_helper';
@@ -40,7 +39,7 @@
    block.plus(plusField.args_);
    const newExtraState = getExtraBlockState(block);
  
-   if (oldExtraState != newExtraState) {
+   if (oldExtraState !== newExtraState) {
      Blockly.Events.fire(new Blockly.Events.BlockChange(
          block, 'mutation', null, oldExtraState, newExtraState));
    }

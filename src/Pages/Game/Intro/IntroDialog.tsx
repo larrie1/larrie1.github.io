@@ -1,7 +1,7 @@
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight'
 import KeyboardArrowLeftIcon from '@mui/icons-material/KeyboardArrowLeft'
 import { Box, Button, Checkbox, IconButton, Typography } from "@mui/material"
-import { useIntro } from './IntroState'
+import { useIntro } from './introHook'
 import { localizedStrings } from '../../../Res'
 import { CustomDialog } from '../../../Utils'
 

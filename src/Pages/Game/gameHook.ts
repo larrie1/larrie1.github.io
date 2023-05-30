@@ -15,7 +15,7 @@ export default function useGame() {
     const nav = useNavigate()
 
     const handleNext = () => {
-        if (activeStep == maxSteps) {
+        if (activeStep === maxSteps) {
             nav('/generator')
         } else {
             setActiveStep(activeStep + 1)

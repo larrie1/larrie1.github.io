@@ -1,9 +1,8 @@
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
-import LanguageIcon from '@mui/icons-material/Language'
 import MenuIcon from '@mui/icons-material/Menu'
 import React from 'react'
-import { Button, Card, AppBar, Toolbar, Tooltip, IconButton, Container, Box } from '@mui/material'
+import { Button, Card, AppBar, Toolbar, Tooltip, IconButton, Container, Box, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
 import { userPrefsContext } from '../context'
@@ -144,7 +143,11 @@ function NavButtons() {
                     key={'lang'}
                     sx={{ ml: 1 }}
                     onClick={userPrefs.toggleLocale}>
-                    <LanguageIcon />
+                    {
+                        localStorage.getItem('locale') === 'de' ?
+                        <Typography>DE</Typography> :
+                        <Typography>EN</Typography>
+                    }
                 </IconButton>
             </Tooltip>
         </>

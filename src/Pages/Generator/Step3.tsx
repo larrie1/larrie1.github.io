@@ -32,7 +32,6 @@ export function Step3(
         let newArray = [...props.data]
         newArray[rowIndex][col] = val
         props.setData(newArray)
-        console.log(newArray)
     }
 
     return (

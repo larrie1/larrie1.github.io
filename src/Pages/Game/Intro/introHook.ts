@@ -19,9 +19,9 @@ export function useIntro(
 
     const handlePrevious = () => setStep(step - 1)
 
-    const isLastStep = () => step == stepsLength - 1
+    const isLastStep = () => step === stepsLength - 1
 
-    const isFirstStep = () => step == 0
+    const isFirstStep = () => step === 0
 
     const moreThanOneStep = () => stepsLength > 1
 

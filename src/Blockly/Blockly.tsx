@@ -6,21 +6,26 @@ import ExtensionIcon from '@mui/icons-material/Extension'
 import ExtensionOffIcon from '@mui/icons-material/ExtensionOff'
 import CodeIcon from '@mui/icons-material/Code'
 import CodeOffIcon from '@mui/icons-material/CodeOff'
+import JavascriptIcon from '@mui/icons-material/Javascript';
 import './Graph.css'
 import "./Blockly.css"
 import { Box, Button, CircularProgress, Tooltip as MuiTooltip, SvgIcon, Typography, Card } from '@mui/material'
 import { BlocklyWorkspace } from 'react-blockly'
 import { darkTheme, lightTheme } from './blocklyTheme'
-import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter'
+import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atelierCaveDark, atelierCaveLight } from 'react-syntax-highlighter/dist/esm/styles/hljs'
+import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
 import { Tree } from './tree/Tree'
 import { scaleInHorLeft, scaleInHorRight, scaleInVerCenter } from '../Utils/animations'
 import { useTheme } from '@mui/material/styles'
 import { createToolBox } from './toolbox'
-import { CustomDialog } from '../Utils'
+import { CustomDialog, Headline } from '../Utils'
 import { useBlockly } from './blocklyHook'
 import { Analyse } from './analyse'
 import { localizedStrings } from '../Res'
+import { Hint } from './hint/hint'
+
+SyntaxHighlighter.registerLanguage('javascript', js);
 
 export function Blockly(
     props: {
@@ -70,31 +75,19 @@ export function Blockly(
             </CustomDialog>
             {
                 state.showTree &&
-                <Card
-                    sx={{
-                        animation: `${scaleInVerCenter} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
-                        width: '100%',
-                    }}
-                >
-                    {
-                        state.jsonError ?
-                            <Box
-                                sx={{
-                                    display: 'flex',
-                                    flexDirection: 'row',
-                                    color: 'red',
-                                    height: '500px',
-                                    width: '100%',
-                                    justifyContent: 'center',
-                                    alignItems: 'center',
-                                }}
-                            >
-                                <ErrorOutlineIcon sx={{ mx: 1 }} />
-                                <Typography>{localizedStrings.json_error}</Typography>
-                            </Box> :
-                            <Tree data={state.data} blockJson={state.blockJson} />
-                    }
-                </Card>
+                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
+                    <Hint
+                        data={state.data}
+                        features={state.features}
+                        target={state.target}
+                        blockJson={state.blockJson}
+                    />
+                    <Tree
+                        data={state.data}
+                        blockJson={state.blockJson}
+                        target={state.target}
+                    />
+                </Box>
             }
             <Box
                 sx={{
@@ -213,7 +206,7 @@ export function Blockly(
                                 flexDirection: 'row',
                                 position: 'absolute',
                                 top: 0,
-                                right: 80,
+                                right: 10,
                                 m: 3,
                                 color: 'red',
                             }}
@@ -232,10 +225,24 @@ export function Blockly(
                                 height: '100%',
                                 width: '100%',
                                 overflow: 'hidden',
+                                pt: 1,
                             }}>
+                            <JavascriptIcon
+                                sx={{
+                                    position: 'absolute',
+                                    top: 10,
+                                    right: 10,
+                                    color: 'primary.main',
+                                    border: 1,
+                                    borderColor: 'secondary.dark',
+                                    borderRadius: 2,
+                                }}
+                            />
                             <SyntaxHighlighter
                                 className='fill-height'
-                                wrapLongLines={true}
+                                wrapLongLines={false}
+                                language="javascript"
+                                showLineNumbers={true}
                                 style={theme.palette.mode === 'dark' ? atelierCaveDark : atelierCaveLight}
                             >
                                 {state.jsonString}

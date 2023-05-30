@@ -321,8 +321,9 @@ function ExtendableCard(
 ) {
   return (
     <Card sx={{
-      width: '350px',
+      width: '20vw',
       height: '255px',
+      overflow: 'auto',
       transition: "transform 0.15s ease-in-out, height 300ms ease-in-out",
       "&:hover": { transform: "scale3d(1.1, 1.1, 1)", height: '450px' },
     }}>

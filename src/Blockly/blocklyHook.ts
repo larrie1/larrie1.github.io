@@ -44,8 +44,8 @@ function onShowResult(data: any, json: any) {
 }
 
 export function useBlockly(xmlKey: string) {
-    const [showTree, setShowTree] = useState(false)
-    const [showJson, setShowJson] = useState(false)
+    const [showTree, setShowTree] = useState(true)
+    const [showJson, setShowJson] = useState(true)
     const [blockCode, setBlockCode] = useState("");
     const [jsonString, setJsonString] = useState("");
     const [jsonError, setJsonError] = useState(false)

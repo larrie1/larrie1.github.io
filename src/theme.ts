@@ -4,6 +4,41 @@ import { alpha, PaletteMode, Theme } from '@mui/material';
 // A custom theme for this app
 export const theme = (mode: PaletteMode) => ({
     components: {
+        MuiLink: {
+            styleOverrides: {
+                root: ({ theme }: { theme: Theme }) =>
+                    theme.unstable_sx(
+                        {
+                            display: 'inline-block',
+                            textDecoration: 'none',
+                            border: 1,
+                            color: 'primary.contrastText',
+                            borderColor: 'secondary.dark',
+                            padding: 1,
+                            borderRadius: 2,
+                            '&: hover': {
+                                color: 'white',
+                                border: 1,
+                                borderColor: 'primary.main',
+                                backgroundColor: 'transparent'
+                            },
+                            '&:hover+ul li a': {
+                                border: 1,
+                                borderColor: 'primary.main',
+                                backgroundColor: 'transparent'
+                            },
+                            '&:hover+ul li a.featureVal': {
+                                border: 0,
+                                borderColor: 'primary.main',
+                                backgroundColor: 'transparent'
+                            },
+                            '&:hover+ul li a.leaf': {
+                                backgroundColor: '#6b63ff39'
+                            },
+                        }
+                    )
+            }
+        },
         MuiCard: {
             defaultProps: {
                 elevation: 0,
@@ -86,7 +121,7 @@ export const theme = (mode: PaletteMode) => ({
             ? {
                 primary: {
                     main: '#6C63FF',
-                    contrastText: '#fff',
+                    contrastText: '#000',
                 },
                 secondary: {
                     light: '#efecf4',
