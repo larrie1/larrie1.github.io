@@ -1,11 +1,15 @@
 /**
  *  English Translations
+ *  Most of the translations got translated by Google
  */
 export const en = {
     title: 'Decision Trees',
-    subtitle: 'A Learntool to understand Machine Learning Techniques',
+    subtitle: 'A learning tool for understanding decision trees',
     footer: 'Designed and developed by André Peters',
     game: 'Game',
+    node: 'Node',
+    node_decision: 'Feature: ',
+    node_value: 'Value ',
     generator: 'Generator',
     result: 'Result',
     lv2Decision: 'How is the Weather',
@@ -127,7 +131,7 @@ export const en = {
     feature: 'Feature',
     hint: 'Hint',
     hint_title: 'Do you struggle with a Decision? Tell me where and I will try to help you!',
-    hint_leafs: 'You have already made all the questions to find a decision, just choose the right decisions!',
+    hint_leafs: 'You have already made all the questions to find a decision, just choose the right decisions! See the table with the data.',
     hint_description: 'In the following you can see the other decisions and their information gain, this can help you to find the optimal decision!',
     analyse: 'Great that you made this level! Below you can see statistics about your created decision tree. If you are not interested in the data or you want to continue, press the "X" in the upper right corner.',
 }

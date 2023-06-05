@@ -16,14 +16,16 @@ export const theme = (mode: PaletteMode) => ({
                             borderColor: 'secondary.dark',
                             padding: 1,
                             borderRadius: 2,
+                            whiteSpace: 'nowrap',
+                            overflow: 'auto',
                             '&: hover': {
                                 color: 'white',
-                                border: 1,
+                                border: 3,
                                 borderColor: 'primary.main',
                                 backgroundColor: 'transparent'
                             },
                             '&:hover+ul li a': {
-                                border: 1,
+                                border: 3,
                                 borderColor: 'primary.main',
                                 backgroundColor: 'transparent'
                             },

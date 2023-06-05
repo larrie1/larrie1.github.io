@@ -5,6 +5,9 @@
 
 .tree ul {
 	padding-top: 20px; position: relative;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    white-space: nowrap;
 	
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
@@ -34,6 +37,9 @@
 	list-style-type: none;
 	position: relative;
 	padding: 20px 5px 0 5px;
+    overflow-x: scroll;
+    overflow-y: scroll;
+    white-space: nowrap;
 	
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;

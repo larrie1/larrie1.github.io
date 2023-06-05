@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { createTree, gain } from "../ID3/decision-tree";
+import { createTree, entropy, gain } from "../ID3/decision-tree";
 
 /**
  * 
@@ -21,7 +21,8 @@ export function useAnalyse(
                 (ele: any) => {
                     return {
                         name: ele.name,
-                        actual_gain: ele.gain
+                        actual_gain: ele.gain,
+                        actual_entropy: ele.entropy
                     }
                 }
             ),
@@ -29,7 +30,8 @@ export function useAnalyse(
             (ele: any) => {
                 return {
                     name: ele.name,
-                    expected_gain: ele.gain
+                    expected_gain: ele.gain,
+                    expected_entropy: ele.entropy
                 }
             }
         )
@@ -70,10 +72,13 @@ function setBlockGain(data: any, features: string[], json: any, target: string) 
         let featureGain = gain(data, target, feature)
         let remainingFeatures = _.without(features, feature)
         let possibleValues = _.uniq(_.map(data, feature))
+        let setSize = _.size(data);
+        let entpy = (data.length / setSize) * entropy(_.map(data, target))
 
         gains.push({
             name: feature,
-            gain: featureGain
+            gain: featureGain,
+            entropy: entpy
         })
 
         _.forEach(possibleValues, (featureVal: any) => {
@@ -103,7 +108,9 @@ function concatGains(arr1: any[], arr2: any[]) {
         result.push({
             name: element.name,
             actual_gain: element.actual_gain,
-            expected_gain: obj ? obj.expected_gain : 0
+            expected_gain: obj ? obj.expected_gain : 0,
+            actual_entropy: element.actual_entropy,
+            expected_entropy: obj ? obj.expected_entropy : 0
         })
     }
     )

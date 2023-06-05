@@ -41,6 +41,8 @@ function useLevel(data: any) {
 }
 
 /**
+ * This Method creates an actual Level. It has it's own Table and Information on the top
+ * aswell as the Blockly Unit. 
  * 
  * @param props Contains the Key to store the progress on the localStorage,
  *              the actual data for this Level for it to get created,

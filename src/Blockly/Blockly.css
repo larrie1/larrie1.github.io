@@ -1,3 +1,6 @@
+/*
+    CSS needed to display the Blockly Workspace at full height/width
+*/
 .fill-height {
     height: 100%;
     width: 100%;

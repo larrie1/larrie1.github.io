@@ -5,6 +5,9 @@ import { Headline } from "../../Utils"
 import { scaleInVerTop } from "../../Utils/animations"
 
 /**
+ *  This Method creates the third Step for generating a Level.
+ *  It will display a table with the target and the features.
+ *  The user then has to fill the columns of the target and features to generate the Level.
  * 
  *  @param props    key: To identify this Component
  *                  target: State Variable holding the actual Target to read from

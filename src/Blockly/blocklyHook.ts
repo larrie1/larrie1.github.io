@@ -123,7 +123,7 @@ export function useBlockly(xmlKey: string) {
 
     useEffect(() => {
         setSeed(Math.random())
-    }, [useTheme().palette.mode, localizedStrings.getLanguage(), xmlKey])
+    }, [useTheme().palette.mode, localizedStrings.getLanguage(), xmlKey, showJson])
 
     useEffect(() => {
         try {

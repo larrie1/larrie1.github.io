@@ -60,8 +60,16 @@ export function Analyse(
                         fill="#6C63FF"
                     />
                     <Bar
+                        dataKey="actual_entropy"
+                        fill="#BB57FF"
+                    />
+                    <Bar
                         dataKey="expected_gain"
                         fill="#939c00"
+                    />
+                    <Bar
+                        dataKey="expected_entropy"
+                        fill="#E8FF57"
                     />
                 </BarChart>
             </ResponsiveContainer>
@@ -120,6 +128,8 @@ const ToolTip = ({ active, payload, label }: TooltipProps<number, string>) => {
                 <Typography>name: {label}</Typography>
                 <Typography>{payload[0].dataKey + ': ' + payload[0].value}</Typography>
                 <Typography>{payload[1].dataKey + ': ' + payload[1].value}</Typography>
+                <Typography>{payload[2].dataKey + ': ' + payload[2].value}</Typography>
+                <Typography>{payload[3].dataKey + ': ' + payload[3].value}</Typography>
             </Card>
         )
     }

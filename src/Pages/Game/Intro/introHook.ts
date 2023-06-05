@@ -1,5 +1,12 @@
 import { useState } from "react"
 
+/**
+ *  This Method creates a state variable holding all the needed Information 
+ *  for the UI to display and process the actions.
+ * 
+ *  @param stepsLength Number of Steps for this Intro
+ *  @returns           JSON Object with all the calculated Information
+ */
 export function useIntro(
     stepsLength: number,
 ) {

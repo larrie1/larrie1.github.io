@@ -1,6 +1,11 @@
 import { Box, Typography } from "@mui/material"
 import { blockClean, localizedStrings, blockConnected, blockDecision, blockHighlightedChoices, blockHighlightedDecision, blockHighlightedLeftConnector, blockHighlightedPlus, blockHighlightedRightConnector } from '../../../Res'
 
+/**
+ *  This Method creates an array which holds all the Intro Pages.
+ * 
+ *  @returns Array holding all Intro Pages
+ */
 export const intros = () => [
     <Intro img={blockClean} description={localizedStrings.block_intro_1} />,
     <Intro img={blockHighlightedDecision} description={localizedStrings.block_intro_2} />,

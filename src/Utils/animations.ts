@@ -1,5 +1,7 @@
 import { keyframes } from "@mui/material"
 
+/* Animations from Animista: https://animista.net/ */
+
 export const wobbleHorBottom = keyframes`
 0%, 100% {
     -webkit-transform: translateX(0%);

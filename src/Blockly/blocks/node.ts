@@ -119,10 +119,10 @@ export function createNode(data: any, features: string[]) {
         init: function () {
             this.appendDummyInput('TOP')
                 .appendField(createPlusField(), 'PLUS')
-                .appendField("Node", 'NODE')
+                .appendField(localizedStrings.node, 'NODE')
             this.appendDummyInput()
                 .setAlign(Blockly.ALIGN_RIGHT)
-                .appendField("Decision: ")
+                .appendField(localizedStrings.node_decision)
                 .appendField(new Blockly.FieldDropdown(this.generateDecisions, this.validate), "DECISION")
             this.setOutput(true, null)
             this.setColour(230)
@@ -187,7 +187,7 @@ export function createNode(data: any, features: string[]) {
             this.appendValueInput(this.itemCount.toString())
                 .setCheck(null)
                 .setAlign(Blockly.ALIGN_RIGHT)
-                .appendField("Choice " + (this.itemCount + 1) + ": ")
+                .appendField(localizedStrings.node_value + (this.itemCount + 1) + ": ")
                 .appendField(new Blockly.FieldDropdown(this.generateChoices(this.decision)), "CHOICE" + this.itemCount)
             this.itemCount++
         },

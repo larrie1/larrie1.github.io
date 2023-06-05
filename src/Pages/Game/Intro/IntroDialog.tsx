@@ -6,12 +6,12 @@ import { localizedStrings } from '../../../Res'
 import { CustomDialog } from '../../../Utils'
 
 /**
+ *  This Method creates the Intro Dialog. It is basically a CustomDialog that displays
+ *  an array of Intro's.
  * 
  *  @param props open: Decides if the Dialog is open or not
- *               title:
- *               steps:
- *               handleClose: 
- *               handleNotAgain:            
+ *               title: Title of the Dialog, it will be displayed over all the Pages
+ *               steps: Array holding the different Pages to display
  *  @returns     UI representation of the Introdialog
  */
 export function IntroDialog(
@@ -32,9 +32,12 @@ export function IntroDialog(
 }
 
 /**
+ *  This Method creates the Bottomnavigation for the IntroDialog since the CustomDialog 
+ *  doesn't provide navigation. It has a forward and backward button and on the last page a 
+ *  "not again" button.
  * 
- * @param state 
- * @returns 
+ * @param state JSON object holding information needed to know at which step we are 
+ * @returns     UI representation of the Bottomnavigation. So a Box with Buttons on the right. 
  */
 function IntroNavigation(props: {state: any}) {
     return <Box sx={{

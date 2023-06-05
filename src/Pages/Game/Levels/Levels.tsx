@@ -1,8 +1,16 @@
 import { lv1_data, localizedStrings, lv2_data, lv3_data, lv4_data, lv5_data } from '../../../Res';
 import { Level } from './Level';
 
+// Level 3 should start with more blocks, so you learn about splitting 
 localStorage.setItem("level3blocks", '<xml xmlns="https://developers.google.com/blockly/xml"><block type="node" x="100" y="100"><field name="DECISION">Hat es Federn?</field><field name="CHOICE0">Nein</field><field name="CHOICE1">Ja</field><value name="0"><block type="node"><field name="DECISION">Lebt es unter der Erde?</field><field name="CHOICE0">Ja</field><field name="CHOICE1">Nein</field><value name="0"></value><value name="1"></value></block></value><value name="1"><block type="node"><field name="DECISION">Kann es Fliegen?</field><field name="CHOICE0">Nein</field><field name="CHOICE1">Ja</field><value name="0"></value><value name="1"></value></block></value></block></xml>')
 
+/**
+ *  This Method maps an index to a Level. 
+ * 
+ *  @param index     The index of the Level which is requested
+ *  @param unlocked  Boolean saying if the Level is already unlocked == true or locked otherwise. 
+ *  @returns         The Level at index. 
+ */
 export const getLevel = (index: number, unlocked: boolean) => [
     <Level
         xmlKey={"level1blocks"}

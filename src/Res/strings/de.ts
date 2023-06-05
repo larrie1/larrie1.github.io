@@ -6,6 +6,9 @@ export const de = {
     subtitle: 'Ein Lerntool zum verstehen von Entcheidungsbäumen',
     footer: 'Designed und entwickelt von André Peters',
     game: 'Spiel',
+    node: 'Knoten',
+    node_decision: 'Merkmal: ',
+    node_value: 'Wert ',
     generator: 'Generator',
     result: 'Ergebnis',
     hot: 'Warm',
@@ -125,7 +128,7 @@ export const de = {
     feature: 'Feature',
     hint: 'Hinweis',
     hint_title: 'Fällt dir eine Entscheidung schwer? Sag mir wo und ich werde versuchen, dir zu helfen!',
-    hint_leafs: 'Du hast bereits alle Fragen zum finden einer Entscheidung getroffen, wähle die passenden Entscheidungen!',
+    hint_leafs: 'Du hast bereits alle Fragen zum finden einer Entscheidung getroffen, wähle die passenden Entscheidungen! Siehe dir dazu die Tabelle mit den Daten an.',
     hint_description: 'Im Folgenden siehst du die übrigen Entscheidungen und deren Informationszuwachs, dieser kann dir helfen die optimale Entscheidung zu finden!',
     analyse: 'Sehr gut, dass du dieses Level geschafft hast! Im folgenden siehst du Statistiken über deinen erstellten Entscheidungsbaum. Wenn dich die Daten nicht interessieren oder du weiter machen möchtest drücke oben rechts auf das "X".',
 }

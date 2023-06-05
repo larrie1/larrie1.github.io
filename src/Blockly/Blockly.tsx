@@ -7,14 +7,13 @@ import ExtensionOffIcon from '@mui/icons-material/ExtensionOff'
 import CodeIcon from '@mui/icons-material/Code'
 import CodeOffIcon from '@mui/icons-material/CodeOff'
 import JavascriptIcon from '@mui/icons-material/Javascript';
-import './Graph.css'
 import "./Blockly.css"
 import { Box, Button, CircularProgress, Tooltip as MuiTooltip, SvgIcon, Typography, Card } from '@mui/material'
 import { BlocklyWorkspace } from 'react-blockly'
 import { darkTheme, lightTheme } from './blocklyTheme'
 import { Light as SyntaxHighlighter } from 'react-syntax-highlighter'
 import { atelierCaveDark, atelierCaveLight } from 'react-syntax-highlighter/dist/esm/styles/hljs'
-import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript';
+import js from 'react-syntax-highlighter/dist/esm/languages/hljs/javascript'
 import { Tree } from './tree/Tree'
 import { scaleInHorLeft, scaleInHorRight } from '../Utils/animations'
 import { useTheme } from '@mui/material/styles'
@@ -25,8 +24,17 @@ import { Analyse } from './analyse'
 import { localizedStrings } from '../Res'
 import { Hint } from './hint/hint'
 
-SyntaxHighlighter.registerLanguage('javascript', js);
+// needed for the syntaxhighlighter to highlight js code
+SyntaxHighlighter.registerLanguage('javascript', js)
 
+/**
+ * This Method creates the Blockly Workspace. It has also the control of the Tree, Hints and Code. 
+ * Those will be also displayed here. If it doesn't have enough information to display the Workspace
+ * without an error it will display a Loadingindicator. 
+ * 
+ * @param props xmlKey: Key to retrieve the stored progress within the localstorage
+ * @returns UI representation of the Blockly workspace
+ */
 export function Blockly(
     props: {
         xmlKey: string
@@ -35,6 +43,7 @@ export function Blockly(
     const state = useBlockly(props.xmlKey)
     const theme = useTheme()
 
+    // Loading if not enough Information is provided
     if (state.loading) {
         return <Box
             sx={{
@@ -56,8 +65,10 @@ export function Blockly(
         </Box>
     }
 
+    // Actual Workspace
     return (
         <>
+            {/* Analysedialog */}
             <CustomDialog
                 handleClose={state.handleClose}
                 bottomNavigation={undefined}
@@ -73,6 +84,7 @@ export function Blockly(
                     />
                 }
             </CustomDialog>
+            {/* Hint & Tree */}
             {
                 state.showTree &&
                 <Box sx={{ display: 'flex', flexDirection: 'row' }}>
@@ -97,6 +109,7 @@ export function Blockly(
                     display: 'flex',
                     alignItems: 'end',
                 }}>
+                {/* Check Code & Show Solution */}
                 {
                     state.functionalities.map(
                         (val: any[], index: number) =>
@@ -115,6 +128,7 @@ export function Blockly(
                     )
                 }
                 <Box sx={{ flex: 1 }} />
+                {/* Button to disable/enable Tree and Hint */}
                 <MuiTooltip title={localizedStrings.show_tree}>
                     <span>
                         <Button
@@ -132,6 +146,7 @@ export function Blockly(
                         </Button>
                     </span>
                 </MuiTooltip>
+                {/* Button to disable/enable Code */}
                 <MuiTooltip title={localizedStrings.show_json}>
                     <span>
                         <Button
@@ -149,6 +164,7 @@ export function Blockly(
                         </Button>
                     </span>
                 </MuiTooltip>
+                {/* Button removing the progress of the workspace */}
                 <MuiTooltip title={localizedStrings.clear_workspace}>
                     <Button
                         onClick={state.clearWorkspace}
@@ -159,7 +175,7 @@ export function Blockly(
                     </Button>
                 </MuiTooltip>
             </Box>
-            <Grid2 container spacing={3}>
+            <Grid2 container spacing={2}>
                 <Grid2 xs={12} md={state.showJson ? 8 : 12}>
                     <Card
                         sx={{
@@ -167,6 +183,7 @@ export function Blockly(
                             height: '800px',
                             overflow: 'hidden',
                         }}>
+                        {/* Workspace from Blockly by Module: https://github.com/nbudin/react-blockly */}
                         <BlocklyWorkspace
                             key={state.seed}
                             className='fill-height'
@@ -186,6 +203,7 @@ export function Blockly(
                                 },
                             }}
                         />
+                        {/* Built with Blockly Logo */}
                         <SvgIcon
                             component={SvgComponent}
                             inheritViewBox
@@ -199,6 +217,7 @@ export function Blockly(
                                 left: 0,
                                 m: 5,
                             }} />
+                        {/* Error message if two blocks not connected */}
                         {
                             state.jsonError &&
                             <Box sx={{
@@ -239,6 +258,7 @@ export function Blockly(
                                     borderRadius: 2,
                                 }}
                             />
+                            {/* Code highlighter Module by: https://github.com/react-syntax-highlighter/react-syntax-highlighter */}
                             <SyntaxHighlighter
                                 className='fill-height'
                                 wrapLongLines={false}
