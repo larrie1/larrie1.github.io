@@ -1,10 +1,8 @@
 import { Card, Typography, Chip, Box } from "@mui/material"
 import _ from "lodash"
-import { useEffect, useState } from "react"
 import { localizedStrings } from "../../Res"
 import { Headline } from "../../Utils"
 import { scaleInVerCenter } from "../../Utils/animations"
-import { gain, NODE_TYPES } from "../ID3/decision-tree"
 import { useHint } from "./hintHook"
 
 export function Hint(
@@ -23,12 +21,12 @@ export function Hint(
                 animation: `${scaleInVerCenter} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
                 flex: 1,
                 height: '100%',
+                width: '100%',
                 maxHeight: '50vh',
                 pt: 1,
                 px: 3,
                 pb: 3,
                 overflow: 'auto',
-                transition: 'all 0.5s'
             }}
         >
             <Headline variant="h6" text={localizedStrings.hint} />

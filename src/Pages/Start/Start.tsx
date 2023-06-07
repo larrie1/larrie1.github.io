@@ -1,4 +1,5 @@
-import { Typography, Box, SvgIcon, Card, CardActionArea, CardContent, Button } from '@mui/material'
+import '../../Blockly/tree/Tree.css'
+import { Typography, Box, SvgIcon, Card, CardActionArea, CardContent, Button, Link } from '@mui/material'
 import { useRef } from 'react'
 import { leftIn, pause_between_iterations, slideInTop, wobbleHorBottom } from '../../Utils/animations'
 import { Headline } from '../../Utils/Headline'
@@ -19,11 +20,13 @@ export function Start() {
   const decisionTreeRef = useRef<HTMLElement>(null)
   const splitsRef = useRef<HTMLElement>(null)
   const informationGainRef = useRef<HTMLElement>(null)
+  const entropyRef = useRef<HTMLElement>(null)
   const scrollToDecide = () => myRef?.current?.scrollIntoView({ behavior: "smooth" })
   const scrollToMachineLearning = () => machineLearningRef?.current?.scrollIntoView({ behavior: "smooth" })
   const scrollToDecisionTree = () => decisionTreeRef?.current?.scrollIntoView({ behavior: "smooth" })
   const scrollToSplits = () => splitsRef?.current?.scrollIntoView({ behavior: "smooth" })
   const scrollToInformationGain = () => informationGainRef?.current?.scrollIntoView({ behavior: "smooth" })
+  const scrollToEntropy = () => entropyRef?.current?.scrollIntoView({ behavior: "smooth" })
 
   return (
     <>
@@ -139,7 +142,7 @@ export function Start() {
           variant={'h3'}
           text={localizedStrings.decide}
         />
-        <Typography>
+        <Typography variant={'h6'}>
           {localizedStrings.start}
         </Typography>
       </Box>
@@ -217,6 +220,14 @@ export function Start() {
             </Typography>
           </Button>
           <Button
+            onClick={scrollToEntropy}
+            sx={{ display: 'flex' }}
+          >
+            <Typography noWrap>
+              {localizedStrings.entropy}
+            </Typography>
+          </Button>
+          <Button
             onClick={scrollToInformationGain}
             sx={{ display: 'flex' }}
           >
@@ -243,7 +254,7 @@ export function Start() {
               text={localizedStrings.machine_learning}
             />
             <Typography
-              variant='body1'
+              variant='h6'
               sx={{ mb: 5 }}
             >
               {localizedStrings.start_machine_learning}
@@ -257,8 +268,25 @@ export function Start() {
               variant={'h4'}
               text={localizedStrings.decision_tree}
             />
+            <Box sx={{display: 'flex', justifyContent: 'center', m: 2}}>
+              <Box className={'tree'}>
+                <ul>
+                  <li>
+                    <Link variant='h6'>{localizedStrings.decision}</Link>
+                    <ul>
+                      <li>
+                        <Link variant='h6'>{localizedStrings.feature + " 1"}</Link>
+                      </li>
+                      <li>
+                        <Link variant='h6'>{localizedStrings.feature + " 2"}</Link>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </Box>
+            </Box>
             <Typography
-              variant='body1'
+              variant='h6'
               sx={{ mb: 5 }}
             >
               {localizedStrings.start_decision_trees}
@@ -273,10 +301,25 @@ export function Start() {
               text={localizedStrings.splits}
             />
             <Typography
-              variant='body1'
+              variant='h6'
               sx={{ mb: 5 }}
             >
               {localizedStrings.start_splits}
+            </Typography>
+          </Box>
+          <Box
+            ref={entropyRef}
+            sx={{ scrollMarginTop: '64px' }}
+          >
+            <Headline
+              variant={'h4'}
+              text={localizedStrings.entropy}
+            />
+            <Typography
+              variant='h6'
+              sx={{ mb: 5 }}
+            >
+              {localizedStrings.start_entropy}
             </Typography>
           </Box>
           <Box
@@ -288,7 +331,7 @@ export function Start() {
               text={localizedStrings.information_gain}
             />
             <Typography
-              variant='body1'
+              variant='h6'
               sx={{ mb: 5 }}
             >
               {localizedStrings.start_information_gain}

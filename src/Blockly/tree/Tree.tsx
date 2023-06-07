@@ -29,6 +29,7 @@ export function Tree(
                 p: 3,
                 justifyContent: 'center',
                 height: '100%',
+                width: '100%',
                 maxHeight: '50vh',
                 overflow: 'auto',
             }}
@@ -73,7 +74,7 @@ function listItems(children: any, data: any, target: string) {
                                 color: 'secondary.dark',
                                 textAlign: 'start',
                             }}>
-                            {localizedStrings.entropy + entpy}
+                            {localizedStrings.entropy + ': ' + entpy}
                         </Typography>
                     </Link>
                     {
@@ -121,7 +122,7 @@ function listItems(children: any, data: any, target: string) {
                                 color: 'secondary.dark',
                                 textAlign: 'start',
                             }}>
-                            {localizedStrings.entropy + entpy}
+                            {localizedStrings.entropy + ': ' + entpy}
                         </Typography>
                     </Link>
                 </li>

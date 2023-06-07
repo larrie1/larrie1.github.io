@@ -207,6 +207,6 @@ export function createNode(data: any, features: string[]) {
             }
         },
         generateDecisions: () => features.map((feature: string) => [feature, feature]),
-        generateChoices: (decision: any) => _.uniq(_.map(data, decision)).map((val: any) => [val ? val.toString() : "", val ? val.toString() : ""]),
+        generateChoices: (decision: any) => _.uniq(_.map(data, decision)).map((val: any) => [val !== undefined && val !== null ? val.toString() : "", val !== undefined && val !== null ? val.toString() : ""]),
     };
 }

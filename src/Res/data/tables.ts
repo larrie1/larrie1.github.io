@@ -87,17 +87,19 @@ export const lv4_data = () => {
     const hot = localizedStrings.hot
     const windy = localizedStrings.windy
     const rainy = localizedStrings.rainy
+    const yes = localizedStrings.yes
+    const no = localizedStrings.no
 
     return {
         target: lv2Decision, features: [hot, windy, rainy], data: [
-            { [result]: undefined, [lv2Decision]: bad_weather, [hot]: true, [windy]: true, [rainy]: true },
-            { [result]: undefined, [lv2Decision]: good_weather, [hot]: true, [windy]: false, [rainy]: false },
-            { [result]: undefined, [lv2Decision]: good_weather, [hot]: true, [windy]: true, [rainy]: false },
-            { [result]: undefined, [lv2Decision]: good_weather, [hot]: true, [windy]: true, [rainy]: false },
-            { [result]: undefined, [lv2Decision]: bad_weather, [hot]: true, [windy]: false, [rainy]: true },
-            { [result]: undefined, [lv2Decision]: bad_weather, [hot]: false, [windy]: false, [rainy]: false },
-            { [result]: undefined, [lv2Decision]: bad_weather, [hot]: false, [windy]: true, [rainy]: false },
-            { [result]: undefined, [lv2Decision]: bad_weather, [hot]: false, [windy]: false, [rainy]: false },
+            { [result]: undefined, [lv2Decision]: bad_weather, [hot]: yes, [windy]: yes, [rainy]: yes },
+            { [result]: undefined, [lv2Decision]: good_weather, [hot]: yes, [windy]: no, [rainy]: no },
+            { [result]: undefined, [lv2Decision]: good_weather, [hot]: yes, [windy]: yes, [rainy]: no },
+            { [result]: undefined, [lv2Decision]: good_weather, [hot]: yes, [windy]: yes, [rainy]: no },
+            { [result]: undefined, [lv2Decision]: bad_weather, [hot]: yes, [windy]: no, [rainy]: yes },
+            { [result]: undefined, [lv2Decision]: bad_weather, [hot]: no, [windy]: no, [rainy]: no },
+            { [result]: undefined, [lv2Decision]: bad_weather, [hot]: no, [windy]: yes, [rainy]: no },
+            { [result]: undefined, [lv2Decision]: bad_weather, [hot]: no, [windy]: no, [rainy]: no },
         ]
     }
 }

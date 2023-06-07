@@ -1,5 +1,6 @@
 /**
  *  German translations
+ *  (Level Descriptions (levelX_description) got AI generated)
  */
 export const de = {
     title: 'Entscheidungsbäume',
@@ -44,7 +45,7 @@ export const de = {
     crow: 'Rabe',
     leaf_tooltip: 'Das ist ein Blatt, es repräsentiert deine Entscheidung',
     node_tooltip: 'Das ist ein Knoten, er verbindet sich mit anderen Knoten oder mit einem Blatt',
-    level1_description: 'Tobi ist drei Jahre alt und lernt gerade zu rechnen. Ihm fällt es allerdings schwer zu zählen, dementsprechend kann er auch nicht gut Motorräder von Autos unterscheiden. Ihm würde ein Entscheidungsbaum bei der Zuordnung sicherlich helfen, hilf ihm und erstelle diesen Entscheidungsbaum!. ',
+    level1_description: 'Es war einmal ein Mann namens Max, der ein Auto und ein Motorrad besaß. Eines Tages hatte er einen Unfall und konnte sich nicht mehr daran erinnern, welches Fahrzeug er fuhr. Er konnte sich nur an die Anzahl der Reifen erinnern. Er wusste, dass das Fahrzeug vier oder zwei Reifen hatte. Max bat seinen Freund Tom um Hilfe. Tom war ein Experte für Entscheidungsbäume und half Max dabei, ein Entscheidungsbaum zu erstellen, um herauszufinden, welches Fahrzeug er fuhr. Tom fragte Max: "Hat das Fahrzeug vier Reifen?" Max antwortete: "Ja." Tom sagte: "Dann fährst du das Auto." Wenn Max jedoch geantwortet hätte: "Nein", hätte Tom ihn gefragt: "Hat das Fahrzeug zwei Reifen?" Wenn Max mit "Ja" geantwortet hätte, hätte Tom gesagt: "Dann fährst du das Motorrad."',
     level1_task: 'Die Aufgabe lautet wie folgt: Bestimme anhand des Merkmals "Reifen", welches Fahrzeug zu welchen Eigenschaften passt. Prüfe deinen Baum wenn du dir sicher bist!', 
     leaf_missing: 'Blatt fehlt!',
     node_missing: 'Entscheidung fehlt!',
@@ -89,14 +90,14 @@ export const de = {
     taste: 'Geschmack',
     random_test: 'Zufälligen Test hinzufügen',
     generator_step1: 'Bitte trage hier ein welche Entscheidung du mithilfe des Baums treffen möchtest. Es kann sich um alles deiner Wahl handeln, jedoch kannst du deine Wahl nicht mehr ändern.',
-    generator_step2: 'Hier kannst du nun deine Features einfügen, die bestimmen für welche Entscheidung wir uns entscheiden bzw. woran man deine Entscheidung messen kann. Ein Beispiel wäre, dass du anhand von Fell einen Hund von einem Menschen unterscheiden kannst.',
+    generator_step2: 'Hier kannst du nun deine Merkmale einfügen, die bestimmen für welche Entscheidung wir uns entscheiden bzw. woran man deine Entscheidung messen kann. Ein Beispiel wäre, dass du anhand von Fell einen Hund von einem Menschen unterscheiden kannst.',
     generator_step3: 'Fülle hier deine Tabelle mit Leben! Du solltest für jede Entscheidung alle Parameter ausfüllen.',
     decision: 'Entscheidung',
-    features: 'Features',
+    features: 'Merkmale',
     data: 'Daten',
     generator_title: 'Erstelle dir dein Eigenes Level!',
-    valid_features: 'Es gibt noch unbelegte Features!',
-    enough_features: 'Es sind noch nicht genügend Features definiert worden!',
+    valid_features: 'Es gibt noch unbelegte Merkmale!',
+    enough_features: 'Es sind noch nicht genügend Merkmale definiert worden!',
     missing_data: 'Es fehlen noch daten in der Tabelle!',
     correct: 'Richtig',
     incorrect: 'Falsch',
@@ -123,9 +124,10 @@ export const de = {
     start_machine_learning: 'Maschinelles Lernen stellt ein Teilgebiet der Künstlichen Intelligenz dar, welches nach der Veröffentlichung von ChatGPT jedem ein Begriff sein sollte. Der Begriff Maschinelles Lernen wurde bereits 1959 eingeführt, jedoch fand es keine Nutzung. Erst als in den 1990er Jahren der Spamfilter maschinelles Lernen verwendete wurde das Maschinelle Lernen populär. Heutzutage findet Maschinelles Lernen häufigen Einsatz in der modernen Informatik. Dies auch nicht ohne Grund, es bietet sich in vielerlei Hinsichten an das Maschinelle Lernen zu verwenden. Denn wenn es darum geht etwas zu klassifizieren oder einen Wert zu bestimmen, bietet es sich an einen Maschinell lernenden Algorithmus zu schreiben, der diese Werte klassifiziert oder vorhersagt. Dabei kann das Maschinelle Lernen in drei Arten unterteilt werden, dem überwachten, unüberwachten und bestärkenden Lernen. Bei dem bestärkenden Lernen erhält der Computer Belohnungen oder Bestrafungen, wenn er eine Aufgabe löst oder gelöst hat. Es wird dabei versucht die Lösung zu lernen, welche die größte Belohnung beinhaltet. Beim unüberwachten Lernen erhält der Computer keine Informationen über eine gewünschte Lösung anhand von Belohnungen oder Ähnliches. Der Computer muss anhand von einem Datensatz Muster innerhalb von diesen Daten finden und kann diese daraufhin klassifizieren. Diese Arten sind jedoch nicht interresant für die Entscheidungsbäume, denn diese gehören zu dem überwachten Lernen. Bei dem überwachten Lernen erhält der Computer für jeden Datensatz ein Ergebnis zum Trainieren. Daraufhin werden die Daten in die jeweils möglichen Klassen klassifiziert. Wenn wir zum Beispiel zurück auf das Beispiel mit dem Spamfilter greifen, da könnten zehn verschiedene E-Mails einen Trainingsdatensatz darstellen, wobei jede dieser E-Mails bereits nach Spam oder kein Spam klassifiziert wurde. Dadurch lernt der Computer Merkmale anhand dessen er die E-Mails auch in Zukunft voneinander trennen kann.',
     start_decision_trees: 'Ein Entscheidungsbaum stellt einen mehrstufigen Entscheidungsprozess mit allen Entscheidungsoptionen dar. Da die Entscheidungswege durch einzelne Äste dargestellt werden, spricht man auch von einem Baumdiagramm. Es ist eine Visualisierung und dient als Entscheidungshilfe. Oftmals findet man im Internet Beispiele für Entscheidungsbäume, die zwar alternative Wege in einem Ablauf visualisieren, die aber nicht als Entscheidungshilfe taugen. Der Sinn eines Entscheidungsbaums liegt darin, anhand von verschiedenen, visualisierten Antwortoptionen auf konkrete Fragen zu einer finalen Entscheidung zu gelangen. Auch wenn ein Entscheidungsbaum optisch ansprechend sein kann, ist er durch formale Regeln klar strukturiert. Darin liegt auch der größte Vorteil für Anwender, die diese Regeln leicht über mehrere Ebenen – die Fragen mit Ihren Antwortoptionen – nachvollziehen und so eine Entscheidung treffen können.',
     start_splits: '',
+    start_entropy: '',
     start_information_gain: '',
-    entropy: 'Entropie: ',
-    feature: 'Feature',
+    entropy: 'Entropie',
+    feature: 'Merkmal',
     hint: 'Hinweis',
     hint_title: 'Fällt dir eine Entscheidung schwer? Sag mir wo und ich werde versuchen, dir zu helfen!',
     hint_leafs: 'Du hast bereits alle Fragen zum finden einer Entscheidung getroffen, wähle die passenden Entscheidungen! Siehe dir dazu die Tabelle mit den Daten an.',

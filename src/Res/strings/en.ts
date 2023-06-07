@@ -1,6 +1,7 @@
 /**
  *  English Translations
  *  Most of the translations got translated by Google
+ *  (Level Descriptions (levelX_description) got AI generated)
  */
 export const en = {
     title: 'Decision Trees',
@@ -47,7 +48,7 @@ export const en = {
     crow: 'Crow',
     leaf_tooltip: 'This is a leaf, it represents your Decision',
     node_tooltip: 'This is a Node it connects with other Nodes or Leafs',
-    level1_description: 'Tobi is three years old and just learning to count. However, he finds it difficult to count, so he is not good at distinguishing motorcycles from cars. A decision tree would certainly help him with the assignment, help him and create this decision tree!.',
+    level1_description: 'Once upon a time, there was a man named Max who owned a car and a motorcycle. One day, he had an accident and couldn\'t remember which vehicle he was driving. All he could recall was the number of tires. He knew that the vehicle had either four or two tires. Max asked his friend Tom for help. Tom was an expert in decision trees and assisted Max in creating a decision tree to determine which vehicle he was driving. Tom asked Max, "Does the vehicle have four tires?" Max replied, "Yes." Tom said, "Then you are driving the car." However, if Max had answered "No," Tom would have asked him, "Does the vehicle have two tires?" If Max had responded "Yes," Tom would have said, "Then you are riding the motorcycle."',
     level1_task: 'The task is as follows: Use the "tire" feature to determine which vehicle matches which properties. Check your tree if you are sure!',
     leaf_missing: 'Leaf is missing!',
     node_missing: 'Decision is missing!',
@@ -126,8 +127,9 @@ export const en = {
     start_machine_learning: 'Machine learning is a sub-area of ​​artificial intelligence, which everyone should be familiar with after the release of ChatGPT. The term machine learning was introduced in 1959, but it was not used. Machine learning only became popular when spam filters used machine learning in the 1990s. Nowadays, machine learning is often used in modern computer science. And not without reason, there are many ways to use machine learning. Because when it comes to classifying something or determining a value, it makes sense to write a machine learning algorithm that classifies or predicts these values. Machine learning can be divided into three types, supervised, unsupervised and reinforcement learning. In reinforcement learning, the computer receives rewards or punishments when it solves or has solved a task. An attempt is made to learn the solution that has the greatest reward. In unsupervised learning, the computer does not receive any information about a desired solution based on rewards or the like. The computer has to use a data set to find patterns within this data and can then classify them. However, these types are not interesting for the decision trees, because these belong to the supervised learning. With supervised learning, the computer receives a result for training for each data set. The data is then classified into the possible classes. For example, if we go back to the spam filter example, ten different emails could constitute a training data set, with each of those emails already classified as spam or not spam. As a result, the computer learns characteristics that it can use to separate the e-mails from one another in the future.',
     start_decision_trees: 'A decision tree represents a multi-stage decision-making process with all decision-making options. Since the decision-making paths are represented by individual branches, it is also called a tree diagram. It is a visualization and serves as a decision-making aid. You can often find examples of decision trees on the Internet that visualize alternative paths in a process, but are not suitable as a decision-making aid. The purpose of a decision tree is to reach a final decision based on different, visualized answer options to specific questions. Even if a decision tree can be visually appealing, it is clearly structured using formal rules. This is also the greatest advantage for users, who can easily understand these rules over several levels - the questions with their answer options - and thus make a decision.',
     start_splits: '',
+    start_entropy: '',
     start_information_gain: '',
-    entropy: 'Entropy: ',
+    entropy: 'Entropy',
     feature: 'Feature',
     hint: 'Hint',
     hint_title: 'Do you struggle with a Decision? Tell me where and I will try to help you!',
