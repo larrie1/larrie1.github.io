@@ -31,8 +31,8 @@ export function Generator() {
             isUnlocked={state.step3Unlocked}
             target={state.target}
             features={state.features}
-            data={state.data}
-            setData={state.setData} />
+            data={state.trainingData}
+            setData={state.setTrainingData} />
     ]
 
     if (!state.isDone) {
@@ -94,7 +94,7 @@ export function Generator() {
         return <Box sx={{ mt: 3 }}>
             <Level
                 xmlKey={`generator${Math.random()}`}
-                data={state.table}
+                data={state.data}
                 title='Generator'
                 description={localizedStrings.generator_description}
                 isUnlocked={true} />

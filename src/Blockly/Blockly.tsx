@@ -77,7 +77,7 @@ export function Blockly(
                 {
                     state.showAnalyse &&
                     <Analyse
-                        data={state.data}
+                        data={state.training_data}
                         target={state.target}
                         features={state.features}
                         blockJson={state.blockJson}
@@ -87,19 +87,23 @@ export function Blockly(
             {/* Hint & Tree */}
             {
                 state.showTree &&
-                <Box sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <Hint
-                        data={state.data}
-                        features={state.features}
-                        target={state.target}
-                        blockJson={state.blockJson}
-                    />
-                    <Tree
-                        data={state.data}
-                        blockJson={state.blockJson}
-                        target={state.target}
-                    />
-                </Box>
+                <Grid2 container spacing={2} sx={{ display: 'flex', flexDirection: 'row' }}>
+                    <Grid2 md={12} lg={6} >
+                        <Hint
+                            data={state.training_data}
+                            features={state.features}
+                            target={state.target}
+                            blockJson={state.blockJson}
+                        />
+                    </Grid2>
+                    <Grid2 md={12} lg={6}>
+                        <Tree
+                            data={state.training_data}
+                            blockJson={state.blockJson}
+                            target={state.target}
+                        />
+                    </Grid2>
+                </Grid2>
             }
             <Box
                 sx={{
@@ -187,7 +191,7 @@ export function Blockly(
                         <BlocklyWorkspace
                             key={state.seed}
                             className='fill-height'
-                            toolboxConfiguration={createToolBox(state.data, state.target)}
+                            toolboxConfiguration={createToolBox(state.training_data, state.target)}
                             initialXml={state.initialXml}
                             onXmlChange={state.saveXML}
                             onWorkspaceChange={state.workspaceDidChange}

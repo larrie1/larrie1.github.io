@@ -32,13 +32,15 @@ export const StepperContext =
  */
 export const TableContext =
     React.createContext<{
-        data: any[],
+        training_data: any[],
+        test_data: any[],
         target: string,
         features: string[],
         addRow: any,
         addResult: any,
     }>({
-        data: [],
+        training_data: [],
+        test_data: [],
         target: "",
         features: [],
         addRow: () => { },

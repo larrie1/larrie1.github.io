@@ -22,10 +22,11 @@ export function Hint(
             sx={{
                 animation: `${scaleInVerCenter} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
                 flex: 1,
+                height: '100%',
+                maxHeight: '50vh',
                 pt: 1,
                 px: 3,
                 pb: 3,
-                mr: 2,
                 overflow: 'auto',
                 transition: 'all 0.5s'
             }}

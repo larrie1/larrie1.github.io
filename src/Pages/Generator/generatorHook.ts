@@ -11,13 +11,11 @@ import { createTable } from "../../Utils/Table"
 export function useGenerator() {
     const [target, setTarget] = useState("")
     const [features, setFeatures] = useState<string[]>(['', ''])
-    const [data, setData] = useState<any[]>([{ [localizedStrings.result]: undefined }, { [localizedStrings.result]: undefined }])
     const [isDone, setDone] = useState(false)
     const [isValidData, setValidData] = useState(false)
+    const [trainingData, setTrainingData] = useState<any[]>([{ [localizedStrings.result]: undefined }, { [localizedStrings.result]: undefined }])
 
     const handleClick = () => setDone(true)
-
-    const setTable = (newData: any) => setData(newData)
 
     const validateFeatures = () => {
         for (let feature of features) {
@@ -27,7 +25,7 @@ export function useGenerator() {
     }
 
     const validateData = () => {
-        for (let row of data) {
+        for (let row of trainingData) {
             if (!row[target]) return false
             for (let feature of features) {
                 if (!row[feature]) return false
@@ -36,16 +34,9 @@ export function useGenerator() {
         return true
     }
 
-    const table = createTable(
-        data,
-        target,
-        features,
-        setTable,
-    )
-
     useEffect(() => {
         setValidData(target !== '' && features.length > 1 && validateFeatures() && validateData())
-    }, [target, features, data])
+    }, [target, features, trainingData])
 
     let validateHints = [
         [!validateFeatures(), localizedStrings.valid_features],
@@ -58,14 +49,18 @@ export function useGenerator() {
         setTarget: setTarget,
         features: features,
         setFeatures: setFeatures,
-        data: data,
-        setData: setData,
+        trainingData: trainingData,
+        setTrainingData: setTrainingData,
         isDone: isDone,
-        table: table,
         validateHints: validateHints,
         isValidData: isValidData,
         handleClick: handleClick,
         step2Unlocked: target !== '',
         step3Unlocked: target !== '' && features[0] !== '',
+        data: {
+            features: features,
+            target: target,
+            data: trainingData
+        }
     }
 }

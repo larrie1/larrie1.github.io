@@ -1,7 +1,7 @@
 import Brightness4Icon from '@mui/icons-material/Brightness4'
 import Brightness7Icon from '@mui/icons-material/Brightness7'
 import MenuIcon from '@mui/icons-material/Menu'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Button, Card, AppBar, Toolbar, Tooltip, IconButton, Container, Box, Typography } from '@mui/material'
 import { useTheme } from '@mui/material/styles'
 import { useState } from 'react'
@@ -30,6 +30,7 @@ export function NavBar() {
                             justifyContent: 'start',
                             display: { xs: 'none', md: 'flex' },
                             height: '64px',
+                            width: '64px',
                             filter: `brightness(80%)`,
                             '&:hover': {
                                 filter: `brightness(100%)`,
@@ -64,10 +65,15 @@ export function NavBar() {
  */
 function MobileNav() {
     const [isOpen, setIsOpen] = useState(false)
+    const location = useLocation()
 
     const onMenuClick = () => {
         setIsOpen(!isOpen)
     }
+
+    useEffect(() => {
+        setIsOpen(false)
+    }, [location.pathname])
 
     return (
         <>

@@ -5,9 +5,6 @@
 
 .tree ul {
 	padding-top: 20px; position: relative;
-    overflow-x: scroll;
-    overflow-y: scroll;
-    white-space: nowrap;
 	
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
@@ -37,9 +34,6 @@
 	list-style-type: none;
 	position: relative;
 	padding: 20px 5px 0 5px;
-    overflow-x: scroll;
-    overflow-y: scroll;
-    white-space: nowrap;
 	
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
@@ -92,38 +86,4 @@ right connector from last child*/
 	position: absolute; top: 0; left: 50%;
 	border-left: 1px solid #6C63FF;
 	width: 0; height: 20px;
-}
-
-/*Connector styles on hover*/
-.tree li a:hover+ul li::after, 
-.tree li a:hover+ul li::before,  
-.tree li a:hover+ul::before,
-.tree li a:hover+ul ul::before{
-    border-color: #6C63FF;
-}
-
-.tree a:hover+ul li:last-child::before{
-    border-right: 3px solid #6C63FF;
-}
-
-.tree a:hover+ul::before{
-    border-left: 3px solid #6C63FF;
-}
-
-.tree a:hover+ul ul::before{
-    border-left: 3px solid #6C63FF;
-}
-
-.tree a:hover+ul li::before, 
-.tree a:hover+ul li::after{
-    border-top: 3px solid #6C63FF;
-}
-
-.tree a:hover+ul li:first-child::before, 
-.tree a:hover+ul li:last-child::after{
-	border: 0 none;
-}
-
-.tree a:hover+ul li::after{
-	border-left: 3px solid #6C63FF;
 }

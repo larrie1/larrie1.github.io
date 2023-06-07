@@ -32,6 +32,7 @@ function useLevel(data: any) {
 
     return {
         table: createTable(
+            data.data,
             tableData.data,
             tableData.target,
             tableData.features,

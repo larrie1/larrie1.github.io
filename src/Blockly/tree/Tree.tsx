@@ -28,12 +28,16 @@ export function Tree(
                 display: 'flex',
                 p: 3,
                 justifyContent: 'center',
+                height: '100%',
                 maxHeight: '50vh',
                 overflow: 'auto',
             }}
         >
             <Box className={'tree'} sx={{overflow: 'auto'}}>
-                <ul>
+                <ul style={{
+                    whiteSpace: 'nowrap',
+                    overflow: 'auto'
+                }}>
                     {listItems(props.blockJson, props.data, props.target)}
                 </ul>
             </Box>

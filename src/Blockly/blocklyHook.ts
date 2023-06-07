@@ -53,7 +53,8 @@ export function useBlockly(xmlKey: string) {
     const [loading, setLoading] = useState(true)
 
     /* Table */
-    const { data } = useContext(TableContext)
+    const { training_data } = useContext(TableContext)
+    const { test_data } = useContext(TableContext)
     const { target } = useContext(TableContext)
     const { features } = useContext(TableContext)
     const { addResult } = useContext(TableContext)
@@ -75,7 +76,7 @@ export function useBlockly(xmlKey: string) {
     async function checkCode() {
         var allRowsCorrect = true
 
-        data.forEach((obj, index) => {
+        test_data.forEach((obj, index) => {
             const actualResult = checkRow(
                 obj,
                 blockJson
@@ -93,7 +94,7 @@ export function useBlockly(xmlKey: string) {
     const showResult = () => {
         saveXML(
             '<xml xmlns="https://developers.google.com/blockly/xml">' +
-            onShowResult(data, createTree(data, target, features)) +
+            onShowResult(training_data, createTree(training_data, target, features)) +
             '</xml>'
         )
         setSeed(Math.random())
@@ -117,8 +118,8 @@ export function useBlockly(xmlKey: string) {
     ]
 
     useEffect(() => {
-        if (!data && !target && !features) setLoading(true)
-        else if (data.length > 0 && features.length > 0 && target !== '') setLoading(false)
+        if (!test_data && !target && !features) setLoading(true)
+        else if (test_data.length > 0 && features.length > 0 && target !== '') setLoading(false)
     }, [TableContext])
 
     useEffect(() => {
@@ -134,7 +135,7 @@ export function useBlockly(xmlKey: string) {
         }
     }, [blockCode])
 
-    createNode(data, features)
+    createNode(training_data, features)
 
     const handleClose = () => {
         setShowAnalyse(false)
@@ -146,7 +147,8 @@ export function useBlockly(xmlKey: string) {
     const handleShowAnalyse = () => setShowAnalyse(true)
 
     return {
-        data: data,
+        training_data: training_data,
+        test_data: test_data,
         features: features,
         target: target,
         blockJson: blockJson,

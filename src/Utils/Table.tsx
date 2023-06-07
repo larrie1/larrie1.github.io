@@ -12,20 +12,23 @@ import { localizedStrings } from '../Res'
  *  This Method creates a Table containing all the information it takes to create the UI for the table.
  *  It will add a addRow method to create new Testdata and a addResult method to store the result. 
  * 
- * @param data Containing the main Data from the Table
+ * @param data_unedited Containing the main Data from the Table with Results, aka Traingingsdata
+ * @param data Containing the main Data from the Table without Results, aka Testdata
  * @param target String defining the Decision that will be targeted
  * @param features A list of features which the decision will be based on
  * @param setData Sets the new modified Table 
  * @returns 
  */
 export function createTable(
-    data: any,
+    training_data: any[],
+    test_data: any,
     target: string,
     features: string[],
     setData: (data: any) => void,
 ) {
     return {
-        data: data,
+        training_data: training_data,
+        test_data: test_data,
         target: target,
         features: features,
         addRow: () => {
@@ -35,16 +38,16 @@ export function createTable(
             }
             for (var i = 0; i < features.length; i++) {
                 let feature = features[i]
-                newVal[feature] = _.sample(_.uniq(_.map(data, feature)))
+                newVal[feature] = _.sample(_.uniq(_.map(test_data, feature)))
             }
             setData(
-                [...data, newVal]
+                [...test_data, newVal]
             )
         },
         addResult: (val: any, index: number) => {
             let result = localizedStrings.result
-            data[index][result] = val
-            setData([...data])
+            test_data[index][result] = val
+            setData([...test_data])
         }
     }
 }
@@ -67,7 +70,7 @@ export function BasicTable() {
     return (
         <TableContext.Consumer>
             {table => {
-                let dataFiltered = table.data.map(row =>
+                let dataFiltered = table.test_data.map(row =>
                     _.reduce(row, function (result: any, value: any, key: string) {
                         if (isResultVisible && key === localizedStrings.result) {
                             result[key] = value

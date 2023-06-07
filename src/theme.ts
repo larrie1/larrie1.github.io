@@ -16,27 +16,6 @@ export const theme = (mode: PaletteMode) => ({
                             borderColor: 'secondary.dark',
                             padding: 1,
                             borderRadius: 2,
-                            whiteSpace: 'nowrap',
-                            overflow: 'auto',
-                            '&: hover': {
-                                color: 'white',
-                                border: 3,
-                                borderColor: 'primary.main',
-                                backgroundColor: 'transparent'
-                            },
-                            '&:hover+ul li a': {
-                                border: 3,
-                                borderColor: 'primary.main',
-                                backgroundColor: 'transparent'
-                            },
-                            '&:hover+ul li a.featureVal': {
-                                border: 0,
-                                borderColor: 'primary.main',
-                                backgroundColor: 'transparent'
-                            },
-                            '&:hover+ul li a.leaf': {
-                                backgroundColor: '#6b63ff39'
-                            },
                         }
                     )
             }
