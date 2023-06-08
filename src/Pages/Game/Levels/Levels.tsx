@@ -14,14 +14,6 @@ localStorage.setItem("level3blocks", '<xml xmlns="https://developers.google.com/
  */
 export const getLevel = (index: number, unlocked: boolean) => [
     <Level
-        xmlKey={"levelxblocks"}
-        data={start_data()}
-        title='Level 1'
-        description={localizedStrings.level1_description}
-        isUnlocked={true}
-        task={localizedStrings.level1_task}
-        intro={localizedStrings.level1_intro} />,
-    <Level
         xmlKey={"level1blocks"}
         data={lv1_data()}
         title='Level 1'
