@@ -57,10 +57,12 @@ export function createTable(
  *  This Method creates a Table with two Buttons at the bottom. 
  *  With the Buttons you can add a random test row and show or hide the result column.
  * 
+ *  @param showFooter Indicates if the Footer should be shown
+ *  @param showResult Indicates if the Result should be shown
  *  @returns UI representation of a basic Table
  */
-export function BasicTable() {
-    const [isResultVisible, setResultVisible] = useState(true)
+export function BasicTable({ showFooter = true, showResult = true }: { showFooter?: Boolean, showResult?: Boolean }) {
+    const [isResultVisible, setResultVisible] = useState(showResult)
     const theme = useTheme()
 
     const onResultClick = () => {
@@ -88,7 +90,7 @@ export function BasicTable() {
                                 textAlign: 'end',
                                 height: '100%',
                             }}>
-                            <Table stickyHeader sx={{ mb: '65px' }}>
+                            <Table stickyHeader sx={{ mb: showFooter ? '65px' : 0}}>
                                 {/* Head of the Table */}
                                 <TableHead>
                                     <TableRow
@@ -138,7 +140,7 @@ export function BasicTable() {
                                 </TableBody>
                             </Table>
                         </TableContainer>
-                        <Box
+                        {showFooter && <Box
                             sx={{
                                 position: 'fixed',
                                 bottom: 0,
@@ -198,7 +200,7 @@ export function BasicTable() {
                                         <VisibilityIcon />}
                                 </Button>
                             </Tooltip>
-                        </Box>
+                        </Box>}
                     </>
                 )
             }}

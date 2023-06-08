@@ -1,4 +1,5 @@
 import { lv1_data, localizedStrings, lv2_data, lv3_data, lv4_data, lv5_data } from '../../../Res';
+import { start_data } from '../../../Res/data/tables';
 import { Level } from './Level';
 
 // Level 3 should start with more blocks, so you learn about splitting 
@@ -12,6 +13,14 @@ localStorage.setItem("level3blocks", '<xml xmlns="https://developers.google.com/
  *  @returns         The Level at index. 
  */
 export const getLevel = (index: number, unlocked: boolean) => [
+    <Level
+        xmlKey={"levelxblocks"}
+        data={start_data()}
+        title='Level 1'
+        description={localizedStrings.level1_description}
+        isUnlocked={true}
+        task={localizedStrings.level1_task}
+        intro={localizedStrings.level1_intro} />,
     <Level
         xmlKey={"level1blocks"}
         data={lv1_data()}

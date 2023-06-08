@@ -87,8 +87,8 @@ export function Blockly(
             {/* Hint & Tree */}
             {
                 state.showTree &&
-                <Grid2 container spacing={2} sx={{ display: 'flex', flexDirection: 'row' }}>
-                    <Grid2 md={12} lg={6} >
+                <Grid2 container spacing={2}>
+                    <Grid2 xs={12} lg={6}>
                         <Hint
                             data={state.training_data}
                             features={state.features}
@@ -96,11 +96,12 @@ export function Blockly(
                             blockJson={state.blockJson}
                         />
                     </Grid2>
-                    <Grid2 md={12} lg={6}>
+                    <Grid2 xs={12} lg={6}>
                         <Tree
                             data={state.training_data}
                             blockJson={state.blockJson}
                             target={state.target}
+                            features={state.features.length + 1}
                         />
                     </Grid2>
                 </Grid2>

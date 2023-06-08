@@ -19,7 +19,6 @@ export function Hint(
         <Card
             sx={{
                 animation: `${scaleInVerCenter} 0.5s cubic-bezier(0.250, 0.460, 0.450, 0.940) both`,
-                flex: 1,
                 height: '100%',
                 width: '100%',
                 maxHeight: '50vh',
@@ -29,7 +28,7 @@ export function Hint(
                 overflow: 'auto',
             }}
         >
-            <Headline variant="h6" text={localizedStrings.hint} />
+            <Headline variant="h5" text={localizedStrings.hint} />
             <Typography>
                 {localizedStrings.hint_title}
             </Typography>

@@ -1,6 +1,37 @@
 import { localizedStrings } from ".."
 
 /**
+ *  This Method creates the JSON representation of the Table for the Startpage.
+ * 
+ *  @returns Data for Level 2
+ */
+ export const start_data = () => {
+    const result = localizedStrings.result
+    const decision = localizedStrings.start_tree_decision
+    const leaf1 = localizedStrings.start_tree_leaf1
+    const leaf2 = localizedStrings.start_tree_leaf2
+    const leaf3 = localizedStrings.start_tree_leaf3
+    const leaf4 = localizedStrings.start_tree_leaf4
+    const temperature = localizedStrings.start_tree_temperature
+    const rainy = localizedStrings.start_tree_rain
+    const windy = localizedStrings.start_tree_windy
+    const yes = localizedStrings.yes
+    const no = localizedStrings.no
+    const cold = localizedStrings.cold
+    const warm = localizedStrings.warm
+    
+
+    return {
+        target: decision, features: [temperature, rainy, windy], data: [
+            { [result]: undefined, [decision]: leaf1, [temperature]: cold, [rainy]: yes, [windy]: no },
+            { [result]: undefined, [decision]: leaf2, [temperature]: cold, [rainy]: no, [windy]: no },
+            { [result]: undefined, [decision]: leaf3, [temperature]: warm, [rainy]: no, [windy]: yes},
+            { [result]: undefined, [decision]: leaf4, [temperature]: warm, [rainy]: no, [windy]: no },
+        ]
+    }
+}
+
+/**
  *  This Method creates the JSON representation of the first Level.
  * 
  *  @returns Data for Level 1

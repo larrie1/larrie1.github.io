@@ -8,6 +8,9 @@ import { ReactComponent as LearnSvg } from '../../Res/Assets/undraw_bibliophile.
 import { ReactComponent as GameSvg } from '../../Res/Assets/undraw_gaming.svg'
 import { ReactComponent as BuildSvg } from '../../Res/Assets/undraw_building_blocks.svg'
 import { localizedStrings, blockly1, block3, block5, block4 } from '../../Res'
+import { TableContext } from '../../context'
+import { BasicTable, createTable } from '../../Utils/Table'
+import { start_data } from '../../Res/data/tables'
 
 /**
  *  This Method creates the Start Page. It contains a Block Background and some Information about the Topic.
@@ -27,6 +30,15 @@ export function Start() {
   const scrollToSplits = () => splitsRef?.current?.scrollIntoView({ behavior: "smooth" })
   const scrollToInformationGain = () => informationGainRef?.current?.scrollIntoView({ behavior: "smooth" })
   const scrollToEntropy = () => entropyRef?.current?.scrollIntoView({ behavior: "smooth" })
+
+  const startData = start_data()
+  const startTable = createTable(
+    startData.data,
+    startData.data,
+    startData.target,
+    startData.features,
+    () => { }
+  )
 
   return (
     <>
@@ -255,30 +267,68 @@ export function Start() {
             />
             <Typography
               variant='h6'
-              sx={{ mb: 5 }}
+              sx={{ mb: 5, textAlign: 'justify' }}
             >
               {localizedStrings.start_machine_learning}
             </Typography>
           </Box>
           <Box
             ref={decisionTreeRef}
-            sx={{ scrollMarginTop: '64px' }}
+            sx={{ scrollMarginTop: '64px', mb: 5 }}
           >
             <Headline
               variant={'h4'}
               text={localizedStrings.decision_tree}
             />
-            <Box sx={{display: 'flex', justifyContent: 'center', m: 2}}>
+            <Box sx={{ mb: 5, mr: 5 }}>
               <Box className={'tree'}>
                 <ul>
                   <li>
-                    <Link variant='h6'>{localizedStrings.decision}</Link>
+                    <Link variant='h6'>{localizedStrings.root}</Link>
                     <ul>
                       <li>
-                        <Link variant='h6'>{localizedStrings.feature + " 1"}</Link>
+                        <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                        <ul>
+                          <li>
+                            <Link variant='h6'>{localizedStrings.node}</Link>
+                            <ul>
+                              <li>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                                <ul>
+                                  <Link variant='h6'>{localizedStrings.leaf}</Link>
+                                </ul>
+                              </li>
+                              <li>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                                <ul>
+                                  <Link variant='h6'>{localizedStrings.leaf}</Link>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
                       </li>
                       <li>
-                        <Link variant='h6'>{localizedStrings.feature + " 2"}</Link>
+                        <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                        <ul>
+                          <li>
+                            <Link variant='h6'>{localizedStrings.node}</Link>
+                            <ul>
+                              <li>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                                <ul>
+                                  <Link variant='h6'>{localizedStrings.leaf}</Link>
+                                </ul>
+                              </li>
+                              <li>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                                <ul>
+                                  <Link variant='h6'>{localizedStrings.leaf}</Link>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
                       </li>
                     </ul>
                   </li>
@@ -287,10 +337,83 @@ export function Start() {
             </Box>
             <Typography
               variant='h6'
-              sx={{ mb: 5 }}
+              sx={{ textAlign: 'justify' }}
             >
-              {localizedStrings.start_decision_trees}
+              {localizedStrings.start_decision_trees1}
             </Typography>
+            <Box sx={{ my: 2, display: 'flex', flexDirection: 'row' }}>
+              <Typography
+                variant='h6'
+                sx={{
+                  flex: 1,
+                  textAlign: 'justify'
+                }}
+              >
+                {localizedStrings.start_decision_trees2}
+              </Typography>
+              <Box
+                className={'tree'}
+                sx={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  flexDirection: 'column',
+                }}>
+                <Typography variant='h6' color='primary.main'>
+                  Was soll ich heute anziehen?
+                </Typography>
+                <ul style={{ marginLeft: 5 }}>
+                  <li>
+                    <Link variant='h6'>Wie ist die Temperatur?</Link>
+                    <ul>
+                      <li>
+                        <Link className={'featureVal'} variant='h6'>Kalt</Link>
+                        <ul>
+                          <li>
+                            <Link variant='h6'>Regnet es?</Link>
+                            <ul>
+                              <li>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.yes}</Link>
+                                <ul>
+                                  <Link variant='h6'>Regenjacke & <br /> lange Hose</Link>
+                                </ul>
+                              </li>
+                              <li>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.no}</Link>
+                                <ul>
+                                  <Link variant='h6'>Pullover & <br /> lange Hose</Link>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                      <li>
+                        <Link className={'featureVal'} variant='h6'>Warm</Link>
+                        <ul>
+                          <li>
+                            <Link variant='h6'>Ist es Windig?</Link>
+                            <ul>
+                              <li>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.yes}</Link>
+                                <ul>
+                                  <Link variant='h6'>Pullover & <br /> kurze Hose</Link>
+                                </ul>
+                              </li>
+                              <li>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.no}</Link>
+                                <ul>
+                                  <Link variant='h6'>T-Shirt & <br /> kurze Hose</Link>
+                                </ul>
+                              </li>
+                            </ul>
+                          </li>
+                        </ul>
+                      </li>
+                    </ul>
+                  </li>
+                </ul>
+              </Box>
+            </Box>
           </Box>
           <Box
             ref={splitsRef}
@@ -300,9 +423,12 @@ export function Start() {
               variant={'h4'}
               text={localizedStrings.splits}
             />
+            <TableContext.Provider value={startTable}>
+              <BasicTable showFooter={false} showResult={false} />
+            </TableContext.Provider>
             <Typography
               variant='h6'
-              sx={{ mb: 5 }}
+              sx={{ mb: 5, textAlign: 'justify' }}
             >
               {localizedStrings.start_splits}
             </Typography>
@@ -315,9 +441,14 @@ export function Start() {
               variant={'h4'}
               text={localizedStrings.entropy}
             />
+            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', textAlign: 'center', my: 2 }}>
+              <Typography variant='h4' color='primary.main'>
+                {localizedStrings.entropy}(S) = &sum;<sub>a &isin; A</sub> -p(a)log<sub>2</sub>p(a)
+              </Typography>
+            </Box>
             <Typography
               variant='h6'
-              sx={{ mb: 5 }}
+              sx={{ mb: 5, textAlign: 'justify' }}
             >
               {localizedStrings.start_entropy}
             </Typography>
@@ -330,9 +461,14 @@ export function Start() {
               variant={'h4'}
               text={localizedStrings.information_gain}
             />
+            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', textAlign: 'center', my: 2 }}>
+              <Typography variant='h4' color='primary.main'>
+                {localizedStrings.information_gain}(S, a) = {localizedStrings.entropy}(S) - &sum;<sub>v &isin; Values(a)</sub> |S<sub>v</sub>| / |S| {localizedStrings.entropy}(S<sub>v</sub>)
+              </Typography>
+            </Box>
             <Typography
               variant='h6'
-              sx={{ mb: 5 }}
+              sx={{ mb: 5, textAlign: 'justify' }}
             >
               {localizedStrings.start_information_gain}
             </Typography>
