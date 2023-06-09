@@ -286,19 +286,19 @@ export function Start() {
                     <Link variant='h6'>{localizedStrings.root}</Link>
                     <ul>
                       <li>
-                        <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                        <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
                         <ul>
                           <li>
                             <Link variant='h6'>{localizedStrings.node}</Link>
                             <ul>
                               <li>
-                                <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
                                 <ul>
                                   <Link variant='h6'>{localizedStrings.leaf}</Link>
                                 </ul>
                               </li>
                               <li>
-                                <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
                                 <ul>
                                   <Link variant='h6'>{localizedStrings.leaf}</Link>
                                 </ul>
@@ -308,19 +308,19 @@ export function Start() {
                         </ul>
                       </li>
                       <li>
-                        <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                        <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
                         <ul>
                           <li>
                             <Link variant='h6'>{localizedStrings.node}</Link>
                             <ul>
                               <li>
-                                <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
                                 <ul>
                                   <Link variant='h6'>{localizedStrings.leaf}</Link>
                                 </ul>
                               </li>
                               <li>
-                                <Link className={'featureVal'} variant='h6'>{localizedStrings.feature}</Link>
+                                <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
                                 <ul>
                                   <Link variant='h6'>{localizedStrings.leaf}</Link>
                                 </ul>
@@ -362,24 +362,24 @@ export function Start() {
                 </Typography>
                 <ul style={{ marginLeft: 5 }}>
                   <li>
-                    <Link variant='h6'>Wie ist die Temperatur?</Link>
+                    <Link variant='h6'>{localizedStrings.start_tree_temperature}</Link>
                     <ul>
                       <li>
-                        <Link className={'featureVal'} variant='h6'>Kalt</Link>
+                        <Link className={'featureVal'} variant='h6'>{localizedStrings.cold}</Link>
                         <ul>
                           <li>
-                            <Link variant='h6'>Regnet es?</Link>
+                            <Link variant='h6'>{localizedStrings.start_tree_rain}</Link>
                             <ul>
                               <li>
                                 <Link className={'featureVal'} variant='h6'>{localizedStrings.yes}</Link>
                                 <ul>
-                                  <Link variant='h6'>Regenjacke & <br /> lange Hose</Link>
+                                  <Link variant='h6'>{localizedStrings.start_tree_leaf1}</Link>
                                 </ul>
                               </li>
                               <li>
                                 <Link className={'featureVal'} variant='h6'>{localizedStrings.no}</Link>
                                 <ul>
-                                  <Link variant='h6'>Pullover & <br /> lange Hose</Link>
+                                  <Link variant='h6'>{localizedStrings.start_tree_leaf2}</Link>
                                 </ul>
                               </li>
                             </ul>
@@ -387,21 +387,21 @@ export function Start() {
                         </ul>
                       </li>
                       <li>
-                        <Link className={'featureVal'} variant='h6'>Warm</Link>
+                        <Link className={'featureVal'} variant='h6'>{localizedStrings.warm}</Link>
                         <ul>
                           <li>
-                            <Link variant='h6'>Ist es Windig?</Link>
+                            <Link variant='h6'>{localizedStrings.start_tree_windy}</Link>
                             <ul>
                               <li>
                                 <Link className={'featureVal'} variant='h6'>{localizedStrings.yes}</Link>
                                 <ul>
-                                  <Link variant='h6'>Pullover & <br /> kurze Hose</Link>
+                                  <Link variant='h6'>{localizedStrings.start_tree_leaf3}</Link>
                                 </ul>
                               </li>
                               <li>
                                 <Link className={'featureVal'} variant='h6'>{localizedStrings.no}</Link>
                                 <ul>
-                                  <Link variant='h6'>T-Shirt & <br /> kurze Hose</Link>
+                                  <Link variant='h6'>{localizedStrings.start_tree_leaf4}</Link>
                                 </ul>
                               </li>
                             </ul>

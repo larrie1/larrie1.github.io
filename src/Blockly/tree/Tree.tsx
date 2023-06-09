@@ -1,10 +1,9 @@
 import './Tree.css'
+import _ from 'lodash'
 import { entropy, log2, NODE_TYPES } from "../ID3/decision-tree"
-import { Card, Box, Link, Typography } from "@mui/material";
-import { localizedStrings } from '../../Res';
-import { scaleInVerCenter } from '../../Utils/animations';
-
-const _ = require('lodash');
+import { Card, Box, Link, Typography } from "@mui/material"
+import { localizedStrings } from '../../Res'
+import { scaleInVerCenter } from '../../Utils/animations'
 
 /**
  *  This Method creates a Container with a Tree Graph inside. The Tree styling
@@ -62,7 +61,7 @@ export function Tree(
  * @returns         UI representation of the Tree graph
  */
 function listItems(children: any, data: any, target: string, features: number) {
-    let setSize = _.size(data);
+    let setSize = _.size(data)
     let entpy = (data.length / setSize) * entropy(_.map(data, target)) / log2(features)
 
     if (children && children.value) {
