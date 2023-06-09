@@ -1,4 +1,3 @@
-import _ from "lodash"
 import { Card, Typography, Chip, Box } from "@mui/material"
 import { localizedStrings } from "../../Res"
 import { Headline } from "../../Utils"

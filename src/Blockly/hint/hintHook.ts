@@ -50,7 +50,7 @@ export function useHint(
                 selectedFeatureVal
             ))
         }
-    }, [selectedFeature, selectedFeatureVal])
+    }, [selectedFeature, selectedFeatureVal, blockJson, data, features, target])
 
     useEffect(() => {
         setFeature("")

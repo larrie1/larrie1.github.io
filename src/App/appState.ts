@@ -38,7 +38,7 @@ export function _appState() {
                 localizedStrings.setLanguage(locale)
             }
         }),
-        [],
+        [locale],
     )
 
     let theme = React.useMemo(() => createTheme(getDesignTokens(mode)), [mode])

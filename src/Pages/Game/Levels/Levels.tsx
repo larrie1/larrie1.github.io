@@ -1,5 +1,4 @@
 import { lv1_data, localizedStrings, lv2_data, lv3_data, lv4_data, lv5_data } from '../../../Res';
-import { start_data } from '../../../Res/data/tables';
 import { Level } from './Level';
 
 // Level 3 should start with more blocks, so you learn about splitting 

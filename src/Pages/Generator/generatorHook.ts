@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react"
 import { localizedStrings } from "../../Res"
-import { createTable } from "../../Utils/Table"
 
 /**
  *  This Method validates the user Input from the Steps inside the Generator. It will
@@ -36,7 +35,7 @@ export function useGenerator() {
 
     useEffect(() => {
         setValidData(target !== '' && features.length > 1 && validateFeatures() && validateData())
-    }, [target, features, trainingData])
+    }, [target, features, trainingData, validateData(), validateFeatures()])
 
     let validateHints = [
         [!validateFeatures(), localizedStrings.valid_features],

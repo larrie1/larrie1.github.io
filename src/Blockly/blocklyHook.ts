@@ -6,6 +6,7 @@ import { localizedStrings } from "../Res";
 import { codeGenerator, createNode, jsonGenerator } from "./blocks";
 import { createTree } from "./ID3/decision-tree";
 import { useTheme } from "@mui/material/styles";
+import { theme } from "../theme";
 
 function checkRow(obj: any, block: any): any {
     const valueFromTable = obj[block.value]
@@ -44,6 +45,8 @@ function onShowResult(data: any, json: any) {
 }
 
 export function useBlockly(xmlKey: string) {
+    const theme = useTheme()
+    const language = localizedStrings.getLanguage()
     const [showTree, setShowTree] = useState(true)
     const [showJson, setShowJson] = useState(true)
     const [blockCode, setBlockCode] = useState("");
@@ -120,11 +123,11 @@ export function useBlockly(xmlKey: string) {
     useEffect(() => {
         if (!test_data && !target && !features) setLoading(true)
         else if (test_data.length > 0 && features.length > 0 && target !== '') setLoading(false)
-    }, [TableContext])
+    }, [TableContext, features, target, test_data])
 
     useEffect(() => {
         setSeed(Math.random())
-    }, [useTheme().palette.mode, localizedStrings.getLanguage(), xmlKey, showJson])
+    }, [theme.palette.mode, language, xmlKey, showJson])
 
     useEffect(() => {
         try {

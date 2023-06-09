@@ -54,7 +54,7 @@ function leafToJson(block: Blockly.Block) {
  */
 function leafToCode(block: Blockly.Block) {
     const leaf = block.getFieldValue("LEAF")
-    const code = '{"value": ' + `"${leaf}"` + ',"type": ' + `"${NODE_TYPES.LEAF}"` + '}';
+    const code = `{"value": "${leaf}", "type": "${NODE_TYPES.LEAF}"}`;
     return [code, codeGenerator.PRECEDENCE];
 }
 
@@ -73,14 +73,14 @@ function nodeToCode(block: Blockly.Block) {
 
     while (choice) {
         counter++
-        json += `"${choice}"` + ': ' + value + ', '
+        json += `"${choice}": ${value}, `
         choice = block.getFieldValue('CHOICE' + counter);
         value = codeGenerator.valueToCode(block, counter.toString(), codeGenerator.PRECEDENCE) || null
     }
 
-    json += '"type": ' + `"${NODE_TYPES.DECISION}"`
+    json += `"type": "${NODE_TYPES.DECISION}"`
 
-    const str = '{"value": ' + `"${decision}"` + ', ' + json + '}'
+    const str = `{"value": "${decision}", ${json}}`
     return [str, codeGenerator.PRECEDENCE];
 }
 
@@ -100,9 +100,9 @@ function nodeToJson(block: Blockly.Block) {
     while(choice) {
         counter++
         if (counter !== 1) {
-            json += jsonGenerator.prefixLines(`else if ("${decision}" === "${choice}")` + ' {\n' + jsonGenerator.prefixLines(value ? value.toString() : '/* TODO */', jsonGenerator.INDENT) + '\n}', jsonGenerator.INDENT)
+            json += jsonGenerator.prefixLines(`else if ("${decision}" === "${choice}") {\n${jsonGenerator.prefixLines(value ? value.toString() : "/* TODO */", jsonGenerator.INDENT)} \n}`, jsonGenerator.INDENT)
         } else {
-            json += jsonGenerator.prefixLines(`if ("${decision}" === "${choice}")` + ' {\n' + jsonGenerator.prefixLines(value ? value.toString() : '/* TODO */', jsonGenerator.INDENT) + '\n}', jsonGenerator.INDENT)
+            json += jsonGenerator.prefixLines(`if ("${decision}" === "${choice}") {\n${jsonGenerator.prefixLines(value ? value.toString() : "/* TODO */", jsonGenerator.INDENT)} \n}`, jsonGenerator.INDENT)
         }
         choice = block.getFieldValue('CHOICE' + counter); 
         value = jsonGenerator.valueToCode(block, counter.toString(), jsonGenerator.PRECEDENCE) || null

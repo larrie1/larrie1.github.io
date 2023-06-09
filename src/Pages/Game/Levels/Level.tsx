@@ -17,10 +17,11 @@ import { createTable } from '../../../Utils/Table'
  */
 function useLevel(data: any) {
     const [tableData, setTableData] = useState(data)
+    const language = localizedStrings.getLanguage()
 
     useEffect(() => {
         setTableData(data)
-    }, [data, localizedStrings.getLanguage()])
+    }, [data, language])
 
     const setTable = (newData: any) => {
         setTableData({
