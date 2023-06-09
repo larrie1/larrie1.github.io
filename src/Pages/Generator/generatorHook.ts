@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react"
+import { useState, useEffect, useCallback } from "react"
 import { localizedStrings } from "../../Res"
 
 /**
@@ -16,26 +16,30 @@ export function useGenerator() {
 
     const handleClick = () => setDone(true)
 
-    const validateFeatures = () => {
-        for (let feature of features) {
-            if (!feature) return false
-        }
-        return true
-    }
-
-    const validateData = () => {
-        for (let row of trainingData) {
-            if (!row[target]) return false
+    const validateFeatures = useCallback(
+        () => {
             for (let feature of features) {
-                if (!row[feature]) return false
+                if (!feature) return false
             }
-        }
-        return true
-    }
+            return true
+        }, [features]
+    )
+
+    const validateData = useCallback(
+        () => {
+            for (let row of trainingData) {
+                if (!row[target]) return false
+                for (let feature of features) {
+                    if (!row[feature]) return false
+                }
+            }
+            return true
+        }, [trainingData, target, features]
+    )
 
     useEffect(() => {
         setValidData(target !== '' && features.length > 1 && validateFeatures() && validateData())
-    }, [target, features, trainingData, validateData(), validateFeatures()])
+    }, [target, features, trainingData, validateData, validateFeatures])
 
     let validateHints = [
         [!validateFeatures(), localizedStrings.valid_features],

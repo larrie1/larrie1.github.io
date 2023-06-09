@@ -6,7 +6,6 @@ import { localizedStrings } from "../Res";
 import { codeGenerator, createNode, jsonGenerator } from "./blocks";
 import { createTree } from "./ID3/decision-tree";
 import { useTheme } from "@mui/material/styles";
-import { theme } from "../theme";
 
 function checkRow(obj: any, block: any): any {
     const valueFromTable = obj[block.value]
@@ -123,7 +122,7 @@ export function useBlockly(xmlKey: string) {
     useEffect(() => {
         if (!test_data && !target && !features) setLoading(true)
         else if (test_data.length > 0 && features.length > 0 && target !== '') setLoading(false)
-    }, [TableContext, features, target, test_data])
+    }, [features, target, test_data])
 
     useEffect(() => {
         setSeed(Math.random())
