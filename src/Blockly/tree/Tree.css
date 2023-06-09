@@ -22,11 +22,7 @@
 }
 
 .tree a.leaf {
-    background-color: #6b63ff39;
-}
-
-.tree a.leaf:hover {
-    background-color: #6b63ff39;
+    background-color: #6b63ff;
 }
 
 .tree li {

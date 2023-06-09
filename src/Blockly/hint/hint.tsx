@@ -1,10 +1,20 @@
-import { Card, Typography, Chip, Box } from "@mui/material"
 import _ from "lodash"
+import { Card, Typography, Chip, Box } from "@mui/material"
 import { localizedStrings } from "../../Res"
 import { Headline } from "../../Utils"
 import { scaleInVerCenter } from "../../Utils/animations"
 import { useHint } from "./hintHook"
 
+/**
+ *  This Method creates the UI for the Hint Section. It will ask the User to select the Feature
+ *  where help is needed and shows the help afterwards.
+ * 
+ *  @param props data: Table which holds the Records
+ *               target: The Decision to make
+ *               features: Features that influence the decision
+ *               blockJson: JSON object holding the actual programm progress
+ *  @returns UI representation of the Hint section
+ */
 export function Hint(
     props: {
         data: any,
@@ -41,8 +51,8 @@ export function Hint(
                     alignItems: 'center',
                 }}
             >
-                <Typography sx={{ color: 'secondary.dark' }}>
-                    {localizedStrings.decision + ":"}
+                <Typography sx={{ color: 'primary.contrastText' }}>
+                    {localizedStrings.feature + ":"}
                 </Typography>
                 {
                     props.features.map(
@@ -72,8 +82,8 @@ export function Hint(
                         overflow: 'auto',
                     }}
                 >
-                    <Typography sx={{ color: 'secondary.dark' }}>
-                        {localizedStrings.feature + ":"}
+                    <Typography sx={{ color: 'primary.contrastText' }}>
+                        {localizedStrings.value + ":"}
                     </Typography>
                     {
                         state.possibleValues.map(

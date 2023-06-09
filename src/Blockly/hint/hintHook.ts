@@ -2,6 +2,16 @@ import _ from "lodash"
 import { useState, useEffect } from "react"
 import { NODE_TYPES, gain } from "../ID3/decision-tree"
 
+/**
+ * This Method creates a custom Hook for the Hint. It will serve all the needed Information for the 
+ * Hint to display it. The Information Gain for the remaining features will be calculated.
+ * 
+ *  @param data: Table which holds the Records
+ *  @param target: The Decision to make
+ *  @param features: Features that influence the decision
+ *  @param blockJson: JSON object holding the actual programm progress
+ * @returns JSON state object with the information
+ */
 export function useHint(
     data: any,
     features: string[],
@@ -59,6 +69,17 @@ export function useHint(
     }
 }
 
+/**
+ * This Method calculates the remainingdata in relation to the complete programm and the selected Feature 
+ * and Feature Value.
+ * 
+ * @param json JSON object containing the whole Tree of the user
+ * @param features All possible Features
+ * @param data The Data of this level
+ * @param selectedFeature The Feature selected by the user
+ * @param selectedFeatureVal The Value of the Feature that got selected
+ * @returns Remaining Data after the selected Feature with all the taken features earlier
+ */
 function calcData(
     json: any,
     features: string[],
@@ -90,6 +111,18 @@ function calcData(
     }
 }
 
+/**
+ * This Method calculates the Information Gain for the remaining Features after the selected Feature
+ * and after the previous Features where made.
+ * 
+ * @param json JSON object containing the whole Tree of the user
+ * @param features All possible Features
+ * @param data The Data of this level
+ * @param target The Decision to make
+ * @param selectedFeature The Feature selected by the user
+ * @param selectedFeatureVal The Value of the Feature that got selected
+ * @returns Information Gain for the remaining Features
+ */
 function calcGains(
     blockJson: any,
     features: string[],

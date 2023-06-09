@@ -2,9 +2,15 @@ import _ from "lodash";
 import { createTree, entropy, gain } from "../ID3/decision-tree";
 
 /**
+ * This Method creates a Custom Hook which returns a json state object containing
+ * all the important Information. It calcutaltes it here instead and returns it to the 
+ * View.
  * 
- * @param props 
- * @returns 
+ * @param props data: Table which holds the Records
+ *              target: The Decision to make
+ *              features: Features that influence the decision
+ *              blockJson: JSON object holding the actual programm progress   
+ * @returns     JSON State Object 
  */
 export function useAnalyse(
     props: {
@@ -51,19 +57,21 @@ export function useAnalyse(
 }
 
 /**
+ * This Method calculates the splits of a given tree. 
  * 
- * @param tree 
- * @returns 
+ * @param tree JSON object containing the structure of the tree
+ * @returns Splits that were made by the tree
  */
 const getSplits = (tree: any) => _.partition(tree, ['type', 'decision'])[0].length + 1
 
 /**
+ * This Method calculates the Entropy and Information Gain per Feature. 
  * 
- * @param data 
- * @param features 
- * @param json 
- * @param target 
- * @returns 
+ * @param data: Table which holds the Records
+ * @param target: The Decision to make
+ * @param features: Features that influence the decision
+ * @param json: JSON object holding the actual programm progress 
+ * @returns The Gain and Entropy per feature
  */
 function setBlockGain(data: any, features: string[], json: any, target: string) {
     if (json.type === 'decision') {
@@ -96,10 +104,11 @@ function setBlockGain(data: any, features: string[], json: any, target: string) 
 }
 
 /**
+ * This Method concatinate two arrays without losing duplicated values.
  * 
- * @param arr1 
- * @param arr2 
- * @returns 
+ * @param arr1 First Array
+ * @param arr2 Second Array
+ * @returns Concatinated Array
  */
 function concatGains(arr1: any[], arr2: any[]) {
     let result: any[] = []

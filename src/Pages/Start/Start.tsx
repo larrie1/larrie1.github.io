@@ -139,11 +139,10 @@ export function Start() {
             height: '3em',
             alignSelf: 'center',
             cursor: 'pointer',
-            filter: `brightness(80%)`,
             animation: `${wobbleHorBottom} 0.8s infinite, ${pause_between_iterations} 4s infinite`,
             scrollBehavior: 'smooth',
             '&:hover': {
-              filter: `brightness(100%)`,
+              filter: `brightness(80%)`,
             }
           }} />
       </Box>

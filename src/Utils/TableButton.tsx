@@ -28,6 +28,7 @@ export function TableButton() {
                         bottom: 40,
                         right: 60,
                         zIndex: zIndex,
+                        color: 'white',
                     }}>
                     <TocIcon />
                 </Fab>

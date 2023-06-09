@@ -3,7 +3,7 @@ import { localizedStrings } from ".."
 /**
  *  This Method creates the JSON representation of the Table for the Startpage.
  * 
- *  @returns Data for Level 2
+ *  @returns Data for Startpage
  */
  export const start_data = () => {
     const result = localizedStrings.result

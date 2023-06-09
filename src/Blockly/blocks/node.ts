@@ -12,9 +12,10 @@ jsonGenerator.PRECEDENCE = 0;
 codeGenerator.PRECEDENCE = 0;
 
 /**
+ * This Method creates a Leaf Block. 
  * 
- * @param leaf 
- * @param key 
+ * @param leaf This string will get displayed by the leaf. It is the Class label of the Decision
+ * @param key Key to identify this leaf
  */
 export function createLeaf(leaf: string, key: number) {
     codeGenerator['leaf' + key] = leafToCode
@@ -33,12 +34,24 @@ export function createLeaf(leaf: string, key: number) {
     };
 }
 
+/**
+ * This Method will create Source Code for the Leaf Block.
+ * 
+ * @param block Block which will be translated
+ * @returns String representation of the Block
+ */
 function leafToJson(block: Blockly.Block) {
     const leaf = block.getFieldValue('LEAF')
     const code = `return "${leaf}";`;
     return [code, jsonGenerator.PRECEDENCE];
 }
 
+/**
+ * This Method will create a JSON Object for the Leaf Block.
+ * 
+ * @param block Block which will be translated
+ * @returns String representation of the Block
+ */
 function leafToCode(block: Blockly.Block) {
     const leaf = block.getFieldValue("LEAF")
     const code = '{"value": ' + `"${leaf}"` + ',"type": ' + `"${NODE_TYPES.LEAF}"` + '}';
@@ -46,9 +59,10 @@ function leafToCode(block: Blockly.Block) {
 }
 
 /**
+ * This Method will create a JSON Object of the Node Block. Containing the Feature and the Values.
  * 
- * @param block 
- * @returns 
+ * @param block Block which will be translated
+ * @returns String representation of the Block
  */
 function nodeToCode(block: Blockly.Block) {
     var decision = block.getFieldValue('DECISION')
@@ -71,9 +85,10 @@ function nodeToCode(block: Blockly.Block) {
 }
 
 /**
+ * This Method will create the Source Code for the Node Block. It will create nested If Statements of the Feature and Values.
  * 
- * @param block 
- * @returns 
+ * @param block Block which will be translated
+ * @returns String representation of the Block
  */
 function nodeToJson(block: Blockly.Block) {
     var decision = block.getFieldValue('DECISION')
@@ -98,23 +113,22 @@ function nodeToJson(block: Blockly.Block) {
     json += jsonGenerator.prefixLines('}\n', jsonGenerator.INDENT)
     block.getParent() ? json = json.substring(0, json.length - 1) : json += "}"
 
-    //const indentedValueString = jsonGenerator.prefixLines(str, jsonGenerator.INDENT);
-    //const code = indentedValueString;
     return [json, jsonGenerator.PRECEDENCE];
   }
 
 /**
+ * This Method will create the main node block. It covers all the functionalities for the block.
  * 
- * @param data 
- * @param features 
+ * @param data Table that holds all the records to create the Block according to the Data
+ * @param features Features that will be displayed at the dropdown
  */
 export function createNode(data: any, features: string[]) {
     codeGenerator['node'] = nodeToCode
     jsonGenerator['node'] = nodeToJson
 
     Blockly.Blocks['node'] = {
-        itemCount: 0,
-        minInputs: 2,
+        itemCount: 0,  // Number of values
+        minInputs: 2,  // min number of values
         decision: features[0],
         init: function () {
             this.appendDummyInput('TOP')
@@ -130,11 +144,13 @@ export function createNode(data: any, features: string[]) {
             this.setHelpUrl("")
             this.updateShape(this.minInputs)
         },
+        // validate Value Dropdown according to Feature Dropdown
         validate: function (newValue: any) {
             this.decision = newValue
             this.getSourceBlock().updateDropDowns(this.decision)
             return newValue
         },
+        // update value Dropdown by removing and appending new value
         updateDropDowns: function (newValue: any) {
             const choices: any = this.generateChoices(newValue)
             for (let i = 0; i <= this.itemCount; i++) {
@@ -143,26 +159,31 @@ export function createNode(data: any, features: string[]) {
                 input?.appendField(new Blockly.FieldDropdown(choices), "CHOICE" + i)
             }
         },
+        // mutate Dom to cover the mutations 
         mutationToDom: function () {
             const container = Blockly.utils.xml.createElement('mutation');
             container.setAttribute('itemCount', this.itemCount);
             return container;
         },
+        // apply mutation to block
         domToMutation: function (xmlElement: any) {
             const targetCount = parseInt(xmlElement.getAttribute('itemCount'), 10);
             this.updateShape(targetCount);
         },
+        // save the selected decision and number of values
         saveExtraState: function () {
             return {
                 'itemCount': this.itemCount,
                 'decision': this.decision,
             }
         },
+        // load the selected decision and number of values
         loadExtraState: function (state: any) {
             this.itemCount = state['itemCount']
             this.decision = state['decision']
             this.updateShape()
         },
+        // updateShape if value option gets added or removed
         updateShape: function (targetCount: number) {
             while (this.itemCount < targetCount) {
                 this.addPart()
@@ -172,10 +193,12 @@ export function createNode(data: any, features: string[]) {
             }
             this.updateMinus()
         },
+        // add value option dropdown
         plus: function () {
             this.addPart()
             this.updateMinus()
         },
+        // remove value option dropdown
         minus: function () {
             if (this.itemCount === this.minInputs) {
                 return
@@ -183,6 +206,7 @@ export function createNode(data: any, features: string[]) {
             this.removePart()
             this.updateMinus()
         },
+        // add dropdown to the block with correct values
         addPart: function () {
             this.appendValueInput(this.itemCount.toString())
                 .setCheck(null)
@@ -191,10 +215,12 @@ export function createNode(data: any, features: string[]) {
                 .appendField(new Blockly.FieldDropdown(this.generateChoices(this.decision)), "CHOICE" + this.itemCount)
             this.itemCount++
         },
+        // remove dropdown from the block
         removePart: function () {
             this.itemCount--
             this.removeInput(this.itemCount.toString())
         },
+        // show or remove minus button if not enough values are displayed
         updateMinus: function () {
             const minusField = this.getField('MINUS')
             const top = this.getInput('TOP')
@@ -206,7 +232,9 @@ export function createNode(data: any, features: string[]) {
                 top.removeField('MINUS')
             }
         },
+        // calculate the Features that can be selected
         generateDecisions: () => features.map((feature: string) => [feature, feature]),
+        // calculate the Values that can be selected
         generateChoices: (decision: any) => _.uniq(_.map(data, decision)).map((val: any) => [val !== undefined && val !== null ? val.toString() : "", val !== undefined && val !== null ? val.toString() : ""]),
     };
 }

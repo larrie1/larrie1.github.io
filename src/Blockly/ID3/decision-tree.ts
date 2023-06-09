@@ -1,7 +1,7 @@
 import _ from 'lodash';
 
 /**
- * 
+ * Types that the Node can be applied to. Either its a decision or its a leaf.
  */
 export const NODE_TYPES = {
   DECISION: 'decision',
@@ -9,11 +9,14 @@ export const NODE_TYPES = {
 }
 
 /**
+ * This Method will create a tree based on the ID3 algorithm.
+ * The Source Code is a modified Version of the npm Module https://github.com/serendipious/nodejs-decision-tree.
+ * I modified it the way I needed it to be. 
  * 
- * @param data 
- * @param target 
- * @param features 
- * @returns 
+ * @param data Table which holds the Records
+ * @param target The Decision to make
+ * @param features Features that influence the decision
+ * @returns JSON Object of the tree created by the ID3 Algorithm
  */
 export function createTree(
   data: any,
@@ -58,9 +61,10 @@ export function createTree(
 }
 
 /**
+ * This Method calculates the Entropy of a Dataset.
  * 
- * @param vals 
- * @returns 
+ * @param vals Class labels of the Decision
+ * @returns Entropy of the Dataset
  */
 export function entropy(vals: any) {
   let uniqueVals = _.uniq(vals);
@@ -78,11 +82,12 @@ export function entropy(vals: any) {
 }
 
 /**
+ * This Method calculates the Information Gain for a single feature.
  * 
- * @param data 
- * @param target 
- * @param feature 
- * @returns 
+ * @param data Table which holds the Records
+ * @param target The Decision to make
+ * @param feature Feature to calculate the gain for
+ * @returns Information Gain for the feature
  */
 export function gain(data: any, target: string, feature: string) {
   let attrVals = _.uniq(_.map(data, feature));
@@ -105,11 +110,12 @@ export function gain(data: any, target: string, feature: string) {
 }
 
 /**
+ * This Method calculates the Feature with the most Information Gain. 
  * 
- * @param data 
- * @param target 
- * @param features 
- * @returns 
+ * @param data Table which holds the Records
+ * @param target The Decision to make
+ * @param features Features that influence the decision
+ * @returns JSON Object containing the Feature name and gain of the feature with the most gain
  */
 export function maxGain(data: any, target: string, features: string[]) {
   let maxGain, maxGainFeature;
@@ -124,10 +130,11 @@ export function maxGain(data: any, target: string, features: string[]) {
 }
 
 /**
+ * This Method calculates the Probability that the value will arrive
  * 
- * @param value 
- * @param list 
- * @returns 
+ * @param value The value to calc the probability from
+ * @param list The complete Set to calc the prob based on
+ * @returns The Probability of the value to the list
  */
 export function prob(value: any, list: any) {
   let occurrences = _.filter(list, function (element: any) {
@@ -140,18 +147,20 @@ export function prob(value: any, list: any) {
 }
 
 /**
+ * This Method calculates the log2 of n.
  * 
- * @param n 
- * @returns 
+ * @param n The parameter to calc the log2 from
+ * @returns log2 of n
  */
 export function log2(n: any) {
   return Math.log(n) / Math.log(2);
 }
 
 /**
+ * This Method calculates the Element which occurs the most
  * 
- * @param list 
- * @returns 
+ * @param list List of which the Element should be selected from
+ * @returns Retuns the most common element
  */
 export function mostCommon(list: any) {
   let elementFrequencyMap: any = {};

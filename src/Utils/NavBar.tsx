@@ -31,9 +31,8 @@ export function NavBar() {
                             display: { xs: 'none', md: 'flex' },
                             height: '64px',
                             width: '64px',
-                            filter: `brightness(80%)`,
                             '&:hover': {
-                                filter: `brightness(100%)`,
+                                filter: `brightness(80%)`,
                             }
                         }} >
                         <img
@@ -47,6 +46,7 @@ export function NavBar() {
                         flex: 1,
                         display: { xs: 'none', md: 'flex' },
                         justifyContent: 'end',
+                        alignItems: 'center',
                     }}>
                         <NavButtons />
                     </Box>
@@ -129,17 +129,21 @@ function NavButtons() {
         <>
             {pages.map((page, index) => (
                 <Button
-                    key={page+index}
+                    key={page + index}
                     variant={('/#' + location.pathname) === routes[index] ? 'contained' : 'outlined'}
                     href={routes[index]}
-                    sx={{ display: 'flex' }}>
+                    sx={{
+                        display: 'flex',
+                        color: ('/#' + location.pathname) === routes[index] ? 'white' : 'primary',
+                    }}>
                     {page}
                 </Button>
-            ))}
+            ))
+            }
             <Tooltip title={localizedStrings.darkmode} >
                 <IconButton
                     key={'mode'}
-                    sx={{ ml: 1 }}
+                    sx={{ ml: 1, height: '50px', width: '50px' }}
                     onClick={userPrefs.toggleColorMode}>
                     {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
                 </IconButton>
@@ -147,12 +151,12 @@ function NavButtons() {
             <Tooltip title={localizedStrings.language} >
                 <IconButton
                     key={'lang'}
-                    sx={{ ml: 1 }}
+                    sx={{ ml: 1, height: '50px', width: '50px' }}
                     onClick={userPrefs.toggleLocale}>
                     {
                         localStorage.getItem('locale') === 'de' ?
-                        <Typography>DE</Typography> :
-                        <Typography>EN</Typography>
+                            <Typography>DE</Typography> :
+                            <Typography>EN</Typography>
                     }
                 </IconButton>
             </Tooltip>

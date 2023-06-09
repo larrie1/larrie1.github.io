@@ -8,10 +8,10 @@ import { localizedStrings } from "../../Res"
  *  This Method creates the content of the Analyse Dialog. It will calculate the gains and splits
  *  and put them together in charts with some text. 
  * 
- *  @param props data:
- *               target:
- *               features:
- *               blockJson:
+ *  @param props data: Table which holds the Records
+ *               target: The Decision to make
+ *               features: Features that influence the decision
+ *               blockJson: JSON object holding the actual programm progress
  *  @returns     UI representation of the content of the Analyse Dialog
  */
 export function Analyse(
@@ -126,10 +126,9 @@ const ToolTip = ({ active, payload, label }: TooltipProps<number, string>) => {
         return (
             <Card sx={{ p: 2 }}>
                 <Typography>name: {label}</Typography>
-                <Typography>{payload[0].dataKey + ': ' + payload[0].value}</Typography>
-                <Typography>{payload[1].dataKey + ': ' + payload[1].value}</Typography>
-                <Typography>{payload[2].dataKey + ': ' + payload[2].value}</Typography>
-                <Typography>{payload[3].dataKey + ': ' + payload[3].value}</Typography>
+                {payload.map((load: any) =>
+                    <Typography>{load.dataKey + ': ' + load.value}</Typography>
+                )}
             </Card>
         )
     }

@@ -43,12 +43,36 @@ export function Game() {
                         (label, index) => (
                             <Step
                                 key={label}
+                                sx={{
+                                    '& .MuiStepLabel-root .Mui-active .MuiStepIcon-text': {
+                                        fill: 'white',
+                                    },
+                                    '& .MuiStepLabel-root .Mui-completed .MuiStepIcon-root': {
+                                        color: 'primary.light',
+                                    },
+                                    '& .MuiStepLabel-root .MuiStepIcon-root': {
+                                        color: 'secondary.dark',
+                                    },
+                                    '& .MuiStepLabel-root .Mui-active': {
+                                        color: 'primary.main',
+                                      },
+                                      '& .MuiStepLabel-root .Mui-completed': {
+                                        color: 'primary.light',
+                                      },
+                                    '& .MuiStepLabel-label.Mui-completed.MuiStepLabel-alternativeLabel':
+                                    {
+                                        color: 'grey.500', 
+                                    },
+                                    '& .MuiStepLabel-label.MuiStepLabel-alternativeLabel':
+                                    {
+                                        color: 'grey.500', 
+                                    },
+                                }}
                                 completed={context.completed[index]}>
                                 <StepButton
                                     disableRipple
-                                    color='inherit'
                                     onClick={state.setStep(index)}>
-                                    <Typography variant='subtitle2'>
+                                    <Typography variant='subtitle2' color={context.activeStep === index ? 'primary' : 'inherit'}>
                                         {label}
                                     </Typography>
                                 </StepButton>

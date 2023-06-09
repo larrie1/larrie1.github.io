@@ -58,6 +58,8 @@ export function CustomDialog(props: {
                     sx={{
                         p: 2,
                         color: 'secondary.dark',
+                        height: '50px', 
+                        width: '50px',
                     }}>
                     <CloseIcon />
                 </IconButton>

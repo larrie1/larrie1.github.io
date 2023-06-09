@@ -126,6 +126,7 @@ export function Blockly(
                                 sx={{
                                     height: index === 0 ? '50px' : '40px',
                                     mx: 1,
+                                    color: index == 0 ? 'white' : 'primary.main'
                                 }}
                             >
                                 {val[0]}
