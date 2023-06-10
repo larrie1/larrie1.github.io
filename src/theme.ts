@@ -16,6 +16,8 @@ export const theme = (mode: PaletteMode) => ({
                             borderColor: 'secondary.dark',
                             padding: 1,
                             borderRadius: 2,
+                            overflowWrap: "break-word",
+                            maxWidth: {xs: '150px', lg: '200px', xl: '10000px'}
                         }
                     )
             }

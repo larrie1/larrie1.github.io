@@ -46,6 +46,7 @@ export function Start() {
       <Box sx={{
         display: 'flex',
         height: `calc(100vh - 64px)`,
+        width: '100%',
         justifyContent: 'center',
         flexDirection: 'column',
         position: 'relative',
@@ -54,6 +55,8 @@ export function Start() {
           variant='h1'
           letterSpacing={'6px'}
           sx={{
+            whiteSpace: 'normal',
+            overflowWrap: "break-word",
             animation: `${leftIn} 0.6s cubic-bezier(0.390, 0.575, 0.565, 1.000) both`,
           }}>
           {localizedStrings.title}
@@ -161,9 +164,10 @@ export function Start() {
         my: 10,
         width: '100%',
         display: 'flex',
-        flexDirection: 'row',
+        flexDirection: { xs: 'column', md: 'row' },
         position: 'relative',
         justifyContent: 'space-around',
+        alignItems: 'center',
       }}>
         <ExtendableCard
           title={localizedStrings.info}
@@ -193,6 +197,7 @@ export function Start() {
       <Box sx={{
         display: 'flex',
         flexDirection: 'row',
+        width: '100%',
       }}>
 
         {/* Table of Contents */}
@@ -200,6 +205,9 @@ export function Start() {
           pt: '64px',
           height: '100%',
           position: 'sticky',
+          display: { xs: 'none', lg: 'flex' },
+          flexDirection: 'column',
+          alignItems: 'start',
           top: 0,
         }}>
           <Headline
@@ -248,107 +256,104 @@ export function Start() {
           </Button>
         </Box>
 
-        {/* Actual content */}
         <Box sx={{
-          pt: '64px',
-          ml: 3,
-          pl: 3,
-          borderLeft: 1,
-          borderColor: 'secondary.dark',
+          display: 'flex',
+          flexDirection: 'row',
         }}>
-          <Box
-            ref={machineLearningRef}
-            sx={{ scrollMarginTop: '64px' }}
-          >
-            <Headline
-              variant={'h4'}
-              text={localizedStrings.machine_learning}
-            />
-            <Typography
-              variant='h6'
-              sx={{ mb: 5, textAlign: 'justify' }}
+          <Box sx={{
+            height: '100%',
+            ml: { xs: 0, lg: 3 },
+            pl: { xs: 0, lg: 3 },
+            borderLeft: { xs: 0, lg: 1 },
+            color: 'secondary.dark',
+          }} />
+          {/* Actual content */}
+          <Box sx={{
+            pt: '64px',
+          }}>
+            <Box
+              ref={machineLearningRef}
+              sx={{ scrollMarginTop: '64px' }}
             >
-              {localizedStrings.start_machine_learning}
-            </Typography>
-          </Box>
-          <Box
-            ref={decisionTreeRef}
-            sx={{ scrollMarginTop: '64px', mb: 5 }}
-          >
-            <Headline
-              variant={'h4'}
-              text={localizedStrings.decision_tree}
-            />
-            <Box sx={{ mb: 5, mr: 5 }}>
-              <Box className={'tree'}>
-                <ul>
-                  <li>
-                    <Link variant='h6'>{localizedStrings.root}</Link>
-                    <ul>
-                      <li>
-                        <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
-                        <ul>
-                          <li>
-                            <Link variant='h6'>{localizedStrings.node}</Link>
-                            <ul>
-                              <li>
-                                <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
-                                <ul>
-                                  <Link variant='h6'>{localizedStrings.leaf}</Link>
-                                </ul>
-                              </li>
-                              <li>
-                                <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
-                                <ul>
-                                  <Link variant='h6'>{localizedStrings.leaf}</Link>
-                                </ul>
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </li>
-                      <li>
-                        <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
-                        <ul>
-                          <li>
-                            <Link variant='h6'>{localizedStrings.node}</Link>
-                            <ul>
-                              <li>
-                                <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
-                                <ul>
-                                  <Link variant='h6'>{localizedStrings.leaf}</Link>
-                                </ul>
-                              </li>
-                              <li>
-                                <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
-                                <ul>
-                                  <Link variant='h6'>{localizedStrings.leaf}</Link>
-                                </ul>
-                              </li>
-                            </ul>
-                          </li>
-                        </ul>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </Box>
-            </Box>
-            <Typography
-              variant='h6'
-              sx={{ textAlign: 'justify' }}
-            >
-              {localizedStrings.start_decision_trees1}
-            </Typography>
-            <Box sx={{ my: 2, display: 'flex', flexDirection: 'row' }}>
+              <Headline
+                variant={'h4'}
+                text={localizedStrings.machine_learning}
+              />
               <Typography
                 variant='h6'
-                sx={{
-                  flex: 1,
-                  textAlign: 'justify'
-                }}
+                sx={{ mb: 5, textAlign: 'justify' }}
               >
-                {localizedStrings.start_decision_trees2}
+                {localizedStrings.start_machine_learning}
+              </Typography>
+            </Box>
+            <Box
+              ref={decisionTreeRef}
+              sx={{ scrollMarginTop: '64px', mb: 5 }}
+            >
+              <Headline
+                variant={'h4'}
+                text={localizedStrings.decision_tree}
+              />
+              <Box sx={{ mb: 5, mr: 5 }}>
+                <Box className={'tree'}>
+                  <ul>
+                    <li>
+                      <Link variant='h6'>{localizedStrings.root}</Link>
+                      <ul>
+                        <li>
+                          <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
+                          <ul>
+                            <li>
+                              <Link variant='h6'>{localizedStrings.node}</Link>
+                              <ul>
+                                <li>
+                                  <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
+                                  <ul>
+                                    <Link variant='h6'>{localizedStrings.leaf}</Link>
+                                  </ul>
+                                </li>
+                                <li>
+                                  <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
+                                  <ul>
+                                    <Link variant='h6'>{localizedStrings.leaf}</Link>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                        <li>
+                          <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
+                          <ul>
+                            <li>
+                              <Link variant='h6'>{localizedStrings.node}</Link>
+                              <ul>
+                                <li>
+                                  <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
+                                  <ul>
+                                    <Link variant='h6'>{localizedStrings.leaf}</Link>
+                                  </ul>
+                                </li>
+                                <li>
+                                  <Link className={'featureVal'} variant='h6'>{localizedStrings.value}</Link>
+                                  <ul>
+                                    <Link variant='h6'>{localizedStrings.leaf}</Link>
+                                  </ul>
+                                </li>
+                              </ul>
+                            </li>
+                          </ul>
+                        </li>
+                      </ul>
+                    </li>
+                  </ul>
+                </Box>
+              </Box>
+              <Typography
+                variant='h6'
+                sx={{ textAlign: 'justify' }}
+              >
+                {localizedStrings.start_decision_trees1}
               </Typography>
               <Box
                 className={'tree'}
@@ -356,11 +361,13 @@ export function Start() {
                   display: 'flex',
                   alignItems: 'center',
                   flexDirection: 'column',
+                  my: 5,
+                  overflow: 'hidden',
                 }}>
                 <Typography variant='h6' color='primary.main'>
-                  Was soll ich heute anziehen?
+                  {localizedStrings.start_tree_decision}
                 </Typography>
-                <ul style={{ marginLeft: 5 }}>
+                <ul style={{ overflow: 'hidden' }}>
                   <li>
                     <Link variant='h6'>{localizedStrings.start_tree_temperature}</Link>
                     <ul>
@@ -412,65 +419,74 @@ export function Start() {
                   </li>
                 </ul>
               </Box>
-            </Box>
-          </Box>
-          <Box
-            ref={splitsRef}
-            sx={{ scrollMarginTop: '64px' }}
-          >
-            <Headline
-              variant={'h4'}
-              text={localizedStrings.splits}
-            />
-            <TableContext.Provider value={startTable}>
-              <BasicTable showFooter={false} showResult={false} />
-            </TableContext.Provider>
-            <Typography
-              variant='h6'
-              sx={{ mb: 5, textAlign: 'justify' }}
-            >
-              {localizedStrings.start_splits}
-            </Typography>
-          </Box>
-          <Box
-            ref={entropyRef}
-            sx={{ scrollMarginTop: '64px' }}
-          >
-            <Headline
-              variant={'h4'}
-              text={localizedStrings.entropy}
-            />
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', textAlign: 'center', my: 2 }}>
-              <Typography variant='h4' color='primary.main'>
-                {localizedStrings.entropy}(S) = &sum;<sub>a &isin; A</sub> -p(a)log<sub>2</sub>p(a)
+              <Typography
+                variant='h6'
+                sx={{
+                  flex: 1,
+                  textAlign: 'justify'
+                }}
+              >
+                {localizedStrings.start_decision_trees2}
               </Typography>
             </Box>
-            <Typography
-              variant='h6'
-              sx={{ mb: 5, textAlign: 'justify' }}
+            <Box
+              ref={splitsRef}
+              sx={{ scrollMarginTop: '64px' }}
             >
-              {localizedStrings.start_entropy}
-            </Typography>
-          </Box>
-          <Box
-            ref={informationGainRef}
-            sx={{ scrollMarginTop: '64px' }}
-          >
-            <Headline
-              variant={'h4'}
-              text={localizedStrings.information_gain}
-            />
-            <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', textAlign: 'center', my: 2 }}>
-              <Typography variant='h4' color='primary.main'>
-                {localizedStrings.information_gain}(S, a) = {localizedStrings.entropy}(S) - &sum;<sub>v &isin; Values(a)</sub> |S<sub>v</sub>| / |S| {localizedStrings.entropy}(S<sub>v</sub>)
+              <Headline
+                variant={'h4'}
+                text={localizedStrings.splits}
+              />
+              <TableContext.Provider value={startTable}>
+                <BasicTable showFooter={false} showResult={false} />
+              </TableContext.Provider>
+              <Typography
+                variant='h6'
+                sx={{ mb: 5, textAlign: 'justify' }}
+              >
+                {localizedStrings.start_splits}
               </Typography>
             </Box>
-            <Typography
-              variant='h6'
-              sx={{ mb: 5, textAlign: 'justify' }}
+            <Box
+              ref={entropyRef}
+              sx={{ scrollMarginTop: '64px' }}
             >
-              {localizedStrings.start_information_gain}
-            </Typography>
+              <Headline
+                variant={'h4'}
+                text={localizedStrings.entropy}
+              />
+              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', textAlign: 'center', my: 2 }}>
+                <Typography variant='h4' color='primary.main'>
+                  {localizedStrings.entropy}(S) = &sum;<sub>a &isin; A</sub> -p(a)log<sub>2</sub>p(a)
+                </Typography>
+              </Box>
+              <Typography
+                variant='h6'
+                sx={{ mb: 5, textAlign: 'justify' }}
+              >
+                {localizedStrings.start_entropy}
+              </Typography>
+            </Box>
+            <Box
+              ref={informationGainRef}
+              sx={{ scrollMarginTop: '64px' }}
+            >
+              <Headline
+                variant={'h4'}
+                text={localizedStrings.information_gain}
+              />
+              <Box sx={{ width: '100%', display: 'flex', flexDirection: 'column', textAlign: 'center', my: 2 }}>
+                <Typography variant='h4' color='primary.main'>
+                  {localizedStrings.information_gain}(S, a) = {localizedStrings.entropy}(S) - &sum;<sub>v &isin; Values(a)</sub> |S<sub>v</sub>| / |S| {localizedStrings.entropy}(S<sub>v</sub>)
+                </Typography>
+              </Box>
+              <Typography
+                variant='h6'
+                sx={{ mb: 5, textAlign: 'justify' }}
+              >
+                {localizedStrings.start_information_gain}
+              </Typography>
+            </Box>
           </Box>
         </Box>
       </Box>
@@ -499,9 +515,10 @@ function ExtendableCard(
 ) {
   return (
     <Card sx={{
-      maxWidth: '255px',
+      maxWidth: '355px',
       height: '255px',
       overflow: 'hidden',
+      m: 3,
       transition: "transform 0.15s ease-in-out, height 300ms ease-in-out",
       "&:hover": { transform: "scale3d(1.1, 1.1, 1)", height: '450px', overflow: 'auto' },
     }}>

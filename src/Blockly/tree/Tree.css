@@ -4,7 +4,8 @@
 * {margin: 0; padding: 0;}
 
 .tree ul {
-	padding-top: 20px; position: relative;
+	padding-top: 20px; 
+    position: relative;
 	
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
@@ -26,10 +27,12 @@
 }
 
 .tree li {
-	float: left; text-align: center;
+	float: left; 
+    text-align: center;
 	list-style-type: none;
 	position: relative;
 	padding: 20px 5px 0 5px;
+    overflow: hidden;
 	
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
@@ -40,12 +43,16 @@
 
 .tree li::before, .tree li::after{
 	content: '';
-	position: absolute; top: 0; right: 50%;
+	position: absolute; 
+    top: 0; 
+    right: 50%;
 	border-top: 1px solid #6C63FF;
-	width: 50%; height: 20px;
+	width: 50%; 
+    height: 20px;
 }
 .tree li::after{
-	right: auto; left: 50%;
+	right: auto; 
+    left: 50%;
 	border-left: 1px solid #6C63FF;
 }
 

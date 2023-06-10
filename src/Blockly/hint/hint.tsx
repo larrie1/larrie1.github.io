@@ -56,7 +56,8 @@ export function Hint(
                 {
                     props.features.map(
                         (feature: string) =>
-                            <Chip
+                        (
+                            feature && <Chip
                                 key={Math.random()}
                                 label={feature.toString()}
                                 variant='outlined'
@@ -68,6 +69,7 @@ export function Hint(
                                     borderColor: state.selectedFeature === feature.toString() ? 'primary.main' : 'secondary.dark',
                                 }}
                             />
+                        )
                     )
                 }
             </Box>
@@ -87,7 +89,8 @@ export function Hint(
                     {
                         state.possibleValues.map(
                             (val: any) =>
-                                <Chip
+                            (
+                                val && <Chip
                                     key={Math.random()}
                                     size='small'
                                     label={val.toString()}
@@ -100,6 +103,7 @@ export function Hint(
                                         borderColor: state.selectedFeatureVal === val.toString() ? 'primary.main' : 'secondary.dark',
                                     }}
                                 />
+                            )
                         )
                     }
                 </Box>

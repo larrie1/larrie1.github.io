@@ -92,7 +92,7 @@ function calcData(
         let vals = _.uniq(_.map(data, json.value))
         if (json.value === selectedFeature) {
             return {
-                data: data.filter((dataRow: any) => dataRow[json.value].toString() === selectedFeatureVal),
+                data: data.filter((dataRow: any) => dataRow[json.value] ? dataRow[json.value].toString() : "" === selectedFeatureVal),
                 features: remainingFeatures
             }
         } else {
