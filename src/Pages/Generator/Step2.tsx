@@ -64,7 +64,7 @@ export function Step2(
                                     }
                                 }
                                 size='small'
-                                label={'feature ' + (index + 1)}
+                                label={localizedStrings.feature + (index + 1)}
                                 variant="outlined"
                             />
                     )}
