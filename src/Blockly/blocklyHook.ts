@@ -27,7 +27,7 @@ function onShowResult(data: any, json: any) {
     let choices = _.uniq(_.map(data, decision))
     if (json['type'] === 'decision') {
         blocks += '<block type="node" x="100" y="100"><field name="DECISION">' + decision + '</field>'
-        blocks += '<mutation itemCount="' + choices.length + '"></mutation>'
+        blocks += '<mutation items="' + choices.length + '"></mutation>'
         choices.forEach((choice: any, index: number) => {
             blocks += '<field name="CHOICE' + index + '">' + choice + '</field>'
         })

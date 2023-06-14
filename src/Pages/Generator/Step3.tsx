@@ -44,6 +44,8 @@ export function Step3(
                 mt: 2,
                 px: 2,
                 pb: 2,
+                overflow: 'auto',
+                maxHeight: '50vh',
                 display: props.isUnlocked ? 'xs' : 'none',
             }}>
             <Headline

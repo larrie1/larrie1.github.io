@@ -98,7 +98,7 @@ export const de = {
     generator_title: 'Erstelle dir dein Eigenes Level!',
     valid_features: 'Es gibt noch unbelegte Merkmale!',
     enough_features: 'Es sind noch nicht genügend Merkmale definiert worden!',
-    missing_data: 'Es fehlen noch daten in der Tabelle!',
+    missing_data: 'Es fehlen noch Daten in der Tabelle!',
     correct: 'Richtig',
     incorrect: 'Falsch',
     guessed: 'Vorhersage',

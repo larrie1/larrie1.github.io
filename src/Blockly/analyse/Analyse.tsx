@@ -127,7 +127,7 @@ const ToolTip = ({ active, payload, label }: TooltipProps<number, string>) => {
             <Card sx={{ p: 2 }}>
                 <Typography>name: {label}</Typography>
                 {payload.map((load: any) =>
-                    <Typography>{load.dataKey + ': ' + load.value}</Typography>
+                    <Typography key={load}>{load.dataKey + ': ' + load.value}</Typography>
                 )}
             </Card>
         )

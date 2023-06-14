@@ -11,7 +11,12 @@ import { createLeaf } from "./blocks/node"
  */
 export const createToolBox = (data: any[], target: string) => {
     const blocks = []
-    const leafs = _.uniq(_.flatten(_.map(data, target)).filter((leaf: any) => leaf !== undefined))
+    const leafs = _.uniq(
+        _.flatten(
+            _.map(data, target)
+        ).filter(
+            (leaf: any) => leaf !== undefined)
+    )
 
     blocks.push({
         'kind': 'block',

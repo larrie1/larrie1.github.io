@@ -4,6 +4,7 @@ import { NODE_TYPES } from '../ID3/decision-tree';
 import { localizedStrings } from '../../Res';
 import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
+import { getExtraBlockState } from './serialization_helper';
 
 export const codeGenerator: any = new Blockly.Generator('CODE');
 export const jsonGenerator: any = new Blockly.Generator('JSON');
@@ -96,25 +97,25 @@ function nodeToJson(block: Blockly.Block) {
     let choice = block.getFieldValue('CHOICE' + counter)
     let value = jsonGenerator.valueToCode(block, counter.toString(), jsonGenerator.PRECEDENCE) || null
     let json = block.getParent() ? "" : "/**\n* This Method finds a value for my Decision\n**/\nfunction decisionTree() {\n"
-    
-    while(choice) {
+
+    while (choice) {
         counter++
         if (counter !== 1) {
             json += jsonGenerator.prefixLines(`else if ("${decision}" === "${choice}") {\n${jsonGenerator.prefixLines(value ? value.toString() : "/* TODO */", jsonGenerator.INDENT)} \n}`, jsonGenerator.INDENT)
         } else {
             json += jsonGenerator.prefixLines(`if ("${decision}" === "${choice}") {\n${jsonGenerator.prefixLines(value ? value.toString() : "/* TODO */", jsonGenerator.INDENT)} \n}`, jsonGenerator.INDENT)
         }
-        choice = block.getFieldValue('CHOICE' + counter); 
+        choice = block.getFieldValue('CHOICE' + counter);
         value = jsonGenerator.valueToCode(block, counter.toString(), jsonGenerator.PRECEDENCE) || null
     }
-  
+
     json += jsonGenerator.prefixLines('else {\n', jsonGenerator.INDENT)
     json += jsonGenerator.prefixLines(jsonGenerator.prefixLines('return undefined;\n', jsonGenerator.INDENT), jsonGenerator.INDENT)
     json += jsonGenerator.prefixLines('}\n', jsonGenerator.INDENT)
     block.getParent() ? json = json.substring(0, json.length - 1) : json += "}"
 
     return [json, jsonGenerator.PRECEDENCE];
-  }
+}
 
 /**
  * This Method will create the main node block. It covers all the functionalities for the block.
@@ -129,7 +130,7 @@ export function createNode(data: any, features: string[]) {
     Blockly.Blocks['node'] = {
         itemCount: 0,  // Number of values
         minInputs: 2,  // min number of values
-        decision: features[0],
+        decision: features[0], // chosen feature
         init: function () {
             this.appendDummyInput('TOP')
                 .appendField(createPlusField(), 'PLUS')
@@ -146,8 +147,8 @@ export function createNode(data: any, features: string[]) {
         },
         // validate Value Dropdown according to Feature Dropdown
         validate: function (newValue: any) {
-            this.decision = newValue
-            this.getSourceBlock().updateDropDowns(this.decision)
+            this.getSourceBlock().decision = newValue
+            this.getSourceBlock().updateDropDowns(newValue)
             return newValue
         },
         // update value Dropdown by removing and appending new value
@@ -162,12 +163,12 @@ export function createNode(data: any, features: string[]) {
         // mutate Dom to cover the mutations 
         mutationToDom: function () {
             const container = Blockly.utils.xml.createElement('mutation');
-            container.setAttribute('itemCount', this.itemCount);
+            container.setAttribute('items', this.itemCount);
             return container;
         },
         // apply mutation to block
         domToMutation: function (xmlElement: any) {
-            const targetCount = parseInt(xmlElement.getAttribute('itemCount'), 10);
+            const targetCount = parseInt(xmlElement.getAttribute('items'), 10);
             this.updateShape(targetCount);
         },
         // save the selected decision and number of values
@@ -179,9 +180,8 @@ export function createNode(data: any, features: string[]) {
         },
         // load the selected decision and number of values
         loadExtraState: function (state: any) {
-            this.itemCount = state['itemCount']
-            this.decision = state['decision']
-            this.updateShape()
+            this.updateDropDowns(state['decision'])
+            this.updateShape(state['itemCount'])
         },
         // updateShape if value option gets added or removed
         updateShape: function (targetCount: number) {
@@ -195,8 +195,8 @@ export function createNode(data: any, features: string[]) {
         },
         // add value option dropdown
         plus: function () {
-            this.addPart()
-            this.updateMinus()
+            this.addPart();
+            this.updateMinus();
         },
         // remove value option dropdown
         minus: function () {
@@ -235,6 +235,12 @@ export function createNode(data: any, features: string[]) {
         // calculate the Features that can be selected
         generateDecisions: () => features.map((feature: string) => [feature, feature]),
         // calculate the Values that can be selected
-        generateChoices: (decision: any) => _.uniq(_.map(data, decision)).map((val: any) => [val !== undefined && val !== null ? val.toString() : "", val !== undefined && val !== null ? val.toString() : ""]),
+        generateChoices: (decision: string) => _.uniq(
+            _.map(data, decision)
+        ).map(
+            (val: any) =>
+                [val !== undefined && val !== null ? val.toString() : "",
+                val !== undefined && val !== null ? val.toString() : ""]
+        ),
     };
 }
