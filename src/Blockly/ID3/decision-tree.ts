@@ -41,13 +41,11 @@ export function createTree(
 
   let bestFeature = maxGain(data, target, features);
   let bestFeatureName: any = bestFeature.name;
-  let bestFeatureGain = bestFeature.gain;
   let remainingFeatures = _.without(features, bestFeatureName);
   let possibleValues = _.uniq(_.map(data, bestFeatureName));
 
   let node: any = {
     value: bestFeatureName,
-    gain: bestFeatureGain,
     type: NODE_TYPES.DECISION
   };
 

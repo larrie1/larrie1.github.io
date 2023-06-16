@@ -16,7 +16,7 @@ export function _appState() {
     localStorage.setItem('locale', locale)
 
     // Theme Mode
-    const prefersDarkMode = useMediaQuery('prefers-color-scheme: dark)')
+    const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)')
     localStorage.setItem(
         'mode',
         localStorage.getItem('mode') === null ?
