@@ -23,6 +23,7 @@ export function Hint(
     }
 ) {
     const state = useHint(props.data, props.features, props.target, props.blockJson)
+    console.log(state.possibleValues)
 
     return (
         <Card
@@ -90,12 +91,12 @@ export function Hint(
                         state.possibleValues.map(
                             (val: any) =>
                             (
-                                val && <Chip
+                                val !== null && val !== undefined && <Chip
                                     key={Math.random()}
                                     size='small'
                                     label={val.toString()}
                                     variant='outlined'
-                                    onClick={state.selectFeatureVal(val)}
+                                    onClick={state.selectFeatureVal(val.toString())}
                                     onDelete={state.selectedFeatureVal === val.toString() ? state.unSelectFeatureVal : undefined}
                                     sx={{
                                         mx: 1,
@@ -109,7 +110,7 @@ export function Hint(
                 </Box>
             }
             {
-                state.selectedFeature && state.selectedFeatureVal &&
+                state.selectedFeature !== "" && state.selectedFeatureVal !== "" &&
                 (
                     state.gains?.length !== 0 ?
                         <>
