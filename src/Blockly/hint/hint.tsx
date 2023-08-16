@@ -133,7 +133,7 @@ export function Hint(
                                                 {obj.name}
                                             </Typography>
                                             <Typography sx={{ color: 'primary.main' }}>
-                                                {obj.gain}
+                                                {obj.gain.toFixed(3)}
                                             </Typography>
                                         </Box>
                                 )

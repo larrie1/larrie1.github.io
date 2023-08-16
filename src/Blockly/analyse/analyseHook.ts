@@ -85,8 +85,8 @@ function setBlockGain(data: any, features: string[], json: any, target: string) 
 
         gains.push({
             name: feature,
-            gain: featureGain,
-            entropy: entpy
+            gain: featureGain.toFixed(3),
+            entropy: entpy.toFixed(3)
         })
 
         _.forEach(possibleValues, (featureVal: any) => {

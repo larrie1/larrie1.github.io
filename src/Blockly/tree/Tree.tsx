@@ -62,7 +62,7 @@ export function Tree(
  */
 function listItems(children: any, data: any, target: string, features: number) {
     let setSize = _.size(data)
-    let entpy = (data.length / setSize) * entropy(_.map(data, target)) / log2(features)
+    let entpy = entropy(_.map(data, target)).toFixed(3)
 
     if (children && children.value) {
         if (children.type === NODE_TYPES.DECISION) {
