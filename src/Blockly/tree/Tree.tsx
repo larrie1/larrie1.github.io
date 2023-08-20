@@ -1,6 +1,6 @@
 import './Tree.css'
 import _ from 'lodash'
-import { entropy, log2, NODE_TYPES } from "../ID3/decision-tree"
+import { entropy, NODE_TYPES } from "../ID3/decision-tree"
 import { Card, Box, Link, Typography } from "@mui/material"
 import { localizedStrings } from '../../Res'
 import { scaleInVerCenter } from '../../Utils/animations'
@@ -61,7 +61,6 @@ export function Tree(
  * @returns         UI representation of the Tree graph
  */
 function listItems(children: any, data: any, target: string, features: number) {
-    let setSize = _.size(data)
     let entpy = entropy(_.map(data, target)).toFixed(3)
 
     if (children && children.value) {

@@ -4,7 +4,6 @@ import { NODE_TYPES } from '../ID3/decision-tree';
 import { localizedStrings } from '../../Res';
 import { createMinusField } from './field_minus';
 import { createPlusField } from './field_plus';
-import { getExtraBlockState } from './serialization_helper';
 
 export const codeGenerator: any = new Blockly.Generator('CODE');
 export const jsonGenerator: any = new Blockly.Generator('JSON');
